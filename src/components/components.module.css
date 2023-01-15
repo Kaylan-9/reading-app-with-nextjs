@@ -1,0 +1,45 @@
+@import url("./components.module.css");
+
+.title {
+  font-size: 18px;
+  font-family: var(--font-one);
+}
+
+.mangaarticle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 30px;
+  min-width: 183px;
+  min-height: 163px;
+}
+
+.imagelist {
+  display: flex;
+}
+
+.imagelist > li:nth-child(1) > .image {
+  background-color: rgb(194, 194, 194) !important;
+  transform: translateX(-14px) scale(.9)
+}
+.imagelist > li:nth-child(2) > .image {
+  background-color: white !important;
+  transform: translateX(-55px) scale(1);
+  z-index: 5;
+}
+.imagelist > li:nth-child(3) > .image {
+  background-color: rgb(87, 87, 87) !important;
+  transform: translateX(-95px) scale(.95);
+}
+
+.image {
+  min-width: 110px;
+  min-height: 110px;
+  background-position: center !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+  position: absolute;
+  border-radius: 10px;
+}
+
+
