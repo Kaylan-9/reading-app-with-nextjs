@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import { GrFavorite } from "react-icons/gr";
 import { BiSpreadsheet } from "react-icons/bi";
 import styles from "./components.module.css";
-import Image from "./Img";
+import Img from "./Img";
 
 interface ArticleInterface {
   title: string
@@ -28,7 +28,7 @@ export default function Article({title} : ArticleInterface) {
     <article className={styles.mangaarticle}>
       <h2 className={styles.title}>{title}</h2>
       <ul className={styles.imagelist}>
-        {images.map((url) => <Image url={url}/>)}
+        {images.map((url, indice) => <Img key={url+indice} url={url}/>)}
       </ul>
       <ul className={styles.mangaoptions}>
         <Option Icon={<GrFavorite/>} func={()=>{}}/>
