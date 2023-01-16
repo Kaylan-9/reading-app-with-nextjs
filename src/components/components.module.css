@@ -127,13 +127,6 @@
   stroke: white;
 }
 
-.abouttext {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
-
 .abouttext > h2 {
   font-family: var(--font-one);
   margin: 50px 0px;
@@ -143,15 +136,75 @@
 .abouttext > p {
   font-family: var(--font-one);
   margin: 0 auto;
-  width: 700px;
+  max-width: 700px;
   text-align: justify;
   font-size: 20px;
   text-indent: 40px;
   line-height: 60px;
 }
 
-@media(max-width:680px) {
+
+@media(max-width:700px) {
   .list_mangas {
+    padding: 75px 10px;
+    gap: 50px;
+    flex-direction: column !important;
+  }
+
+  .abouttext {
     padding: 10px;
+  }
+
+  .abouttext > p {
+    min-width: 0px;
+    margin: 10px;
+  }
+
+  .mangaarticle {
+    min-width: 233px;
+    min-height: 244px;
+  }
+
+  .image {
+    width: 180px !important;
+    min-height: 180px !important;
+  }
+
+  .mangaoptions {
+    gap: 50px;
+    margin-top: 180px;
+  }
+  
+  .mangaoptions > li > button {
+    font-size: 24px;
+  }
+
+  .imagelist > li:nth-child(1) > .image {
+    transform: translateX(-180px) scale(.9)
+  }
+  .imagelist > li:nth-child(2) > .image {
+    transform: translateX(-90px) scale(1);
+  }
+  .imagelist > li:nth-child(3) > .image {
+    transform: translateX(0px) scale(1);
+  }
+
+  .aside {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .aside > .inputicon {
+    display: grid;
+    grid-template-columns: min-content auto;
+  }
+}
+
+@media(min-width:700px) {
+  .abouttext {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
   }
 }
