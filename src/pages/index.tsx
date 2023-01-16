@@ -1,5 +1,5 @@
 import { Inter } from '@next/font/google'
-import styles from '../app/page.module.css'
+import styles from '../components/components.module.css'
 import Article from '@/components/Article'
 import Header from '@/components/Header'
 import Aside from '@/components/Aside'
@@ -11,7 +11,25 @@ export default function Home() {
     <Header/>
     <Aside/>
     <main className={styles.main}>
-      <ul className={styles.listmangas}>
+      <ul className={styles.list_mangas}>
+        <Article title={`Manga title one`}/>
+        <Article title={`Manga title two`}/>
+        <Article title={`Manga title three`}/>
+        <Article title={`Manga title four`}/>
+        <Article title={`Manga title one`}/>
+        <Article title={`Manga title`}/>
+        <Article title={`Manga title one`}/>
+        <Article title={`Manga title two`}/>
+        <Article title={`Manga title three`}/>
+        <Article title={`Manga title four`}/>
+        <Article title={`Manga title one`}/>
+        <Article title={`Manga title`}/>
+        <Article title={`Manga title one`}/>
+        <Article title={`Manga title two`}/>
+        <Article title={`Manga title three`}/>
+        <Article title={`Manga title four`}/>
+        <Article title={`Manga title one`}/>
+        <Article title={`Manga title`}/>
         <Article title={`Manga title one`}/>
         <Article title={`Manga title two`}/>
         <Article title={`Manga title three`}/>

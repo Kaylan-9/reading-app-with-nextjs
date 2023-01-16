@@ -18,7 +18,7 @@
   color: white;
 }
 
-.header > ul > li > .logoimg {
+.header > ul > li > a > .logoimg {
   width: 80px;
 }
 
@@ -68,6 +68,18 @@
   min-height: 163px;
 }
 
+.list_mangas {
+  display: flex;
+  flex-direction: row !important;
+  justify-content: space-between !important;
+  flex-wrap: wrap;
+  row-gap: 100px;
+  column-gap: 50px;
+  padding: 100px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
 .imagelist {
   display: flex;
 }
@@ -96,4 +108,50 @@
   border-radius: 10px;
 }
 
+.mangaoptions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 100px;
+  gap: 5px;
+}
 
+.mangaoptions > li > button {
+  background-color: transparent;
+  border: none;
+  font-size: 18px;
+}
+
+.mangaoptions > li > button > svg * {
+  color: white;
+  stroke: white;
+}
+
+.abouttext {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.abouttext > h2 {
+  font-family: var(--font-one);
+  margin: 50px 0px;
+  text-align: center;
+}
+
+.abouttext > p {
+  font-family: var(--font-one);
+  margin: 0 auto;
+  width: 700px;
+  text-align: justify;
+  font-size: 20px;
+  text-indent: 40px;
+  line-height: 60px;
+}
+
+@media(max-width:680px) {
+  .list_mangas {
+    padding: 10px;
+  }
+}
