@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import { GrFavorite } from "react-icons/gr";
 import { BiSpreadsheet } from "react-icons/bi";
 import styles from "./components.module.css";
-import Image from "./Image";
+import Image from "./Img";
 
 interface ArticleInterface {
   title: string
