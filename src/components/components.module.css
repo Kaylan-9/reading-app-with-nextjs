@@ -1,5 +1,59 @@
 @import url("./components.module.css");
 
+.header {
+  background-color: rgb(51, 51, 51);
+}
+
+.header > ul {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.header > ul > li > a {
+  text-decoration: none;
+  font-weight: bold;
+  font-family: var(--font-one);
+  font-size: 15px;
+  color: white;
+}
+
+.header > ul > li > .logoimg {
+  width: 80px;
+}
+
+.aside {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  padding: 10px;
+  gap: 15px;
+  background-color: rgb(100, 100, 100);
+}
+
+.aside > .inputicon {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+  font-size: 25px;
+}
+
+.aside > .inputicon > input {
+  border: none;
+  border-radius: 20px;
+  padding: 10px;
+  font-weight: bold;
+  font-family: var(--font-one);
+  background-color: rgb(51, 51, 51);
+  color: white;
+  min-width: 250px;
+  outline: none;
+}
+
+.aside > .inputicon > svg > * {
+  color: rgb(51, 51, 51);
+}
+
 .title {
   font-size: 18px;
   font-family: var(--font-one);
