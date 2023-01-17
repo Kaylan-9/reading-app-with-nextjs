@@ -15,3 +15,10 @@ model Book {
   imagepath   String @db.Text
   description String @db.Text
 }
+
+model User {
+  id          Int    @id @default(autoincrement())
+  name        String @db.Text
+  email       String @db.Text
+  password    String @db.Text
+}

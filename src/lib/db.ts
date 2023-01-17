@@ -27,11 +27,8 @@ export async function createBook(data: Book) {
   })
 }
 
-export async function deleteBook(data: Book) {
-  const {id} = data; 
-  await  prisma.book.delete({
-    where: {
-      id
-    }
-  })
+export async function getUser() {
+  const data = await prisma.book.findFirst();
+  return data;
 }
+

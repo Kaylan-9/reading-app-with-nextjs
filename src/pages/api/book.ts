@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { createBook, deleteBook } from "lib/db"
+import { createBook, deleteBook } from "@/lib/db"
 
 export default async function handler(
   req: NextApiRequest,

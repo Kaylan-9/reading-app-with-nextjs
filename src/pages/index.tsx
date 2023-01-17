@@ -4,7 +4,7 @@ import { GetServerSideProps } from "next";
 import Article from '@/components/Article';
 import Header from '@/components/Header';
 import Aside from '@/components/Aside';
-import { Book, getAllBooks } from 'lib/db';
+import { Book, getAllBooks } from '@/lib/db';
 
 const inter = Inter({ subsets: ['latin'] })
 
