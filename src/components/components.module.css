@@ -210,6 +210,10 @@
   }
 }
 
+.pagelogin {
+  min-height: 100vh;
+}
+
 .pagelogin > div {
   display: flex;
   flex-direction: column;
@@ -219,6 +223,11 @@
   background-color: #333333;
   padding: 50px 35px;
   border-radius: 15px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-one);
 }
 
 .pagelogin > div > form > .inputlabel > input {
@@ -227,6 +236,7 @@
   padding: 10px;
   border-radius: 10px;
   border: none;
+  outline: none;
 }
 
 .pagelogin > div > form > .inputlabel > label {
@@ -240,4 +250,20 @@
   grid-template-columns: 50px auto;
   align-items: center;
   gap: 25px;
+}
+
+.pagelogin > div > form {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 25px;
+  align-items: center !important;
+}
+
+.backbtn {
+  text-decoration: none;
+  color:  rgb(0, 0, 0);
+  background-color: rgb(185, 185, 185);
+  margin: 10px;
+  border-radius: 10px;
+  padding: 5px;
 }
