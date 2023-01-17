@@ -27,9 +27,6 @@ export default function Home({books} : PostProps) {
     <Aside/>
     <main className={styles.main}>
       <ul className={styles.list_mangas}>
-        {JSON.stringify(books, null, 4)}
-
-
         <Article title={`Manga title one`}/>
         <Article title={`Manga title two`}/>
         <Article title={`Manga title three`}/>

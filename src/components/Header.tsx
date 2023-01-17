@@ -18,6 +18,7 @@ function NavItem({name, href}: NavItemType) {
 export default function Header() {
   return (<header className={styles.header}>
     <ul>
+      <NavItem name='login' href="/"/>
       <NavItem name='favoritos' href="favorites"/>
       <li>
         <Link href={`/`}>
@@ -25,6 +26,7 @@ export default function Header() {
         </Link>
       </li>
       <NavItem name='about' href="about"/>
+      <NavItem name='login' href="login"/>
     </ul>
   </header>);
 }
