@@ -16,8 +16,10 @@ const InputLabel = forwardRef(({label, placeholder=""}: InputLabelType, ref: any
 
 export default function Login() {
   return (<div className={styles.pagelogin}>
-    <Link className={styles.backbtn} href="/">Voltar</Link>
-    <div>
+    <div className={styles.backbtn}>
+      <Link href="/">Voltar</Link>
+    </div>
+    <div className={styles.containerform}>
       <h2>Login de administrador</h2>
       <form action="" method="post">
         <InputLabel label="usuário" placeholder="nome ou @e-mail de entrada"/>

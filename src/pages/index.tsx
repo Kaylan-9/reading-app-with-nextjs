@@ -35,22 +35,6 @@ export default function Home({books} : PostProps) {
         <Article title={`Manga title`}/>
         <Article title={`Manga title one`}/>
         <Article title={`Manga title two`}/>
-        <Article title={`Manga title three`}/>
-        <Article title={`Manga title four`}/>
-        <Article title={`Manga title one`}/>
-        <Article title={`Manga title`}/>
-        <Article title={`Manga title one`}/>
-        <Article title={`Manga title two`}/>
-        <Article title={`Manga title three`}/>
-        <Article title={`Manga title four`}/>
-        <Article title={`Manga title one`}/>
-        <Article title={`Manga title`}/>
-        <Article title={`Manga title one`}/>
-        <Article title={`Manga title two`}/>
-        <Article title={`Manga title three`}/>
-        <Article title={`Manga title four`}/>
-        <Article title={`Manga title one`}/>
-        <Article title={`Manga title`}/>
       </ul>
     </main>
   </>)

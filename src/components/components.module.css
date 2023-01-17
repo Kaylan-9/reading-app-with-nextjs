@@ -152,6 +152,10 @@
     flex-direction: column !important;
   }
 
+  .header > ul {
+    flex-wrap: wrap;
+  }
+
   .abouttext {
     padding: 10px;
   }
@@ -214,11 +218,11 @@
   min-height: 100vh;
 }
 
-.pagelogin > div {
+.pagelogin > .containerform {
   display: flex;
   flex-direction: column;
   gap: 50px;
-  max-width: 350px;
+  max-width: 400px;
   width: 100%;
   background-color: #333333;
   padding: 50px 35px;
@@ -230,7 +234,7 @@
   font-family: var(--font-one);
 }
 
-.pagelogin > div > form > .inputlabel > input {
+.pagelogin > .containerform  > form > .inputlabel > input {
   font-weight: bold;
   font-family: var(--font-one);
   padding: 10px;
@@ -239,31 +243,52 @@
   outline: none;
 }
 
-.pagelogin > div > form > .inputlabel > label {
+.pagelogin > .containerform > form > .inputlabel > label {
   font-family: var(--font-one);
   font-weight: bold;
   border: none;
 }
 
-.pagelogin > div > form > .inputlabel {
+.pagelogin > .containerform > form > .inputlabel {
   display: grid;
   grid-template-columns: 50px auto;
   align-items: center;
   gap: 25px;
+  width: 100%;
 }
 
-.pagelogin > div > form {
+.pagelogin > .containerform > form > button {
+  padding: 8px 16px;
+  border-radius: 30px;
+  border: none;
+  background-color: #1d1d1d;
+  color: white;
+  font-weight: bold;
+  font-family: var(--font-one);
+  font-size: 15px;
+}
+
+.pagelogin > .containerform > form {
   display: flex !important;
   flex-direction: column !important;
-  gap: 25px;
-  align-items: center !important;
+  gap: 45px;
+  align-items: center;
 }
 
-.backbtn {
+.pagelogin > .backbtn {
+  background-color: rgb(185, 185, 185);
+  border-radius: 30px;
+  padding: 12px 30px;
+  display: inline-block;
+  margin: 15px;
+  text-align: center;
+}
+
+.pagelogin > .backbtn > a {
   text-decoration: none;
   color:  rgb(0, 0, 0);
-  background-color: rgb(185, 185, 185);
-  margin: 10px;
-  border-radius: 10px;
-  padding: 5px;
+  font-family: var(--font-one);
+  font-weight: bold;
+  font-size: 18px;
 }
+
