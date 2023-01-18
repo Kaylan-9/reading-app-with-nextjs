@@ -257,7 +257,7 @@
   width: 100%;
 }
 
-.pagelogin > .containerform > form > input[type="submit"] {
+.pagelogin > .containerform > form > input[type="button"] {
   padding: 8px 16px;
   border-radius: 30px;
   border: none;

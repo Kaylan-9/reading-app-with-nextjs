@@ -7,8 +7,20 @@ export interface Book {
   description: string;
 }
 
+export interface User {
+  id: number;
+  name: string;
+  email: string;
+  password: string;
+}
+
 export async function getAllBooks() {
   const data =await prisma.book.findMany();
+  return data;
+}
+
+export async function getAllUsers() {
+  const data =await prisma.user.findMany();
   return data;
 }
 
@@ -18,7 +30,7 @@ export async function createBook(data: Book) {
     imagepath,
     description,
   } = data; 
-  await  prisma.book.create({
+  await prisma.book.create({
     data: {
       title,
       imagepath,
@@ -27,8 +39,18 @@ export async function createBook(data: Book) {
   })
 }
 
-export async function getUser() {
-  const data = await prisma.book.findFirst();
-  return data;
+export async function deleteBook(data: Book) {
+  const {id} = data;
+  await prisma.book.delete({
+    where: {id}
+  })
+}
+
+export async function getUser(data: User) {
+  const {name, password} = data;
+  const user = await prisma.user.findFirst({
+    where: {name, password}
+  });
+  return user;
 }
 

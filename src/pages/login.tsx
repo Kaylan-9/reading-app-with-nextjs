@@ -1,7 +1,8 @@
 import { useRef, useState, useCallback, FormEvent, forwardRef } from "react";
-import styles from "../../components/components.module.css";
+import styles from "@/components/components.module.css";
 import Link from "next/link";
 import useUser from "../lib/useUser";
+import { withIronSessionSsr } from "iron-session/next";
 
 type InputLabelType = {
   label: string,
@@ -15,7 +16,27 @@ const InputLabel = forwardRef(({label, placeholder=""}: InputLabelType, ref: any
   </div>);
 });
 
-export default function Login() {
+export const getServerSideProps = withIronSessionSsr(
+  async ({ req }) => {
+    const user = req.session.user;
+    if (user.admin !== true) {
+      return {
+        notFound: true,
+      };
+    }
+    return {
+      props: {
+        user: req.session.user,
+      }
+    }
+  },
+  {
+    cookieName: "admlogin",
+    password: "complex_password_at_least_32_characters_long",
+  }
+)
+
+export default function Login({user} : {user: any}) {
   const input_usernameoremail = useRef<HTMLInputElement>(null);
   const input_password = useRef<HTMLInputElement>(null);
   const [errorMsg, setErrorMsg] = useState<string>("");
@@ -24,21 +45,22 @@ export default function Login() {
     redirectIfFound: true,
   });
 
-  const handleLogin = async (e: FormEvent<HTMLInputElement>) => {
+  const handleLogin = useCallback(async (e: FormEvent<HTMLInputElement>) => {
     e.preventDefault();
 
     const body = {
-      usernameoremail: input_usernameoremail.current,
-      password: input_password.current
+      name: input_usernameoremail.current?.value,
+      password: input_password.current?.value
     };
 
     try {
+      const user = await fetch('api/login', {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
       mutateUser(
-        await fetch('api/login', {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(body),
-        }),
+        user,
         false
       );
     } catch(error) {
@@ -46,7 +68,7 @@ export default function Login() {
       // console.log(error)
     }
 
-  };
+  }, []);
 
   return (<div className={styles.pagelogin}>
     <div className={styles.backbtn}>
@@ -57,7 +79,7 @@ export default function Login() {
       <form>
         <InputLabel ref={input_usernameoremail} label="usuário" placeholder="nome ou @e-mail de entrada"/>
         <InputLabel ref={input_password} label="senha"/>
-        <input type="submit" onSubmit={handleLogin} value="Logar"/>
+        <input type="button" onClick={handleLogin} value="Logar"/>
       </form>
     </div>
   </div>);

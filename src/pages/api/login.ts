@@ -1,4 +1,5 @@
 
+import { getUser } from "@/lib/db";
 import { withIronSessionApiRoute } from "iron-session/next";
 import { NextApiRequest, NextApiResponse } from "next";
 
@@ -7,20 +8,16 @@ export default withIronSessionApiRoute(
     req: any, 
     res: any
   ) {
-    if (req.method === 'GET') {
+    if (req.method === 'POST') {
       const data = req.body;
-      return res.status(200).json({message: 'Success'})
+      const user = await getUser(data);
+      req.session.user = {
+        id: 230,
+        admin: true,
+      };
+      await req.session.save();
+      return res.status(200).json({...user, message: 'Success'})
     }
-
-
-
-    req.session.user = {
-      id: 230,
-      admin: true,
-    };
-    alert("teste")
-    await req.session.save();
-    res.send({ ok: true });
   },
   {
     cookieName: "admlogin",
