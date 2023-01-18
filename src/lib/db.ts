@@ -49,7 +49,6 @@ export async function deleteBook(data: Book) {
 
 export async function getUser(data: User) {
   const {name, password} = data;
-  console.log(name);
   const user = await prisma.user.findFirst({
     where: {name, password}
   });

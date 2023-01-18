@@ -1,6 +1,8 @@
+import { useContext } from "react";
 import Link from 'next/link';
 import styles from './components.module.css';
 import logoimg from '../../public/logo.png';
+import { SessionContext } from '@/contexts/SessionContext';
 
 type NavItemType = {
   name: string,
@@ -16,6 +18,7 @@ function NavItem({name, href}: NavItemType) {
 }
 
 export default function Header() {
+  const { userSession } = useContext<any>(SessionContext);
   return (<header className={styles.header}>
     <ul>
       <NavItem name='home' href="/"/>
@@ -26,7 +29,9 @@ export default function Header() {
         </Link>
       </li>
       <NavItem name='about' href="about"/>
-      <NavItem name='login' href="login"/>
+      {userSession.isLoggedIn ? 
+        (<NavItem name='profile' href="profile"/>) : 
+        (<NavItem name='login' href="login"/>)}
     </ul>
   </header>);
 }

@@ -1,4 +1,5 @@
-import '../app/globals.css'
+import { SessionProvider } from '@/contexts/SessionContext';
+import '../app/globals.css';
 
 interface MyAppInterface {
   Component: any;
@@ -6,5 +7,7 @@ interface MyAppInterface {
 }
 
 export default function MyApp({ Component, pageProps }: MyAppInterface) {
-  return <Component {...pageProps} />
+  return <SessionProvider>
+    <Component {...pageProps} />
+  </SessionProvider>;
 }

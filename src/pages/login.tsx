@@ -1,8 +1,8 @@
-import { useRef, useState, useCallback, FormEvent, forwardRef } from "react";
+import { useRef, useCallback, FormEvent, forwardRef, useContext, useEffect } from "react";
 import styles from "@/components/components.module.css";
 import Link from "next/link";
-import useUser from "../lib/useUser";
-import fetchJson, { FetchError } from "@/lib/fetchJson";
+import { SessionContext } from "@/contexts/SessionContext";
+import Router from "next/router";
 
 type InputLabelType = {
   label: string,
@@ -19,37 +19,23 @@ const InputLabel = forwardRef(({label, placeholder=""}: InputLabelType, ref: any
 export default function Login() {
   const input_usernameoremail = useRef<HTMLInputElement>(null);
   const input_password = useRef<HTMLInputElement>(null);
-  const [errorMsg, setErrorMsg] = useState<string>("");
-  const { mutateUser } = useUser({
-    redirectTo: "/about",
-    redirectIfFound: true,
-  });
-
+  const { handleLogin: _Login, userSession } = useContext<any>(SessionContext);
   const handleLogin = useCallback(async (e: FormEvent<HTMLInputElement>) => {
-    e.preventDefault();
-
-    const body = {
+    e.preventDefault();  
+    _Login({
       name: input_usernameoremail.current?.value,
       password: input_password.current?.value
-    };
+    });
+  }, []);
 
-    try {
-      mutateUser(
-        await fetchJson('/api/login', {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(body),
-        }),
-        false
-      );
-    }catch (error) {
-      if (error instanceof FetchError) {
-        setErrorMsg(error.data.message);
-      } else {
-        console.error("An unexpected error happened:", error);
-      }
+  const verifyLogin = useCallback(() => {
+    if(userSession.isLoggedIn) {
+      Router.push("/");
     }
+  }, [userSession]);
 
+  useEffect(() => {
+    verifyLogin();
   }, []);
 
   return (<div className={styles.pagelogin}>
