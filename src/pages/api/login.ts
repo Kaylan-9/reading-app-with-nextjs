@@ -1,26 +1,28 @@
-
-import { getUser } from "@/lib/db";
+import { getUser, User } from "@/lib/db";
 import { withIronSessionApiRoute } from "iron-session/next";
+import { sessionOptions } from "@/lib/session";
 import { NextApiRequest, NextApiResponse } from "next";
 
-export default withIronSessionApiRoute(
-  async function loginRoute(
-    req: any, 
-    res: any
-  ) {
-    if (req.method === 'POST') {
+export default withIronSessionApiRoute(loginRoute, sessionOptions);
+
+async function loginRoute(
+  req: NextApiRequest, 
+  res: NextApiResponse
+) {
+  if (req.method === 'POST') {
+    console.log("teste drive ")
+    try {
       const data = req.body;
-      const user = await getUser(data);
-      req.session.user = {
-        id: 230,
-        admin: true,
-      };
+      const user = await getUser(data) as User;
+      req.session.user = user;
       await req.session.save();
-      return res.status(200).json({...user, message: 'Success'})
+      res.json(user);
+    } catch (error) {
+      res.status(500).json({ message: (error as Error).message });
     }
-  },
-  {
-    cookieName: "admlogin",
-    password: "complex_password_at_least_32_characters_long",
-  },
-);
+  }
+
+  if (req.method === 'GET') {
+    res.status(500).json({message: "test"});
+  }
+};

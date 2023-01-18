@@ -2,7 +2,7 @@ import { useRef, useState, useCallback, FormEvent, forwardRef } from "react";
 import styles from "@/components/components.module.css";
 import Link from "next/link";
 import useUser from "../lib/useUser";
-import { withIronSessionSsr } from "iron-session/next";
+import fetchJson, { FetchError } from "@/lib/fetchJson";
 
 type InputLabelType = {
   label: string,
@@ -16,27 +16,7 @@ const InputLabel = forwardRef(({label, placeholder=""}: InputLabelType, ref: any
   </div>);
 });
 
-export const getServerSideProps = withIronSessionSsr(
-  async ({ req }) => {
-    const user = req.session.user;
-    if (user.admin !== true) {
-      return {
-        notFound: true,
-      };
-    }
-    return {
-      props: {
-        user: req.session.user,
-      }
-    }
-  },
-  {
-    cookieName: "admlogin",
-    password: "complex_password_at_least_32_characters_long",
-  }
-)
-
-export default function Login({user} : {user: any}) {
+export default function Login() {
   const input_usernameoremail = useRef<HTMLInputElement>(null);
   const input_password = useRef<HTMLInputElement>(null);
   const [errorMsg, setErrorMsg] = useState<string>("");
@@ -54,18 +34,20 @@ export default function Login({user} : {user: any}) {
     };
 
     try {
-      const user = await fetch('api/login', {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
       mutateUser(
-        user,
+        await fetchJson('/api/login', {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        }),
         false
       );
-    } catch(error) {
-      // setErrorMsg(error)
-      // console.log(error)
+    }catch (error) {
+      if (error instanceof FetchError) {
+        setErrorMsg(error.data.message);
+      } else {
+        console.error("An unexpected error happened:", error);
+      }
     }
 
   }, []);

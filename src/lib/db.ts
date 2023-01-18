@@ -12,6 +12,7 @@ export interface User {
   name: string;
   email: string;
   password: string;
+  isLoggedIn?: boolean;
 }
 
 export async function getAllBooks() {
@@ -48,6 +49,7 @@ export async function deleteBook(data: Book) {
 
 export async function getUser(data: User) {
   const {name, password} = data;
+  console.log(name);
   const user = await prisma.user.findFirst({
     where: {name, password}
   });
