@@ -292,6 +292,102 @@ form > .inputlabel {
   font-size: 18px;
 }
 
-.profilepage {
+.profilepage > main {
+  padding: 50px;
+}
 
+.profilepage > main > div > form {
+  display: grid;
+  grid-template-columns: 260px auto min-content;
+  grid-template-rows: repeat(3, auto);
+  grid-template-areas: 
+    'comicnameinputandlabel comicdescriptiontextarea .'
+    'comiccategorieselect comicdescriptiontextarea addcomicbutton'
+    'selectedimages selectedimages selectedimages'
+  ;
+  gap: 20px;
+}
+
+.profilepage > main > div > form > input[type="button"] {
+  padding: 8px 16px;
+  border-radius: 30px;
+  border: none;
+  background-color: #1d1d1d;
+  color: white;
+  font-weight: bold;
+  font-family: var(--font-one);
+  font-size: 15px;
+  grid-area: addcomicbutton;
+}
+
+.profilepage > main > div > form > * {
+  font-family: var(--font-one);
+  font-size: 15px;
+  font-weight: bold;
+  outline: none;
+}
+
+.profilepage > main > div > form > textarea {
+  width: 100%;
+  padding: 20px;
+  border-radius: 10px;
+  grid-area: comicdescriptiontextarea;
+}
+
+.profilepage > main > div > form > select {
+  padding: 8px;
+  border-radius: 5px;
+  border: none;
+  grid-area: comiccategorieselect;
+  text-align: center;
+}
+
+.profilepage > main > div > form > select > option {
+  padding: 8px;
+}
+
+.profilepage > main > div > form > input[type="file"] {
+  display: none;
+}
+
+.listselectedimages > li {
+  height: 20vh;
+  flex-grow: 1;
+  border-radius: 1.25vh;
+}
+
+.listselectedimages > li > img {
+  max-height: 100%;
+  min-width: 100%;
+  object-fit: cover;
+  vertical-align: bottom;
+}
+
+.listselectedimages {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2.5vh;
+  grid-area: selectedimages;
+}
+
+.listselectedimages > label[for="comicimagesinput"] {
+  width: 15vh;
+  min-height: 20vh;
+  min-width: 16vh !important; 
+  grid-area: imageselectionbutton;
+  background-color: white;
+  border-radius: 1.25vh;
+  object-fit: cover;
+  vertical-align: bottom;
+  color: #1d1d1d;
+  padding: 10px;
+  text-align: center;
+  display: flex;
+  justify-items: center;
+  align-items: center;
+}
+
+
+.profilepage > main > div > form > .inputlabel {
+  grid-area: comicnameinputandlabel;
 }

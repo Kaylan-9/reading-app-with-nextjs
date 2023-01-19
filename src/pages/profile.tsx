@@ -1,31 +1,44 @@
 import styles from '@/components/components.module.css';
 import Header from '@/components/Header';
 import InputLabel from '@/components/InputLabel';
-import { useCallback, useRef, useState } from 'react';
-
+import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
 
 export default function Profile() {
+  const [newImages, setNewImages] = useState<FileList | []>([]);
+  const [filesDataURL, setFilesDataURL] = useState<string[]>([]);
   const comicnameinput = useRef<HTMLInputElement>(null);
   const comicimagesinput = useRef<HTMLInputElement>(null);
   const comicdescriptioninput = useRef<HTMLTextAreaElement>(null);
   const comiccategorie = useRef<string>("");
   const handleAddBook = useCallback(async () => {
-    const title = comicnameinput.current?.value;
-    // const images = comicimagesinput.current?.files?.map((image: string) => {
-    //   console.log(image);
-    // });
-
-    const result = await fetch('/api/book')
+    return;
   }, []);
 
+  useEffect(() => {
+    for(let newImage of Array.from(newImages)) {
+      let fileReader = new FileReader();
+      fileReader.onload = ({target}) => {
+        const result = target?.result;
+        if(typeof result === 'string') {
+          setFilesDataURL((oldfilesDataURL) => [...oldfilesDataURL, result]);
+        }
+      }
+      fileReader.readAsDataURL(newImage);
+    }
+  }, [newImages]);
+
   return (<div className={styles.profilepage}>
+    
     <Header/>
     <main>
       <div>
         <form>
-          <InputLabel ref={comicnameinput} label="Nome"/>
-          <textarea ref={comicdescriptioninput} rows={2} className={styles.textarea} placeholder="Descrição"/>
-          <input ref={comicimagesinput} type="file" multiple/>
+          <InputLabel 
+            ref={comicnameinput} 
+            label="Nome" 
+            placeholder="Nome do mangá ou HQ" 
+            id="comicnameinput"
+          />
           <select onChange={(e: any) => {
             const value = e.target.value
             comiccategorie.current = value;
@@ -37,7 +50,36 @@ export default function Profile() {
             <option value="Yuri">Yuri</option>
             <option value="Josei">Josei</option>
           </select>
-          <input type="button" onClick={handleAddBook} value="Logar"/>
+          <textarea ref={comicdescriptioninput} rows={2} className={styles.textarea} placeholder="Descrição"/>
+
+          <input 
+            ref={comicimagesinput} 
+            id="comicimagesinput" 
+            type="file" 
+            multiple 
+            onChange = {
+              (e: ChangeEvent<HTMLInputElement>) => {
+                if( 
+                    FileReader && 
+                    e.currentTarget.files && 
+                    e.currentTarget.files.length
+                  ) {
+                  setNewImages(e.currentTarget.files);
+                }
+              }
+            }/>
+
+          <ul className={styles.listselectedimages}>
+            <label htmlFor="comicimagesinput">
+              Clique e selecione as imagens desejadas
+            </label>
+            {filesDataURL.map((fileDataUrl: string) => {
+              return (<li>
+                <img src={fileDataUrl} alt="preview"/>
+              </li>)
+            })}
+          </ul>
+          <input type="button" onClick={handleAddBook} value="Adicionar"/>
         </form>
       </div>
     </main>

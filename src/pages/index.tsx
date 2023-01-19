@@ -4,7 +4,7 @@ import { GetServerSideProps } from "next";
 import Article from '@/components/Article';
 import Header from '@/components/Header';
 import Aside from '@/components/Aside';
-import { Book, getAllBooks } from '@/lib/db';
+import { Books, getAllBooks } from '@/lib/db';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -18,7 +18,7 @@ export const getServerSideProps: GetServerSideProps = async ()  => {
 }
 
 interface PostProps {
-  books: Book[]
+  books: Books[]
 }
 
 export default function Home({books} : PostProps) {

@@ -1,13 +1,20 @@
 import { prisma } from "./prisma";
 
-export interface Book {
+export interface Books {
   id: number;
   title: string;
-  imagepath: string;
+  imagepaths: Images[];
   description: string;
 }
 
-export interface User {
+export interface Images {
+  id: number;
+  name: string;
+  path: string;
+  idBook: number;
+}
+
+export interface Users {
   id: number;
   name: string;
   email: string;
@@ -16,40 +23,41 @@ export interface User {
 }
 
 export async function getAllBooks() {
-  const data =await prisma.book.findMany();
+  const data = {}
+  // await prisma.books.findMany();
   return data;
 }
 
 export async function getAllUsers() {
-  const data =await prisma.user.findMany();
+  const data =await prisma.users.findMany();
   return data;
 }
 
-export async function createBook(data: Book) {
+export async function createBook(data: Books) {
   const {
     title,
-    imagepath,
+    imagepaths,
     description,
   } = data; 
-  await prisma.book.create({
+  await prisma.books.create({
     data: {
       title,
-      imagepath,
+      imagepaths,
       description,
     }
   })
 }
 
-export async function deleteBook(data: Book) {
+export async function deleteBook(data: Books) {
   const {id} = data;
-  await prisma.book.delete({
+  await prisma.books.delete({
     where: {id}
   })
 }
 
-export async function getUser(data: User) {
+export async function getUser(data: Users) {
   const {name, password} = data;
-  const user = await prisma.user.findFirst({
+  const user = await prisma.users.findFirst({
     where: {name, password}
   });
   return user;

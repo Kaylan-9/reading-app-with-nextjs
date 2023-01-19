@@ -17,16 +17,6 @@ export default function Login() {
     });
   }, []);
 
-  const verifyLogin = useCallback(() => {
-    if(userSession.isLoggedIn) {
-      Router.push("/");
-    }
-  }, [userSession]);
-
-  useEffect(() => {
-    verifyLogin();
-  }, []);
-
   return (<div className={styles.pagelogin}>
     <div className={styles.backbtn}>
       <Link href="/">Voltar</Link>
