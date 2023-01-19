@@ -1,20 +1,9 @@
-import { useRef, useCallback, FormEvent, forwardRef, useContext, useEffect } from "react";
+import { useRef, useCallback, FormEvent, useContext, useEffect } from "react";
 import styles from "@/components/components.module.css";
 import Link from "next/link";
 import { SessionContext } from "@/contexts/SessionContext";
 import Router from "next/router";
-
-type InputLabelType = {
-  label: string,
-  placeholder?: string,
-}
-
-const InputLabel = forwardRef(({label, placeholder=""}: InputLabelType, ref: any) => {
-  return (<div className={styles.inputlabel}>
-    <label>{label}</label>
-    <input type="text" placeholder={placeholder} ref={ref}/>
-  </div>);
-});
+import InputLabel from "@/components/InputLabel";
 
 export default function Login() {
   const input_usernameoremail = useRef<HTMLInputElement>(null);

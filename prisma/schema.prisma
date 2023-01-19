@@ -9,14 +9,25 @@ datasource db {
   relationMode = "prisma"
 }
 
-model Book {
+model Images {
   id          Int    @id @default(autoincrement())
-  title       String @db.Text
-  imagepath   String @db.Text
-  description String @db.Text
+  name        String @db.Text
+  path        String @db.Text
+  book        Books @relation(fields: [idBook], references: [id])
+  idBook      Int   
+
+  @@index([idBook])
 }
 
-model User {
+model Books {
+  id          Int    @id @default(autoincrement())
+  title       String @db.Text
+  imagepaths  Images[] 
+  description String @db.Text
+  categorie   String @db.Text
+}
+
+model Users {
   id          Int    @id @default(autoincrement())
   name        String @db.Text
   email       String @db.Text

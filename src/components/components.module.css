@@ -234,7 +234,7 @@
   font-family: var(--font-one);
 }
 
-.pagelogin > .containerform  > form > .inputlabel > input {
+form > .inputlabel > input {
   font-weight: bold;
   font-family: var(--font-one);
   padding: 10px;
@@ -243,13 +243,13 @@
   outline: none;
 }
 
-.pagelogin > .containerform > form > .inputlabel > label {
+form > .inputlabel > label {
   font-family: var(--font-one);
   font-weight: bold;
   border: none;
 }
 
-.pagelogin > .containerform > form > .inputlabel {
+form > .inputlabel {
   display: grid;
   grid-template-columns: 50px auto;
   align-items: center;
@@ -292,3 +292,6 @@
   font-size: 18px;
 }
 
+.profilepage {
+
+}
