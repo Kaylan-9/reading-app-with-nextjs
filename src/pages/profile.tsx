@@ -17,7 +17,22 @@ export default function Profile() {
       bookdescription: bookdescriptioninput.current?.value,
       bookcategorie: bookcategorieselect.current
     }
-    console.log(bookdata);
+    
+    const validFiles: File[] = [];
+    for (let i = 0; i < newImages.length; i++) {
+      const file = newImages[i];
+      if (!file.type.startsWith("image")) {
+        alert(`File with index ${i} is invalid`);
+        continue;
+      }
+      validFiles.push(file);
+    }
+    const formData = new FormData();
+    validFiles.forEach((file) => formData.append("bookimages", file));
+    await fetch('/api/book/create', {
+      method: 'POST',
+      body: formData
+    });
   }, [newImages]);
 
   useEffect(() => {
