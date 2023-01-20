@@ -6,13 +6,19 @@ import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
 export default function Profile() {
   const [newImages, setNewImages] = useState<FileList | []>([]);
   const [filesDataURL, setFilesDataURL] = useState<string[]>([]);
-  const comicnameinput = useRef<HTMLInputElement>(null);
-  const comicimagesinput = useRef<HTMLInputElement>(null);
-  const comicdescriptioninput = useRef<HTMLTextAreaElement>(null);
-  const comiccategorie = useRef<string>("");
+  const booknameinput = useRef<HTMLInputElement>(null);
+  const bookimagesinput = useRef<HTMLInputElement>(null);
+  const bookdescriptioninput = useRef<HTMLTextAreaElement>(null);
+  const bookcategorieselect = useRef<string>("");
   const handleAddBook = useCallback(async () => {
-    return;
-  }, []);
+    const bookdata = {
+      bookname: booknameinput.current?.value,
+      bookimages: newImages,
+      bookdescription: bookdescriptioninput.current?.value,
+      bookcategorie: bookcategorieselect.current
+    }
+    console.log(bookdata);
+  }, [newImages]);
 
   useEffect(() => {
     for(let newImage of Array.from(newImages)) {
@@ -34,14 +40,14 @@ export default function Profile() {
       <div>
         <form>
           <InputLabel 
-            ref={comicnameinput} 
+            ref={booknameinput} 
             label="Nome" 
             placeholder="Nome do mangá ou HQ" 
-            id="comicnameinput"
+            id="booknameinput"
           />
           <select onChange={(e: any) => {
             const value = e.target.value
-            comiccategorie.current = value;
+            bookcategorieselect.current = value;
           }}>
             <option value="Shōnen">Shōnen</option>
             <option value="Seinen">Seinen</option>
@@ -50,11 +56,11 @@ export default function Profile() {
             <option value="Yuri">Yuri</option>
             <option value="Josei">Josei</option>
           </select>
-          <textarea ref={comicdescriptioninput} rows={2} className={styles.textarea} placeholder="Descrição"/>
+          <textarea ref={bookdescriptioninput} rows={2} className={styles.textarea} placeholder="Descrição"/>
 
           <input 
-            ref={comicimagesinput} 
-            id="comicimagesinput" 
+            ref={bookimagesinput} 
+            id="bookimagesinput" 
             type="file" 
             multiple 
             onChange = {
@@ -70,7 +76,7 @@ export default function Profile() {
             }/>
 
           <ul className={styles.listselectedimages}>
-            <label htmlFor="comicimagesinput">
+            <label htmlFor="bookimagesinput">
               Clique e selecione as imagens desejadas
             </label>
             {filesDataURL.map((fileDataUrl: string) => {

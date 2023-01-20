@@ -3,8 +3,9 @@ import { prisma } from "./prisma";
 export interface Books {
   id: number;
   title: string;
-  imagepaths: Images[];
+  imagepaths: any;
   description: string;
+  categorie: string;
 }
 
 export interface Images {
@@ -23,8 +24,7 @@ export interface Users {
 }
 
 export async function getAllBooks() {
-  const data = {}
-  // await prisma.books.findMany();
+  const data = await prisma.books.findMany();
   return data;
 }
 
@@ -34,18 +34,7 @@ export async function getAllUsers() {
 }
 
 export async function createBook(data: Books) {
-  const {
-    title,
-    imagepaths,
-    description,
-  } = data; 
-  await prisma.books.create({
-    data: {
-      title,
-      imagepaths,
-      description,
-    }
-  })
+  await prisma.books.create({data: data})
 }
 
 export async function deleteBook(data: Books) {

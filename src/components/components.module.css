@@ -301,8 +301,8 @@ form > .inputlabel {
   grid-template-columns: 260px auto min-content;
   grid-template-rows: repeat(3, auto);
   grid-template-areas: 
-    'comicnameinputandlabel comicdescriptiontextarea .'
-    'comiccategorieselect comicdescriptiontextarea addcomicbutton'
+    'booknameinputandlabel bookdescriptiontextarea .'
+    'bookcategorieselect bookdescriptiontextarea addbookbutton'
     'selectedimages selectedimages selectedimages'
   ;
   gap: 20px;
@@ -317,7 +317,7 @@ form > .inputlabel {
   font-weight: bold;
   font-family: var(--font-one);
   font-size: 15px;
-  grid-area: addcomicbutton;
+  grid-area: addbookbutton;
 }
 
 .profilepage > main > div > form > * {
@@ -331,14 +331,14 @@ form > .inputlabel {
   width: 100%;
   padding: 20px;
   border-radius: 10px;
-  grid-area: comicdescriptiontextarea;
+  grid-area: bookdescriptiontextarea;
 }
 
 .profilepage > main > div > form > select {
   padding: 8px;
   border-radius: 5px;
   border: none;
-  grid-area: comiccategorieselect;
+  grid-area: bookcategorieselect;
   text-align: center;
 }
 
@@ -370,7 +370,7 @@ form > .inputlabel {
   grid-area: selectedimages;
 }
 
-.listselectedimages > label[for="comicimagesinput"] {
+.listselectedimages > label[for="bookimagesinput"] {
   width: 15vh;
   min-height: 20vh;
   min-width: 16vh !important; 
@@ -389,5 +389,5 @@ form > .inputlabel {
 
 
 .profilepage > main > div > form > .inputlabel {
-  grid-area: comicnameinputandlabel;
+  grid-area: booknameinputandlabel;
 }
