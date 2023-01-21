@@ -10,9 +10,10 @@ export const FormidableError = formidable.errors.FormidableError;
 export const parseForm = async (
   req: NextApiRequest
 ): Promise<{ fields: formidable.Fields; files: formidable.Files }> => (await new Promise(async (resolve, reject) => {
+  const filepath =  dateFn.format(Date.now(), "ss-mm-hh-dd-MM-Y");
   const uploadDir = join(
     process.env.ROOT_DIR || process.cwd(),
-    `/images/${dateFn.format(Date.now(), "ss-mm-hh-dd-MM-Y")}`
+    `/images/${filepath}`
   );
 
   try {
@@ -34,10 +35,9 @@ export const parseForm = async (
     uploadDir,
     filename: (_name, _ext, part) => {
       const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
-      const filename = `${part.name || "unknown"}-${uniqueSuffix}.${
-        mime.getExtension(part.mimetype || "") || "unknown"
-      }`;
-      return filename;
+      const _filename = `${part.name || "unknown"}-${uniqueSuffix}`;
+      const filetype = mime.getExtension(part.mimetype || "") || "unknown";
+      return `${_filename}.${filetype}`;
     },
     filter: (part) => {
       return (
@@ -46,9 +46,9 @@ export const parseForm = async (
     },
   });
 
-  form.parse(req, function (err, fields, files) {
+  form.parse(req, (err, fields, files) => {
     if (err) reject(err);
-    else resolve({ fields, files });
+    else resolve({ fields: {...fields, bookpath: filepath}, files});
   });
 
 }));

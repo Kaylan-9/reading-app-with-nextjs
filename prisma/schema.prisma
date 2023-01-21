@@ -12,17 +12,17 @@ datasource db {
 model Images {
   id          Int    @id @default(autoincrement())
   name        String @db.Text
-  path        String @db.Text
-  book        Books @relation(fields: [idBook], references: [id])
-  idBook      Int   
-
+  type        String @db.Text
+  book        Books?  @relation("BookImages", fields: [idBook], references: [id])
+  idBook      Int    
   @@index([idBook])
 }
 
 model Books {
   id          Int    @id @default(autoincrement())
   title       String @db.Text
-  imagepaths  Images[] 
+  imagepaths  Images[] @relation("BookImages")
+  path        String @db.Text
   description String @db.Text
   categorie   String @db.Text
 }

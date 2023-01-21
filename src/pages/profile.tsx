@@ -11,12 +11,11 @@ export default function Profile() {
   const bookdescriptioninput = useRef<HTMLTextAreaElement>(null);
   const bookcategorieselect = useRef<string>("");
   const handleAddBook = useCallback(async () => {
-    const bookdata = {
-      bookname: booknameinput.current?.value,
-      bookimages: newImages,
-      bookdescription: bookdescriptioninput.current?.value,
-      bookcategorie: bookcategorieselect.current
-    }
+    const formData = new FormData();
+    formData.append('bookpath', '');
+    formData.append('bookname', booknameinput.current?.value ?? '');
+    formData.append('bookdescription', bookdescriptioninput.current?.value ?? '');
+    formData.append('bookcategorie', bookcategorieselect.current);
     
     const validFiles: File[] = [];
     for (let i = 0; i < newImages.length; i++) {
@@ -27,12 +26,14 @@ export default function Profile() {
       }
       validFiles.push(file);
     }
-    const formData = new FormData();
+    
     validFiles.forEach((file) => formData.append("bookimages", file));
-    await fetch('/api/book/create', {
+    const addBook = await fetch('/api/book/create', {
       method: 'POST',
       body: formData
     });
+
+    console.log(await addBook.json());
   }, [newImages]);
 
   useEffect(() => {

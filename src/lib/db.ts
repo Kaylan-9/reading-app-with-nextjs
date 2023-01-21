@@ -1,18 +1,21 @@
+import { Prisma } from "@prisma/client";
 import { prisma } from "./prisma";
 
 export interface Books {
-  id: number;
+  id?: number;
   title: string;
   imagepaths: any;
+  path: string;
   description: string;
   categorie: string;
 }
 
 export interface Images {
-  id: number;
+  id?: number;
   name: string;
-  path: string;
-  idBook: number;
+  type: string;
+  book?: Books;
+  idBook?: number;
 }
 
 export interface Users {
@@ -24,8 +27,7 @@ export interface Users {
 }
 
 export async function getAllBooks() {
-  const data = {}
-  // await prisma.books.findMany();
+  const data = await prisma.books.findMany();
   return data;
 }
 
@@ -34,8 +36,18 @@ export async function getAllUsers() {
   return data;
 }
 
-export async function createBook(data: Books) {
-  await prisma.books.create({data: data})
+export async function createBook(data: Prisma.BooksCreateInput) {
+  const imagepaths: any = data.imagepaths;
+  delete data.imagepaths;
+  const newBook = await prisma.books.create({data});
+  Promise.all(await imagepaths.map(async (img: Prisma.ImagesCreateManyBookInput) => {
+    await prisma.images.create({
+      data: {
+        ...img,
+        idBook: newBook.id
+      }
+    })
+  }))
 }
 
 export async function deleteBook(data: Books) {

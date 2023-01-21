@@ -68,7 +68,7 @@ export const SessionProvider = ({children}: {children: ReactNode}) => {
       if(userdata!=null) {
         sessionStorage.setItem("userdata", JSON.stringify(body));
         handleUserSession({type: "login", userdata: body}); 
-        Router.push("/about");
+        Router.push("/");
       }
     } catch(error) {
       console.log(error);
