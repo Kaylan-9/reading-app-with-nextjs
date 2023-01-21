@@ -1,6 +1,7 @@
 import styles from '@/components/components.module.css';
 import Header from '@/components/Header';
 import InputLabel from '@/components/InputLabel';
+import Select from '@/components/Select';
 import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
 
 export default function Profile() {
@@ -61,17 +62,10 @@ export default function Profile() {
             placeholder="Nome do mangá ou HQ" 
             id="booknameinput"
           />
-          <select onChange={(e: any) => {
+          <Select onChange={(e: any) => {
             const value = e.target.value
             bookcategorieselect.current = value;
-          }}>
-            <option value="Shōnen">Shōnen</option>
-            <option value="Seinen">Seinen</option>
-            <option value="Shōjo">Shōjo</option>
-            <option value="Yaoi">Yaoi</option>
-            <option value="Yuri">Yuri</option>
-            <option value="Josei">Josei</option>
-          </select>
+          }}/>
           <textarea ref={bookdescriptioninput} rows={2} className={styles.textarea} placeholder="Descrição"/>
 
           <input 

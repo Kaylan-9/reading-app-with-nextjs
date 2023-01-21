@@ -1,40 +1,21 @@
 import { Inter } from '@next/font/google';
 import styles from '../components/components.module.css';
 import { GetServerSideProps } from "next";
-import Article from '@/components/Article';
 import Header from '@/components/Header';
-import Aside from '@/components/Aside';
 import { Books, getAllBooks } from '@/lib/db';
-
+import Mangas from '@/components/lists/Mangas';
 const inter = Inter({ subsets: ['latin'] })
 
 export const getServerSideProps: GetServerSideProps = async ()  => {
   const books = await getAllBooks();
-   return {
-    props: {
-      books,
-    }
-   }
+   return {props: {books}}
 }
 
-interface PostProps {
-  books: Books[]
-}
-
-export default function Home({books} : PostProps) {
+export default function Home({books}: {books: Books[]}) {
   return (<>
     <Header/>
-    <Aside/>
     <main className={styles.main}>
-      <ul className={styles.list_mangas}>
-        {books.map((book: Books) => 
-          <Article 
-            title={book.title} 
-            path={book.path} 
-            images={book.imagepaths}
-          />
-        )}
-      </ul>
+      <Mangas books={books}/>
     </main>
   </>)
 }

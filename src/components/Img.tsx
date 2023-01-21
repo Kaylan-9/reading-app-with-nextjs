@@ -1,10 +1,8 @@
-import styles from "./components.module.css";
-import { css } from "@emotion/css";
-import testeImage from '../../public/teste.png'
 import styled from '@emotion/styled';
 
 interface ImageInterface {
-  url: string
+  id: string;
+  url: string;
 }
 
 const ImagesStyle = styled.div<{url: string}>`
@@ -16,10 +14,14 @@ const ImagesStyle = styled.div<{url: string}>`
   background-repeat: no-repeat !important;
   position: absolute;
   border-radius: 10px;
+  @media(max-width:700px) {
+    width: 180px !important;
+    min-height: 180px !important;
+  }
 `;
 
-export default function Image({url} : ImageInterface) {
-  return <li>
-    <ImagesStyle url={url} className={styles.image}/>
+export default function Image({id, url} : ImageInterface) {
+  return <li id={id}>
+    <ImagesStyle url={url}/>
   </li>
 }

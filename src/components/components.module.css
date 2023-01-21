@@ -1,119 +1,14 @@
 @import url("./components.module.css");
 
-.header {
-  background-color: #333333;
-}
-
-.header > ul {
-  display: flex;
-  justify-content: center;
-  gap: 50px;
-  align-items: center;
-}
-
-.header > ul > li > a {
-  text-decoration: none;
-  font-weight: bold;
-  font-family: var(--font-one);
-  font-size: 15px;
-  color: white;
-}
-
-.header > ul > li > a > .logoimg {
-  width: 80px;
-}
-
 .aside {
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
   padding: 10px;
   gap: 15px;
-  background-color: rgb(100, 100, 100);
-}
-
-.aside > .inputicon {
-  align-items: center;
-  display: flex;
-  gap: 10px;
-  font-size: 25px;
-}
-
-.aside > .inputicon > input {
-  border: none;
-  border-radius: 20px;
-  padding: 10px;
-  font-weight: bold;
-  font-family: var(--font-one);
   background-color: rgb(51, 51, 51);
-  color: white;
-  min-width: 250px;
-  outline: none;
 }
 
-.aside > .inputicon > svg > * {
-  color: rgb(51, 51, 51);
-}
-
-.title {
-  font-size: 18px;
-  font-family: var(--font-one);
-}
-
-.mangaarticle {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  row-gap: 30px;
-  min-width: 183px;
-  min-height: 163px;
-}
-
-.list_mangas {
-  display: flex;
-  flex-direction: row !important;
-  justify-content: space-between !important;
-  flex-wrap: wrap;
-  row-gap: 100px;
-  column-gap: 50px;
-  padding: 100px;
-  max-width: 1280px;
-  margin: 0 auto;
-}
-
-.imagelist {
-  display: flex;
-}
-
-.imagelist > li:nth-child(1) > .image {
-  transform: translateX(-14px) scale(.9)
-}
-.imagelist > li:nth-child(2) > .image {
-  transform: translateX(-55px) scale(1);
-  z-index: 5;
-}
-.imagelist > li:nth-child(3) > .image {
-  transform: translateX(-95px) scale(.95);
-}
-
-.mangaoptions {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-top: 100px;
-  gap: 5px;
-}
-
-.mangaoptions > li > button {
-  background-color: transparent;
-  border: none;
-  font-size: 18px;
-}
-
-.mangaoptions > li > button > svg * {
-  color: white;
-  stroke: white;
-}
 
 .abouttext > h2 {
   font-family: var(--font-one);
@@ -133,62 +28,12 @@
 
 
 @media(max-width:700px) {
-  .list_mangas {
-    padding: 75px 10px;
-    gap: 50px;
-    flex-direction: column !important;
-  }
-
-  .header > ul {
-    flex-wrap: wrap;
-  }
-
   .abouttext {
     padding: 10px;
   }
-
   .abouttext > p {
     min-width: 0px;
     margin: 10px;
-  }
-
-  .mangaarticle {
-    min-width: 233px;
-    min-height: 244px;
-  }
-
-  .image {
-    width: 180px !important;
-    min-height: 180px !important;
-  }
-
-  .mangaoptions {
-    gap: 50px;
-    margin-top: 180px;
-  }
-  
-  .mangaoptions > li > button {
-    font-size: 24px;
-  }
-
-  .imagelist > li:nth-child(1) > .image {
-    transform: translateX(-180px) scale(.9)
-  }
-  .imagelist > li:nth-child(2) > .image {
-    transform: translateX(-90px) scale(1);
-  }
-  .imagelist > li:nth-child(3) > .image {
-    transform: translateX(0px) scale(1);
-  }
-
-  .aside {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .aside > .inputicon {
-    display: grid;
-    grid-template-columns: min-content auto;
   }
 }
 
@@ -319,18 +164,6 @@ form > .inputlabel {
   padding: 20px;
   border-radius: 10px;
   grid-area: bookdescriptiontextarea;
-}
-
-.profilepage > main > div > form > select {
-  padding: 8px;
-  border-radius: 5px;
-  border: none;
-  grid-area: bookcategorieselect;
-  text-align: center;
-}
-
-.profilepage > main > div > form > select > option {
-  padding: 8px;
 }
 
 .profilepage > main > div > form > input[type="file"] {

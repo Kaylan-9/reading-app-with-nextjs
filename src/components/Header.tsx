@@ -1,8 +1,11 @@
 import { useContext } from "react";
 import Link from 'next/link';
-import styles from './components.module.css';
-import logoimg from '../../public/logo.png';
+import Image from 'next/image';
 import { SessionContext } from '@/contexts/SessionContext';
+import styled from "@emotion/styled";
+import { MdOutlineManageSearch } from "react-icons/md";
+import Select from "./Select";
+import { useRouter } from "next/router";
 
 type NavItemType = {
   name: string,
@@ -17,15 +20,89 @@ function NavItem({name, href}: NavItemType) {
   </li>);
 }
 
+const HeaderSt = styled.header`
+  align-items: center;
+  padding: 10px 25px;
+  display: grid;
+  grid-template-columns: 285px auto 285px;
+  grid-template-areas: 'inputicon headeritems bookcategorieselect';
+  background: rgb(29,27,27);
+  background: linear-gradient(180deg, #000000 50%, transparent 50%);
+  margin-bottom: 50px;
+  @media(max-width: 1100px) {
+    grid-template-columns: auto auto !important;
+    grid-template-areas: 
+      'headeritems headeritems'
+      'inputicon bookcategorieselect';
+  }
+  & > .items {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    align-items: center;
+    margin: 0 auto;
+    grid-area: headeritems;
+    @media(max-width:700px) {
+      flex-wrap: wrap;
+    }
+    & > li > a {
+      text-decoration: none;
+      font-weight: bold;
+      font-family: var(--font-one);
+      font-size: 15px;
+      color: white;
+    }
+  }
+  & > .inputicon {
+    align-items: center;
+    display: flex;
+    gap: 10px;
+    grid-area: inputicon;
+    font-size: 25px;
+    @media(max-width:700px) {
+      display: grid;
+      grid-template-columns: min-content auto;
+    }
+    & > input {
+      border: none;
+      border-radius: 20px;
+      padding: 10px;
+      font-weight: bold;
+      font-family: var(--font-one);
+      background-color: rgb(100, 100, 100);
+      color: white;
+      min-width: 250px;
+      outline: none;
+      &::-webkit-input-placeholder {
+        color: white;
+      }
+    }
+    & > svg > * {
+      color: rgb(100, 100, 100);
+    }
+  }
+`;
+
 export default function Header() {
   const { userSession } = useContext<any>(SessionContext);
-  return (<header className={styles.header}>
-    <ul>
+  const { asPath } = useRouter();
+
+  return (<HeaderSt>
+    {asPath==="/profile" ?
+      null :
+      <Select onChange={() => null}/>
+    }
+    <ul className="items">
       <NavItem name='home' href="/"/>
       <NavItem name='favoritos' href="favorites"/>
       <li>
         <Link href={`/`}>
-          <img className={styles.logoimg} src={logoimg.src} alt=""/>
+          <Image
+            src="/logo.png"
+            alt="logo do site" 
+            width={60}
+            height={60}
+          />
         </Link>
       </li>
       <NavItem name='about' href="about"/>
@@ -33,5 +110,9 @@ export default function Header() {
         (<NavItem name='profile' href="profile"/>) : 
         (<NavItem name='login' href="login"/>)}
     </ul>
-  </header>);
+    <div className="inputicon">
+      <MdOutlineManageSearch/>
+      <input type="text" name="" id="" placeholder='pesquisar por nome'/>
+    </div>
+  </HeaderSt>);
 }

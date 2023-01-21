@@ -31,3 +31,20 @@ ul {
 li {
   list-style-type: none;
 }
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+.title {
+  font-family: var(--font-one);
+}
+
+h2 {
+  display: flex !important;
+  align-items: center;
+  gap: 50px;
+  font-size: 30px;
+}
+h3 {font-size: 18px !important;}
