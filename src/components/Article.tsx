@@ -1,19 +1,20 @@
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import { GrFavorite } from "react-icons/gr";
 import { BiSpreadsheet } from "react-icons/bi";
 import styles from "./components.module.css";
 import Img from "./Img";
+import { Images } from "@/lib/db";
 
 interface ArticleInterface {
-  title: string
+  title: string;
+  path: string;
+  images: Images[];
 }
 
 type OptionType = {
   Icon: ReactNode,
   func: () => void,
 }
-
-const images: string[] = ["teste.png", "teste.png", "teste.png"];
 
 function Option({Icon} : OptionType) {
   return  (<li>
@@ -23,12 +24,19 @@ function Option({Icon} : OptionType) {
   </li>);
 }
 
-export default function Article({title} : ArticleInterface) {
+export default function Article({title, path, images} : ArticleInterface) {
   return <li>
     <article className={styles.mangaarticle}>
       <h2 className={styles.title}>{title}</h2>
       <ul className={styles.imagelist}>
-        {images.map((url, indice) => <Img key={url+indice} url={url}/>)}
+        {images?.map((img, indice) => {
+          if(indice<3) {
+            return <Img 
+              key={img.name+img.id} 
+              url={`/images/${path}/${img.name}.${img.type}`}
+            />
+          }
+        })}
       </ul>
       <ul className={styles.mangaoptions}>
         <Option Icon={<GrFavorite/>} func={()=>{}}/>

@@ -27,7 +27,11 @@ export interface Users {
 }
 
 export async function getAllBooks() {
-  const data = await prisma.books.findMany();
+  const data = await prisma.books.findMany({
+    include: {
+      imagepaths: true
+    }
+  });
   return data;
 }
 

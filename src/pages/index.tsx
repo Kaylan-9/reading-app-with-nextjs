@@ -27,14 +27,13 @@ export default function Home({books} : PostProps) {
     <Aside/>
     <main className={styles.main}>
       <ul className={styles.list_mangas}>
-        <Article title={`Manga title one`}/>
-        <Article title={`Manga title two`}/>
-        <Article title={`Manga title three`}/>
-        <Article title={`Manga title four`}/>
-        <Article title={`Manga title one`}/>
-        <Article title={`Manga title`}/>
-        <Article title={`Manga title one`}/>
-        <Article title={`Manga title two`}/>
+        {books.map((book: Books) => 
+          <Article 
+            title={book.title} 
+            path={book.path} 
+            images={book.imagepaths}
+          />
+        )}
       </ul>
     </main>
   </>)
