@@ -6,7 +6,12 @@ import { Books, getAllBooks } from '@/lib/db';
 import Mangas from '@/components/lists/Mangas';
 const inter = Inter({ subsets: ['latin'] })
 
-export const getServerSideProps: GetServerSideProps = async ()  => {
+export const getServerSideProps: GetServerSideProps = async ({ req, res })  => {
+  res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=5, stale-while-revalidate=50'
+  )
+
   const books = await getAllBooks();
    return {props: {books}}
 }

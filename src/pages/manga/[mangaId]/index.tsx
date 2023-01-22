@@ -5,6 +5,11 @@ import { GetServerSideProps } from 'next';
 import Image from 'next/image';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  context.res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=5, stale-while-revalidate=50'
+  )
+
   let { mangaId } = context.query;
   return {props: {
     bookData: typeof mangaId==="string" ? await getBook(Number(mangaId)) : null
