@@ -12,12 +12,25 @@ type NavItemType = {
   href: string,
 }
 
+const NavItemSt = styled.li`
+  & > button {
+    background-color: transparent;
+    cursor: pointer;
+    font-family: 'Roboto', sans-serif !important;
+    font-weight: bold;
+    border: none;
+    padding:0px;
+    color: white;
+  }
+`;
+
 function NavItem({name, href}: NavItemType) {
-  return (<li>
-    <Link href={`/${href}`}>
+  const router = useRouter();
+  return (<NavItemSt>
+    <button onClick={() => router.push(`/${href}`, undefined, { shallow: true })}>
       {name}
-    </Link>
-  </li>);
+    </button>
+  </NavItemSt>);
 }
 
 const HeaderSt = styled.header`
@@ -90,7 +103,7 @@ export default function Header() {
   return (<HeaderSt>
     {asPath==="/profile" ?
       null :
-      <Select onChange={() => null}/>
+      <Select optionCapture={(optionCategorie: string) => null}/>
     }
     <ul className="items">
       <NavItem name='home' href="/"/>

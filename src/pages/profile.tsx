@@ -62,9 +62,8 @@ export default function Profile() {
             placeholder="Nome do mangá ou HQ" 
             id="booknameinput"
           />
-          <Select onChange={(e: any) => {
-            const value = e.target.value
-            bookcategorieselect.current = value;
+          <Select optionCapture={(optionCategorie: string) => {
+            bookcategorieselect.current = optionCategorie;
           }}/>
           <textarea ref={bookdescriptioninput} rows={2} className={styles.textarea} placeholder="Descrição"/>
 

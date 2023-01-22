@@ -1,4 +1,4 @@
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 import { createContext, useReducer, ReactNode, useEffect, useCallback } from "react";
 
 export type UserDataType = {
@@ -42,6 +42,7 @@ export const sessionReducer = (state: any, action: any) => {
 export const SessionContext: any = createContext(initialValueSessionContext);
 
 export const SessionProvider = ({children}: {children: ReactNode}) => {
+  const router = useRouter();
   const [userSession, handleUserSession] = useReducer(sessionReducer, initialValueSessionContext.userSession);
   const areYouLoggedIn = useCallback(async () => {
     let getStorage: unknown | SessionInterface = sessionStorage.getItem("userdata");
@@ -57,6 +58,7 @@ export const SessionProvider = ({children}: {children: ReactNode}) => {
   }, []);
 
   const handleLogin = useCallback(async (body: UserDataType | any) => {
+    console.log(router)
     try {
       const reqParams = {
         method: 'POST',
@@ -68,7 +70,8 @@ export const SessionProvider = ({children}: {children: ReactNode}) => {
       if(userdata!=null) {
         sessionStorage.setItem("userdata", JSON.stringify(body));
         handleUserSession({type: "login", userdata: body}); 
-        Router.push("/");
+        if(router.asPath==="/login")
+          router.push("/");
       }
     } catch(error) {
       console.log(error);

@@ -35,6 +35,18 @@ export async function getAllBooks() {
   return data;
 }
 
+export async function getBook(id: number) {
+  const data = await prisma.books.findUnique({
+    where: {
+      id: id
+    },
+    include: {
+      imagepaths: true
+    }
+  });
+  return data;
+}
+
 export async function getAllUsers() {
   const data =await prisma.users.findMany();
   return data;
