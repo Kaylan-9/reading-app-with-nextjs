@@ -10,13 +10,13 @@ export default function Profile() {
   const booknameinput = useRef<HTMLInputElement>(null);
   const bookimagesinput = useRef<HTMLInputElement>(null);
   const bookdescriptioninput = useRef<HTMLTextAreaElement>(null);
-  const bookcategorieselect = useRef<string>("");
+  const bookcategoryselect = useRef<HTMLInputElement>(null);
   const handleAddBook = useCallback(async () => {
     const formData = new FormData();
     formData.append('bookpath', '');
     formData.append('bookname', booknameinput.current?.value ?? '');
     formData.append('bookdescription', bookdescriptioninput.current?.value ?? '');
-    formData.append('bookcategorie', bookcategorieselect.current);
+    formData.append('bookcategorie', bookcategoryselect.current?.value ?? '');
     
     const validFiles: File[] = [];
     for (let i = 0; i < newImages.length; i++) {
@@ -62,9 +62,7 @@ export default function Profile() {
             placeholder="Nome do mangá ou HQ" 
             id="booknameinput"
           />
-          <Select optionCapture={(optionCategorie: string) => {
-            bookcategorieselect.current = optionCategorie;
-          }}/>
+          <Select ref={bookcategoryselect}/>
           <textarea ref={bookdescriptioninput} rows={2} className={styles.textarea} placeholder="Descrição"/>
 
           <input 

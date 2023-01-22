@@ -1,10 +1,8 @@
-import { useContext } from "react";
+import { ReactNode, useContext } from "react";
 import Link from 'next/link';
 import Image from 'next/image';
 import { SessionContext } from '@/contexts/SessionContext';
 import styled from "@emotion/styled";
-import { MdOutlineManageSearch } from "react-icons/md";
-import Select from "./Select";
 import { useRouter } from "next/router";
 
 type NavItemType = {
@@ -38,7 +36,7 @@ const HeaderSt = styled.header`
   padding: 10px 25px;
   display: grid;
   grid-template-columns: 285px auto 285px;
-  grid-template-areas: 'inputicon headeritems bookcategorieselect';
+  grid-template-areas: 'inputicon headeritems bookcategoryselect';
   background: rgb(29,27,27);
   background: linear-gradient(180deg, #000000 50%, transparent 50%);
   margin-bottom: 50px;
@@ -46,7 +44,7 @@ const HeaderSt = styled.header`
     grid-template-columns: auto auto !important;
     grid-template-areas: 
       'headeritems headeritems'
-      'inputicon bookcategorieselect';
+      'inputicon bookcategoryselect';
   }
   & > .items {
     display: flex;
@@ -96,15 +94,15 @@ const HeaderSt = styled.header`
   }
 `;
 
-export default function Header() {
-  const { userSession } = useContext<any>(SessionContext);
-  const { asPath } = useRouter();
+interface HeaderInterface {
+  children?: ReactNode,
+  search?: any
+}
 
+export default function Header({children, search}: HeaderInterface) {
+  const { userSession } = useContext<any>(SessionContext);
   return (<HeaderSt>
-    {asPath==="/profile" ?
-      null :
-      <Select optionCapture={(optionCategorie: string) => null}/>
-    }
+    {children}
     <ul className="items">
       <NavItem name='home' href="/"/>
       <NavItem name='favoritos' href="favorites"/>
@@ -123,9 +121,6 @@ export default function Header() {
         (<NavItem name='profile' href="profile"/>) : 
         (<NavItem name='login' href="login"/>)}
     </ul>
-    <div className="inputicon">
-      <MdOutlineManageSearch/>
-      <input type="text" name="" id="" placeholder='pesquisar por nome'/>
-    </div>
+    {search}
   </HeaderSt>);
 }

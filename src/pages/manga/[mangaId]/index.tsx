@@ -27,13 +27,14 @@ const Presentation = styled.div`
   grid-template-rows: min-content min-content !important;
   grid-template-columns: min-content auto !important;
   grid-template-areas: 
-    'mangaoptions mangatitle'
-    'presentationimage mangadescription';
+    'mangaoptions mangatitle mangacategory'
+    'presentationimage mangadescription mangadescription';
   .presentationimage {
     border-radius: 15px;
     grid-area: presentationimage;
   }
   .title {grid-area: mangatitle}
+  .category {grid-area: mangacategory}
   .description {
     font-family: 'Roboto', sans-serif !important;
     font-size: 20px;
@@ -170,6 +171,7 @@ export default function Manga({bookData}: {bookData: Books | null}) {
             quality={50}
           />
           <h2 className='title'>{bookData?.title}</h2>
+          <h3 className='category'>{bookData?.categorie}</h3>
           <p className='description'>{bookData?.description}</p>
           <Options options={[
             {name: "read", Icon: <AiOutlineRead/>, onClick() {

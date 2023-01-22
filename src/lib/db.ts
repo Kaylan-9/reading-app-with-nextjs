@@ -47,6 +47,23 @@ export async function getBook(id: number) {
   return data;
 }
 
+export async function getBooks(title: string, category: string | false) {
+  type whereType = {
+    title?: string,
+    categorie?: string
+  }
+  let where: whereType = {}
+  if(typeof title==="string") where.title= title;
+  if(typeof category==="string") where.categorie = category;
+  const data = await prisma.books.findMany({
+    where: where,
+    include: {
+      imagepaths: true
+    }
+  });
+  return data;
+}
+
 export async function getAllUsers() {
   const data =await prisma.users.findMany();
   return data;

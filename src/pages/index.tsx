@@ -1,10 +1,11 @@
-import { Inter } from '@next/font/google';
 import styles from '../components/components.module.css';
 import { GetServerSideProps } from "next";
 import Header from '@/components/Header';
 import { Books, getAllBooks } from '@/lib/db';
 import Mangas from '@/components/lists/Mangas';
-const inter = Inter({ subsets: ['latin'] })
+import { useCallback, useRef, useState } from 'react';
+import Select from '@/components/Select';
+import { MdOutlineManageSearch } from 'react-icons/md';
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res })  => {
   res.setHeader(
@@ -17,10 +18,36 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res })  => {
 }
 
 export default function Home({books}: {books: Books[]}) {
+  const [ searchContent,  setSearchContent ] = useState<Books[] | false>(false);
+  const searchInput = useRef<HTMLInputElement>(null);
+  const categorySearchPicker = useRef<HTMLInputElement>(null);
+
   return (<>
-    <Header/>
+    <Header 
+      search={<div className="inputicon">
+        <MdOutlineManageSearch onClick={async () => {
+          const dataToDoSearch = JSON.stringify({
+            title: searchInput.current?.value==="" ? false : searchInput.current?.value,
+            category: categorySearchPicker.current?.value==="" ? false : categorySearchPicker.current?.value
+          });
+
+          console.log(dataToDoSearch);
+
+          const resultResearch = await fetch('/api/book/search', {
+            method: 'POST',
+            headers: {'Content-Type' : 'application/json'},
+            body: dataToDoSearch
+          });
+          const dataResearch = await resultResearch.json();
+          setSearchContent(dataResearch.research as Books[]);
+        }}/>
+        <input ref={searchInput} type="text" name="" id="" placeholder='pesquisar por nome'/>
+      </div>}
+    >
+      <Select ref={categorySearchPicker}/>
+    </Header>
     <main className={styles.main}>
-      <Mangas books={books}/>
+      <Mangas books={(!searchContent ? books : searchContent)}/>
     </main>
   </>)
 }

@@ -134,7 +134,7 @@ form > .inputlabel {
   grid-template-rows: repeat(3, auto);
   grid-template-areas: 
     'booknameinputandlabel bookdescriptiontextarea .'
-    'bookcategorieselect bookdescriptiontextarea addbookbutton'
+    'bookcategoryselect bookdescriptiontextarea addbookbutton'
     'selectedimages selectedimages selectedimages'
   ;
   gap: 20px;

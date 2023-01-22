@@ -1,18 +1,17 @@
 import styled from "@emotion/styled";
-import { useState } from "react";
+import { forwardRef, useState } from "react";
 import { IoIosArrowForward } from 'react-icons/io';
-
-interface SelectInterface {
-  optionCapture: unknown;
-}
 
 const SelectSt = styled.div`
   border-radius: 5px;
   border: none;
-  grid-area: bookcategorieselect;
+  grid-area: bookcategoryselect;
   text-align: center;
   background-color: #0c0c0c;
   border-radius: 15px;
+  > input[type=text] {
+    display: none;
+  }
   > #select-button, > .optionlist > .option {
     font-family: 'Roboto', sans-serif !important;
     cursor: pointer;
@@ -34,7 +33,7 @@ const SelectSt = styled.div`
   }
 `;
 
-export default function Select({optionCapture}: SelectInterface) {
+const Select = forwardRef<HTMLInputElement>(({}, ref) => {
   const [viewContent, setViewContent] = useState<boolean>(false);
   const [option, setOption] = useState<string>("");
   const categories: string[] = [
@@ -46,23 +45,24 @@ export default function Select({optionCapture}: SelectInterface) {
     "Josei"
   ];
 
-  return (<SelectSt className="categorie">
+  return (<SelectSt className="category">
     <div id="select-button" onClick={() => setViewContent(oldViewContent => !oldViewContent)}>
-      <span>categorie {option==="" ? "" : ":"+option}</span>
+      <span>category {option==="" ? "" : ":"+option}</span>
       <IoIosArrowForward/>
     </div>
+    <input type="text" ref={ref} defaultValue={option}/>
     {viewContent ?
-      <div className="optionlist">{categories?.map((categorie: string) => 
-        <div className="option" onClick={(optionCapture: unknown)=> {
-          setOption(categorie); 
-          setViewContent(oldViewContent => !oldViewContent);
-          if(typeof optionCapture==="function")
-            optionCapture(categorie)
-        }}>
-          {categorie}
+      <div className="optionlist">{categories?.map((category: string) => 
+        <div key={category} className="option" onClick={()=> [
+          setOption(category),
+          setViewContent(false)
+        ]}>
+          {category}
         </div>
       )}</div> :
       null
     }
   </SelectSt>);
-}
+});
+
+export default Select;
