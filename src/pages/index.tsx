@@ -13,7 +13,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res })  => {
   )
 
   const books = await getAllBooks();
-   return {props: {books}}
+  return {props: {books}}
 }
 
 export default function Home({books}: {books: Books[]}) {
