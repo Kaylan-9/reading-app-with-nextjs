@@ -3,7 +3,7 @@ import { Books, getBook, Images } from '@/lib/db';
 import styled from '@emotion/styled';
 import { GetServerSideProps } from 'next';
 import Image from 'next/image';
-import { useState, useRef, useEffect, ReactNode, MouseEventHandler } from "react";
+import { useState, useRef, useEffect, ReactNode } from "react";
 import { AiOutlineRead } from 'react-icons/ai';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
@@ -17,18 +17,25 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }};
 }
 
-const Presentation = styled.div`
+const Presentation = styled.div<{image: string}>`
   width: 100%;
   min-height: 350px;
   top: 20px;
   padding: 50px;
   display: grid;
-  gap: 50px;
+  column-gap: 50px;
+  row-gap: 10px;
   grid-template-rows: min-content min-content !important;
   grid-template-columns: min-content auto !important;
   grid-template-areas: 
-    'mangaoptions mangatitle mangacategory'
-    'presentationimage mangadescription mangadescription';
+    'mangaoptions mangatitle'
+    'mangaoptions mangacategory'
+    'presentationimage mangadescription';
+  background-image: linear-gradient(to right, black 25%, #00000076 100%), url(${({image}) => image});
+  background-size: cover;
+  > * {
+    font-family: 'Roboto', sans-serif !important;
+  }
   .presentationimage {
     border-radius: 15px;
     grid-area: presentationimage;
@@ -36,7 +43,6 @@ const Presentation = styled.div`
   .title {grid-area: mangatitle}
   .category {grid-area: mangacategory}
   .description {
-    font-family: 'Roboto', sans-serif !important;
     font-size: 20px;
     grid-area: mangadescription
   }
@@ -44,19 +50,7 @@ const Presentation = styled.div`
 
 const MangaContentSt = styled.div`
   background-color: black;
-  .imagelist {
-    box-sizing: border-box;
-    padding: 50px;
-    max-width: 1280px;
-    width: 100%;
-    display: grid;
-    gap: 20px;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    margin: 0 auto;
-    & > li > img {
-      border-radius: 10px;
-    }
-  }
+  color: white;
 `;
 
 type OptionsType = {
@@ -129,7 +123,6 @@ const Viewer = ({bookData, viewContent, setViewContent}: {bookData: Books | null
         if(typeof imagePositions?.left==='number' && typeof imagePositions?.right==='number')
           if(clientX < (imagePositions.left) || clientX > (imagePositions.right))
             setViewContent(false);
-        
       }
     }
   }}>
@@ -151,6 +144,17 @@ const Viewer = ({bookData, viewContent, setViewContent}: {bookData: Books | null
 
 export default function Manga({bookData}: {bookData: Books | null}) {
   const [viewContent, setViewContent] = useState<boolean>(false);
+  const [viewPosition, setViewPosition] = useState<number>(0);
+
+  useEffect(() => {
+    setTimeout(() => {
+      const numberPages = bookData?.imagepaths.length-1;
+      setViewPosition(currentViewPosition => {
+        return ((numberPages<=6 && currentViewPosition<numberPages) ? 
+          (currentViewPosition+1) : ((currentViewPosition<=6 && numberPages>6) ? (currentViewPosition+1) : 0));
+      });
+    }, 5000);
+  }, [viewPosition, setViewPosition]);
 
   return <>
     <Viewer 
@@ -161,7 +165,7 @@ export default function Manga({bookData}: {bookData: Books | null}) {
     <Header/>
     <MangaContentSt>
       {((bookData ?? false)!=false) ? (<>
-        <Presentation>
+        <Presentation image={`/images/${bookData?.path}/${bookData?.imagepaths[viewPosition].name}.${bookData?.imagepaths[viewPosition].type}`}>
           <Image 
             className='presentationimage'
             alt={`${bookData?.imagepaths[0].name}-0`}
@@ -179,19 +183,6 @@ export default function Manga({bookData}: {bookData: Books | null}) {
             },}
           ]}/>
         </Presentation>
-        <ul className='imagelist'>{bookData?.imagepaths.map((img: Images, indice: number) => {
-          if(indice > 0 && indice < 6)
-            return (<li>
-              <Image 
-                key={img.name+img.id} 
-                alt={`${img.name}-${indice}`}
-                src={`/images/${bookData.path}/${img.name}.${img.type}`}
-                width={200}
-                height={270}
-                quality={25}
-              />
-            </li>);
-        })}</ul>
       </>) :
         null      
       }

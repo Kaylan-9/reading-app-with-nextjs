@@ -19,6 +19,7 @@ const SelectSt = styled.div`
   .optionlist {
     margin-top: 10px;
     position: absolute;
+    z-index: 5;
     background-color: #0c0c0c;
     border-radius: 15px;
     .option {

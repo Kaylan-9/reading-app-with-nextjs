@@ -36,13 +36,16 @@ const HeaderSt = styled.header`
   padding: 10px 25px;
   display: grid;
   grid-template-columns: 285px auto 285px;
-  grid-template-areas: 'inputicon headeritems bookcategoryselect';
+  grid-template-areas: 
+    'adverts adverts adverts'
+    'inputicon headeritems bookcategoryselect';
   background: rgb(29,27,27);
-  background: linear-gradient(180deg, #000000 50%, transparent 50%);
+  background: linear-gradient(180deg, #000000 81%, transparent 81%);
   margin-bottom: 50px;
   @media(max-width: 1100px) {
     grid-template-columns: auto auto !important;
     grid-template-areas: 
+      'adverts adverts'
       'headeritems headeritems'
       'inputicon bookcategoryselect';
   }
@@ -64,6 +67,10 @@ const HeaderSt = styled.header`
       color: white;
     }
   }
+  & > .adverts {
+    grid-area: adverts;
+    min-height: 125px;
+  }
   & > .inputicon {
     align-items: center;
     display: flex;
@@ -76,11 +83,11 @@ const HeaderSt = styled.header`
     }
     & > input {
       border: none;
-      border-radius: 20px;
-      padding: 10px;
+      border-radius: 15px;
+      padding: 15px;
       font-weight: bold;
       font-family: var(--font-one);
-      background-color: rgb(100, 100, 100);
+      background-color: #0c0c0c;
       color: white;
       min-width: 250px;
       outline: none;
@@ -89,7 +96,7 @@ const HeaderSt = styled.header`
       }
     }
     & > svg > * {
-      color: rgb(100, 100, 100);
+      color: white;
     }
   }
 `;
@@ -102,6 +109,9 @@ interface HeaderInterface {
 export default function Header({children, search}: HeaderInterface) {
   const { userSession } = useContext<any>(SessionContext);
   return (<HeaderSt>
+    <div className='adverts'>
+
+    </div>
     {children}
     <ul className="items">
       <NavItem name='home' href="/"/>
