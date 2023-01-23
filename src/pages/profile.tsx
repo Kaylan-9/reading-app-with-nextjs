@@ -87,13 +87,12 @@ const MangaEdit = () => {
             images={book.imagepaths}
             options={[
               {Icon: <BiTrash/>, async func(id){
-                const dataToDoDelete = JSON.stringify({id});
-                const deleteResult = await fetch('/api/book/delete', {
+                const dataToDoDelete = JSON.stringify({id, path: book.path});
+                await fetch('/api/book/delete', {
                   method: 'DELETE',
                   headers: {'Content-Type' : 'application/json'},
                   body: dataToDoDelete
                 });
-                console.log(deleteResult);
                 router.push('/');
               }}
             ]}

@@ -1,5 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import { rmdir } from "fs/promises";
 import { deleteBook as deleteBookInDB } from "@/lib/db"; 
+import { join } from "path";
 
 export default async function deleteBook( 
   req: NextApiRequest,
@@ -7,8 +9,14 @@ export default async function deleteBook(
 ) {
   if (req.method === 'DELETE') {
     try {
-      const { id } = req.body;
+      const { id, path } = req.body;
+      const deleteDir = join(
+        process.env.ROOT_DIR || process.cwd(),
+        `/images/${path}`
+      );
+      
       await deleteBookInDB(id);
+      await rmdir(deleteDir, { recursive: true });
       return res.status(200).json({message: 'Success'})
     } catch(error) {
       console.log(error);

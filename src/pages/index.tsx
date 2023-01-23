@@ -11,7 +11,7 @@ import Head from 'next/head';
 export const getServerSideProps: GetServerSideProps = async ({ res })  => {
   res.setHeader(
     'Cache-Control',
-    'public, s-maxage=5, stale-while-revalidate=50'
+    'public, s-maxage=5, stale-while-revalidate=150'
   )
 
   const books = await getAllBooks();
