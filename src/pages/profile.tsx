@@ -241,7 +241,7 @@ export default function Profile() {
                   Clique e selecione as imagens desejadas
                 </label>
                 {filesDataURL.map((fileDataUrl: string) => {
-                  return (<li>
+                  return (<li key={fileDataUrl}>
                     <img src={fileDataUrl} alt="preview"/>
                   </li>)
                 })}
