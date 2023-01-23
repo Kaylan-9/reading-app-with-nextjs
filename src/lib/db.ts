@@ -83,11 +83,13 @@ export async function createBook(data: Prisma.BooksCreateInput) {
   }))
 }
 
-export async function deleteBook(data: Books) {
-  const {id} = data;
+export async function deleteBook(id: number) {
+  await prisma.images.deleteMany({
+    where: {idBook: id}
+  });
   await prisma.books.delete({
-    where: {id}
-  })
+    where: {id: id}
+  });
 }
 
 export async function getUser(data: Users) {

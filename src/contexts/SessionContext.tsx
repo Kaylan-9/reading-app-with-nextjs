@@ -49,8 +49,7 @@ export const SessionProvider = ({children}: {children: ReactNode}) => {
     if(typeof getStorage === 'string') {
       try {
         getStorage = JSON.parse(getStorage);
-        const result = handleLogin(getStorage);
-        console.log(result);
+        handleLogin(getStorage);
       } catch(error) {
         console.log(error);
       }
@@ -58,7 +57,6 @@ export const SessionProvider = ({children}: {children: ReactNode}) => {
   }, []);
 
   const handleLogin = useCallback(async (body: UserDataType | any) => {
-    console.log(router)
     try {
       const reqParams = {
         method: 'POST',

@@ -6,24 +6,18 @@ import { Images } from "@/lib/db";
 import styled from "@emotion/styled";
 import Link from "next/link";
 
+
+type OptionType = {
+  Icon: ReactNode,
+  func: (id: number) => void,
+}
+
 interface MangaInterface {
   id: number;
   title: string;
   path: string;
   images: Images[];
-}
-
-type OptionType = {
-  Icon: ReactNode,
-  func: () => void,
-}
-
-function Option({Icon} : OptionType) {
-  return  (<li>
-    <button>
-      {Icon}
-    </button>
-  </li>);
+  options: OptionType[];
 }
 
 const MangaSt = styled.article`
@@ -108,6 +102,7 @@ const MangaSt = styled.article`
     margin-top: 100px;
     gap: 5px;
     & > li > button {
+      cursor: pointer;
       background-color: transparent;
       border: none;
       font-size: 18px;
@@ -119,7 +114,7 @@ const MangaSt = styled.article`
   }
 `;
 
-export default function Manga({id, title, path, images} : MangaInterface) {
+export default function Manga({id, title, path, images, options} : MangaInterface) {
   return <li>
     <MangaSt>
       <Link href={`/manga/@${id}`}>
@@ -136,9 +131,17 @@ export default function Manga({id, title, path, images} : MangaInterface) {
           })}
         </ul>
       </Link>
-      <ul className="options">
-        <Option Icon={<GrFavorite/>} func={()=>{}}/>
+      <ul className="options"> 
+        {options.map((option) => (<li>
+          <button onClick={() => {
+            option.func(id);
+          }}>
+            {option.Icon}
+          </button>
+        </li>))}
       </ul>
     </MangaSt>
   </li>
 }
+
+

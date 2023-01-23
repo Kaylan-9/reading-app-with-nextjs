@@ -3,6 +3,7 @@ import { AiOutlineArrowDown, AiOutlineArrowUp } from 'react-icons/ai';
 import styled from '@emotion/styled';
 import Manga from "./Manga";
 import { useState } from 'react';
+import { GrFavorite } from 'react-icons/gr';
 
 const MangaList = styled.div`
   max-width: 1280px;
@@ -57,6 +58,9 @@ export default function Mangas({books}: {books: Books[]}) {
             title={book.title} 
             path={book.path} 
             images={book.imagepaths}
+            options={[
+              {Icon:<GrFavorite/>, func(){}}
+            ]}
           />
         )}
       </ul> :
