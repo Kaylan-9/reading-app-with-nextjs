@@ -122,7 +122,7 @@ const MangaSt = styled.article`
 export default function Manga({id, title, path, images} : MangaInterface) {
   return <li>
     <MangaSt>
-      <Link href={`/manga/${id}`}>
+      <Link href={`/manga/@${id}`}>
         <h3 className="title">{title}</h3>
         <ul className="imagelist">
           {images?.map((img, indice) => {
