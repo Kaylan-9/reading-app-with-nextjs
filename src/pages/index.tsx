@@ -6,8 +6,9 @@ import Mangas from '@/components/lists/Mangas';
 import { useCallback, useRef, useState } from 'react';
 import Select from '@/components/Select';
 import { MdOutlineManageSearch } from 'react-icons/md';
+import Head from 'next/head';
 
-export const getServerSideProps: GetServerSideProps = async ({ req, res })  => {
+export const getServerSideProps: GetServerSideProps = async ({ res })  => {
   res.setHeader(
     'Cache-Control',
     'public, s-maxage=5, stale-while-revalidate=50'
@@ -23,6 +24,9 @@ export default function Home({books}: {books: Books[]}) {
   const categorySearchPicker = useRef<HTMLInputElement>(null);
 
   return (<>
+    <Head>
+      <title>Reading App</title>
+    </Head>
     <Header 
       search={<div className="inputicon">
         <MdOutlineManageSearch onClick={async () => {
@@ -30,8 +34,6 @@ export default function Home({books}: {books: Books[]}) {
             title: searchInput.current?.value==="" ? false : searchInput.current?.value,
             category: categorySearchPicker.current?.value==="" ? false : categorySearchPicker.current?.value
           });
-
-          console.log(dataToDoSearch);
 
           const resultResearch = await fetch('/api/book/search', {
             method: 'POST',

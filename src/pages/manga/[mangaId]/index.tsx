@@ -2,6 +2,7 @@ import Header from '@/components/Header';
 import { Books, getBook, Images } from '@/lib/db';
 import styled from '@emotion/styled';
 import { GetServerSideProps } from 'next';
+import Head from 'next/head';
 import Image from 'next/image';
 import { useState, useRef, useEffect, ReactNode } from "react";
 import { AiOutlineRead } from 'react-icons/ai';
@@ -46,6 +47,8 @@ const Presentation = styled.div<{image: string}>`
   .category {grid-area: mangacategory}
   .description {
     font-size: 20px;
+    text-indent: 25px;
+    line-height: 45px;
     grid-area: mangadescription
   }
 `;
@@ -159,6 +162,9 @@ export default function Manga({bookData}: {bookData: Books | null}) {
   }, [viewPosition, setViewPosition]);
 
   return <>
+    <Head>
+      <title>{bookData?.title}</title>
+    </Head>
     <Viewer 
       bookData={bookData} 
       viewContent={viewContent}
