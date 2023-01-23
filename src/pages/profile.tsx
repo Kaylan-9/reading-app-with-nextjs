@@ -81,6 +81,7 @@ const MangaEdit = () => {
     <ul>
       {searchContent ? searchContent.map((book: Books) => 
           <Manga
+            key={book.id+book.title}
             id={book.id as number}
             title={book.title} 
             path={book.path} 

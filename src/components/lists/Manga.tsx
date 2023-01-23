@@ -132,8 +132,8 @@ export default function Manga({id, title, path, images, options} : MangaInterfac
         </ul>
       </Link>
       <ul className="options"> 
-        {options.map((option) => (<li>
-          <button onClick={() => {
+        {options.map((option, indice) => (<li>
+          <button key={indice} onClick={() => {
             option.func(id);
           }}>
             {option.Icon}

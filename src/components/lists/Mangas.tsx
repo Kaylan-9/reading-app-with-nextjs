@@ -52,8 +52,9 @@ export default function Mangas({books}: {books: Books[]}) {
     </h2>
     {viewContent ? 
       <ul>
-        {books.map((book: Books) => 
+        {books.map((book: Books, indice) => 
           <Manga
+            key={book.id+book.title}
             id={book.id as number}
             title={book.title} 
             path={book.path} 
