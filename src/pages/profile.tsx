@@ -2,7 +2,7 @@ import styles from '@/components/components.module.css';
 import Header from '@/components/Header';
 import InputLabel from '@/components/InputLabel';
 import Manga from '@/components/lists/Manga';
-import Select from '@/components/Select';
+import Select from '../components/Select';
 import { Books } from '@/lib/db';
 import { css } from '@emotion/css';
 import styled from '@emotion/styled';

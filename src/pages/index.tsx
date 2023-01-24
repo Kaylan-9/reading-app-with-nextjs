@@ -4,7 +4,7 @@ import Header from '@/components/Header';
 import { Books, getAllBooks } from '@/lib/db';
 import Mangas from '@/components/lists/Mangas';
 import { useCallback, useRef, useState } from 'react';
-import Select from '@/components/Select';
+import Select from '../components/Select';
 import { MdOutlineManageSearch } from 'react-icons/md';
 import Head from 'next/head';
 
