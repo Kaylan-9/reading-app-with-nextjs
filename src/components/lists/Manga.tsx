@@ -1,6 +1,4 @@
-import { ReactNode, useEffect } from "react";
-import { GrFavorite } from "react-icons/gr";
-import { BiSpreadsheet } from "react-icons/bi";
+import { ReactNode } from "react";
 import Img from "../Img";
 import { Images } from "@/lib/db";
 import styled from "@emotion/styled";
@@ -132,8 +130,8 @@ export default function Manga({id, title, path, images, options} : MangaInterfac
         </ul>
       </Link>
       <ul className="options"> 
-        {options.map((option, indice) => (<li>
-          <button key={indice} onClick={() => {
+        {options.map((option, indice) => (<li key={indice}>
+          <button onClick={() => {
             option.func(id);
           }}>
             {option.Icon}

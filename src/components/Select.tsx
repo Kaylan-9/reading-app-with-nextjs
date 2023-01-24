@@ -34,7 +34,7 @@ const SelectSt = styled.div`
   }
 `;
 
-const Select = forwardRef<HTMLInputElement>(({}, ref) => {
+export default forwardRef<HTMLInputElement>(({}, ref) => {
   const [viewContent, setViewContent] = useState<boolean>(false);
   const [option, setOption] = useState<string>("");
   const categories: string[] = [
@@ -65,5 +65,3 @@ const Select = forwardRef<HTMLInputElement>(({}, ref) => {
     }
   </SelectSt>);
 });
-
-export default Select;
