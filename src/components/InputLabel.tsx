@@ -7,9 +7,13 @@ type InputLabelType = {
   id?: string
 }
 
-export default forwardRef(({label, placeholder="", id=""}: InputLabelType, ref: any) => {
+const InputLabel = forwardRef(({label, placeholder="", id=""}: InputLabelType, ref: any) => {
   return (<div className={styles.inputlabel} id={id}>
     <label>{label}</label>
     <input type="text" placeholder={placeholder} ref={ref}/>
   </div>);
 });
+
+InputLabel.displayName = "InputLabel";
+
+export default InputLabel;

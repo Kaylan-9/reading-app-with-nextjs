@@ -2,7 +2,7 @@ import { useRef, useCallback, FormEvent, useContext, useEffect } from "react";
 import styles from "@/components/components.module.css";
 import Link from "next/link";
 import { SessionContext } from "@/contexts/SessionContext";
-import InputLabel from "@/components/InputLabel";
+import InputLabel from "../components/InputLabel";
 import Head from "next/head";
 
 export default function Login() {

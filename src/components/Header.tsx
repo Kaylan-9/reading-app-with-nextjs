@@ -114,8 +114,8 @@ export default function Header({children, search}: HeaderInterface) {
     </div>
     {children}
     <ul className="items">
-      <NavItem name='home' href="/"/>
-      <NavItem name='favoritos' href="favorites"/>
+      <NavItem name='home' href=""/>
+      <NavItem name='favoritos' href=""/>
       <li>
         <Link href={`/`}>
           <Image
