@@ -12,10 +12,9 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
-.env*.local
 .vercel
 KEY-BOOKCLOUD.json
+.env
 *.tsbuildinfo
 next-env.d.ts
 /public/teste.png
-.env
