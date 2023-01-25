@@ -123,7 +123,7 @@ export default function Manga({id, title, path, images, options} : MangaInterfac
               return <Img 
                 id={`image-${indice}`}
                 key={img.name+img.id} 
-                url={`/images/${path}/${img.name}.${img.type}`}
+                url={`https://storage.cloud.google.com/xyz2-book-page-image-data/${img.name}`}
               />
             }
           })}

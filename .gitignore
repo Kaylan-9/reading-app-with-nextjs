@@ -14,6 +14,7 @@ yarn-error.log*
 .pnpm-debug.log*
 .env*.local
 .vercel
+KEY-BOOKCLOUD.json
 *.tsbuildinfo
 next-env.d.ts
 /public/teste.png

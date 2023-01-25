@@ -3,7 +3,6 @@ import { Books, getBook, Images } from '@/lib/db';
 import styled from '@emotion/styled';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
-import Image from 'next/image';
 import { useState, useRef, useEffect, ReactNode } from "react";
 import { AiOutlineRead } from 'react-icons/ai';
 
@@ -42,6 +41,7 @@ const Presentation = styled.div<{image: string}>`
   .presentationimage {
     border-radius: 15px;
     grid-area: presentationimage;
+    width: 400px;
   }
   .title {grid-area: mangatitle}
   .category {grid-area: mangacategory}
@@ -173,14 +173,11 @@ export default function Manga({bookData}: {bookData: Books | null}) {
     <Header/>
     <MangaContentSt>
       {((bookData ?? false)!=false) ? (<>
-        <Presentation image={`/images/${bookData?.path}/${bookData?.imagepaths[viewPosition].name}.${bookData?.imagepaths[viewPosition].type}`}>
-          <Image 
+        <Presentation image={`https://storage.cloud.google.com/xyz2-book-page-image-data/${bookData?.imagepaths[viewPosition].name}`}>
+          <img
             className='presentationimage'
             alt={`${bookData?.imagepaths[0].name}-0`}
-            src={`/images/${bookData?.path}/${bookData?.imagepaths[0].name}.${bookData?.imagepaths[0].type}`}
-            width={300}
-            height={405}
-            quality={50}
+            src={`https://storage.cloud.google.com/xyz2-book-page-image-data/${bookData?.imagepaths[0].name}`}
           />
           <h2 className='title'>{bookData?.title}</h2>
           <h3 className='category'>{bookData?.categorie}</h3>

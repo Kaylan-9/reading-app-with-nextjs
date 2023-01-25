@@ -7,6 +7,7 @@ import { useCallback, useRef, useState } from 'react';
 import Select from '../components/Select';
 import { MdOutlineManageSearch } from 'react-icons/md';
 import Head from 'next/head';
+import * as gcs from '../lib/gcs'
 
 export const getServerSideProps: GetServerSideProps = async ({ res })  => {
   res.setHeader(
