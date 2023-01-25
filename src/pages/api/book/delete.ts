@@ -3,6 +3,12 @@ import { rmdir } from "fs/promises";
 import { deleteBook as deleteBookInDB } from "@/lib/db"; 
 import { join } from "path";
 
+export const config = {
+  api: {
+    bodyParser: true,
+  },
+};
+
 export default async function deleteBook( 
   req: NextApiRequest,
   res: NextApiResponse
@@ -24,9 +30,3 @@ export default async function deleteBook(
     }
   }
 }
-
-export const config = {
-  api: {
-    bodyParser: true,
-  },
-};

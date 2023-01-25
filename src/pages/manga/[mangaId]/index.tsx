@@ -141,7 +141,7 @@ const Viewer = ({bookData, viewContent, setViewContent}: {bookData: Books | null
         );
       })}
       alt={`${bookData?.imagepaths[pagePosition].name}-${pagePosition}`}
-      src={`/images/${bookData?.path}/${bookData?.imagepaths[pagePosition].name}.${bookData?.imagepaths[pagePosition].type}`}
+      src={`https://storage.cloud.google.com/xyz2-book-page-image-data/${bookData?.imagepaths[pagePosition].name}`}
     />
   </ViewerSt>) : 
   null);

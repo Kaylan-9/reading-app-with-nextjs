@@ -4,6 +4,12 @@ import { FormidableError, parseForm } from "@/lib/parse-form";
 import { createReadStream } from "fs";
 import type { NextApiRequest, NextApiResponse } from "next";
 
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
+
 export default async function createBook(
   req: NextApiRequest,
   res: NextApiResponse
@@ -56,9 +62,3 @@ export default async function createBook(
     }
   }
 }
-
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
