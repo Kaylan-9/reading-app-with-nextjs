@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
 
 :root {
-  --background: 25, 25, 25;
+  --background: 22, 22, 24;
   --foreground: 220, 220, 220;
   --font-one: 'Roboto', sans-serif;
 }
@@ -10,6 +10,13 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  font-family: var(--font-one);
+}
+
+form > * {
+  font-size: 15px;
+  font-weight: bold;
+  outline: none;
 }
 
 html,
@@ -42,9 +49,10 @@ a {
 }
 
 h2 {
-  display: flex !important;
-  align-items: center;
-  gap: 50px;
   font-size: 30px;
 }
 h3 {font-size: 18px !important;}
+
+input {
+  font-size: 15px;
+}

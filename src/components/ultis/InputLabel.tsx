@@ -1,0 +1,41 @@
+import { forwardRef } from "react";
+import styled from "@emotion/styled";
+
+interface InputLabelInterface {
+  label: string;
+  area: string;
+  placeholder?: string;
+}
+
+const InputLabelSt = styled.div<{area: string}>`
+  display: grid;
+  grid-template-columns: 50px auto;
+  align-items: center;
+  gap: 5px;
+  width: 100%;
+  grid-area: ${({area}) => area};
+  & > label {
+    font-weight: bold;
+    border: none;
+  }
+  & > input {
+    font-weight: bold;
+    background-color: #292929;
+    color: #ffffff;
+    padding: 15px;
+    border-radius: 30px;
+    border: none;
+    outline: none;
+  }
+`;
+
+const InputLabel = forwardRef(({label, placeholder="", area}: InputLabelInterface, ref: any) => {
+  return (<InputLabelSt area={area}>
+    <label>{label}</label>
+    <input type="text" placeholder={placeholder} ref={ref}/>
+  </InputLabelSt>);
+});
+
+InputLabel.displayName = "InputLabel";
+
+export default InputLabel;

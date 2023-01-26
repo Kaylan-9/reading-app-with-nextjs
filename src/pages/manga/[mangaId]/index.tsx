@@ -1,9 +1,10 @@
-import Header from '@/components/Header';
+import Header from '@/components/sections/Header';
 import { Books, getBook, Images } from '@/lib/db';
+import { css } from '@emotion/css';
 import styled from '@emotion/styled';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
-import { useState, useRef, useEffect, ReactNode } from "react";
+import { useState, useRef, useEffect, ReactNode, useCallback } from "react";
 import { AiOutlineRead } from 'react-icons/ai';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
@@ -41,7 +42,7 @@ const Presentation = styled.div<{image: string}>`
   .presentationimage {
     border-radius: 15px;
     grid-area: presentationimage;
-    width: 400px;
+    width: 250px;
   }
   .title {grid-area: mangatitle}
   .category {grid-area: mangacategory}
@@ -98,7 +99,7 @@ const Options = ({options}: OptionsType) => {
   </OptionsSt>);
 }
 
-const ViewerSt = styled.div`
+const ViewerSt = styled.ul`
   position: fixed;
   background-color: #000000ac;
   min-height: 100vh;
@@ -107,42 +108,53 @@ const ViewerSt = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  img {
+  & > li > img {
     max-height: calc(100vh - 100px);
+    min-height: calc(100vh - 100px);
   }
 `;
 
 const Viewer = ({bookData, viewContent, setViewContent}: {bookData: Books | null, viewContent: boolean, setViewContent: any}) => {
   const [pagePosition, setPagePosition] = useState<number>(0);
-  const imageEle = useRef<HTMLImageElement>(null);
+  const numberPages = bookData?.imagepaths.length-1;
+  const imagesEle = useRef<HTMLUListElement>(null);
+  const [mouseDown, setMouseDown] = useState<boolean>(false)
+  const [periodyActive, setPeriodyActive] = useState<boolean>(false)
+  const [moveTime, setMoveTime] = useState(0);
 
-  return (viewContent ? (<ViewerSt onClick={e => {
-    if(viewContent) {
-      type imagePositionsType = undefined | null | {
-        left: number | null,
-        right: number | null
-      };
-      const imagePositions: imagePositionsType = imageEle.current?.getBoundingClientRect();
-      if(imagePositions!==null) {
-        let { clientX } = e;
-        if(typeof imagePositions?.left==='number' && typeof imagePositions?.right==='number')
-          if(clientX < (imagePositions.left) || clientX > (imagePositions.right))
-            setViewContent(false);
-      }
+  const mouseActiveMove = useCallback(() => { 
+    setMoveTime(oldMoveTime => oldMoveTime+1);
+    // setPeriodyActive(oldPeriodyActive => !oldPeriodyActive);
+    setTimeout(() => {
+      setMoveTime(0);
+    }, moveTime);
+  }, [setMouseDown, moveTime, setMoveTime])
+
+
+  const movePage = useCallback(() => {
+    const currentRight = Number(imagesEle?.current?.style.right.split("px")[0]) ?? 0;
+    if(imagesEle.current !== null) {
+      imagesEle.current.style.right = `${currentRight+300}px`;
+      alert(currentRight)
     }
-  }}>
-    <img 
-      ref={imageEle}
-      onClick={(e: any) => setPagePosition((currentPagePosition: number) => { 
-        const numberPages = bookData?.imagepaths.length-1;
-        return (e.clientX > (window.innerWidth/2) ?
-          (currentPagePosition === numberPages ? 0 : currentPagePosition+1) : 
-          (currentPagePosition === 0 ? numberPages : currentPagePosition-1)
-        );
-      })}
-      alt={`${bookData?.imagepaths[pagePosition].name}-${pagePosition}`}
-      src={`https://storage.cloud.google.com/xyz2-book-page-image-data/${bookData?.imagepaths[pagePosition].name}`}
-    />
+  }, [])
+
+  return (viewContent ? (<ViewerSt ref={imagesEle} onClick={movePage} onMouseMove={mouseActiveMove}>
+    {bookData?.imagepaths.map((image: {name: string}, indice: number) => {
+      return (indice>=pagePosition || indice<=pagePosition+10 || (numberPages<10 && indice<=numberPages) ?
+        (<li key={image.name}>
+        <img 
+          onClick={(e: any) => setPagePosition((currentPagePosition: number) => { 
+            return (e.clientX > (window.innerWidth/2) ?
+              (currentPagePosition === numberPages ? 0 : currentPagePosition+1) : 
+              (currentPagePosition === 0 ? numberPages : currentPagePosition-1)
+            );
+          })}
+          alt={`${bookData?.imagepaths[pagePosition].name}-${pagePosition}`}
+          src={`https://storage.cloud.google.com/xyz2-book-page-image-data/${image.name}`}
+        />
+      </li>) : null);
+    })}
   </ViewerSt>) : 
   null);
 }

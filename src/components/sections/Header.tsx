@@ -24,11 +24,11 @@ const NavItemSt = styled.li`
 
 function NavItem({name, href}: NavItemType) {
   const router = useRouter();
-  return (<NavItemSt>
+  return (router.asPath!==`/${href}` ? (<NavItemSt>
     <button onClick={() => router.push(`/${href}`, undefined, { shallow: true })}>
       {name}
     </button>
-  </NavItemSt>);
+  </NavItemSt>) : null);
 }
 
 const HeaderSt = styled.header`
@@ -36,18 +36,21 @@ const HeaderSt = styled.header`
   padding: 10px 25px;
   display: grid;
   grid-template-columns: 285px auto 285px;
+  grid-template-rows:  125px auto;
   grid-template-areas: 
     'adverts adverts adverts'
     'inputicon headeritems bookcategoryselect';
-  background: rgb(29,27,27);
-  background: linear-gradient(180deg, #000000 81%, transparent 81%);
-  margin-bottom: 50px;
+  gap: 15px;
+  background-color: rgb(0, 0, 0);
+  box-shadow: 0px 0px 50px 1px rgba(0, 0, 0, 0.5);
   @media(max-width: 1100px) {
-    grid-template-columns: auto auto !important;
+    grid-template-columns: auto !important;
+    grid-template-rows: min-content auto auto auto;
     grid-template-areas: 
-      'adverts adverts'
-      'headeritems headeritems'
-      'inputicon bookcategoryselect';
+      'adverts'
+      'headeritems'
+      'bookcategoryselect'
+      'inputicon';
   }
   & > .items {
     display: flex;
@@ -69,25 +72,25 @@ const HeaderSt = styled.header`
   }
   & > .adverts {
     grid-area: adverts;
-    min-height: 125px;
   }
   & > .inputicon {
     align-items: center;
     display: flex;
-    gap: 10px;
     grid-area: inputicon;
     font-size: 25px;
+    border-radius: 30px;
+    background-color: #292929;
+    padding-left: 15px;
+    gap: 15px;
     @media(max-width:700px) {
       display: grid;
-      grid-template-columns: min-content auto;
+      grid-template-columns: auto auto;
     }
     & > input {
       border: none;
-      border-radius: 15px;
+      background-color: transparent;
       padding: 15px;
-      font-weight: bold;
       font-family: var(--font-one);
-      background-color: #0c0c0c;
       color: white;
       min-width: 250px;
       outline: none;
@@ -95,8 +98,11 @@ const HeaderSt = styled.header`
         color: white;
       }
     }
-    & > svg > * {
-      color: white;
+    & > svg {
+      min-width: 18px;
+      & > * {
+        color: white;
+      }
     }
   }
 `;
@@ -115,7 +121,6 @@ export default function Header({children, search}: HeaderInterface) {
     {children}
     <ul className="items">
       <NavItem name='home' href=""/>
-      <NavItem name='favoritos' href=""/>
       <li>
         <Link href={`/`}>
           <Image

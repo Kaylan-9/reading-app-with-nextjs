@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import Img from "../Img";
+import PresentationImg from "./PresentationImg";
 import { Images } from "@/lib/db";
 import styled from "@emotion/styled";
 import Link from "next/link";
@@ -23,72 +23,38 @@ const MangaSt = styled.article`
   flex-direction: column;
   align-items: center;
   row-gap: 20px;
-  min-width: 183px;
-  min-height: 163px;
-  @media(max-width:700px) {
-    min-width: 233px;
-    min-height: 244px;
-    & > .options {
-      gap: 50px;
-      margin-top: 180px !important;
-      & > li > button {
-        font-size: 24px;
-      }
-    }
-    & > a { 
-      & > .title {
-        margin-bottom: 0px;
-      }
-      & > .imagelist {
-        #image-0 {transform: translateX(-180px) scale(.9) !important}
-        #image-1 {transform: translate(-90px, -5px) scale(1) !important}
-        #image-2 {transform: translateX(0px) scale(.95) !important}
-        &:hover > #image-0, &:hover > #image-2 {transform: translateX(-90px) !important}
-      }
-    }
-  }
+  max-width: 261px;
   & > a {
     display: flex;
     flex-direction: column;
     align-items: center;
     & > .title {
-      font-size: 18px;
+      font-size: 18px !important;
       font-family: var(--font-one);
       margin-bottom: 15px;
     }
     & > .imagelist {
       #image-0 {
-        transform: translateX(0px) scale(.9);
+        transform: translateX(-130px) scale(.9) !important;
         transition: transform 300ms;
       }
       #image-1 {
-        transform: translate(-55px, -2.5px);
+        transform: translate(-70px, -7.5px) scale(1) !important;
         z-index: 5;
         position: relative;
         transition: transform 1s;
-        div {
-          transition: border-radius 3s;
-        }
       }
       #image-2 {
-        transform: translateX(-100px) scale(.95);
+        transform: translate(-5px, -3.75px) scale(.95) !important;
         transition: transform 500ms;
       }
-      #image-0 > div, #image-2 > div {
-        transition: transform 1s;
-      }
+      #image-0 > div, #image-2 > div {transition: transform 1s}
       &:hover {
         #image-0, #image-2 {
-          transform: translateX(-55px);
-          div {
-            transform: scale(.5);
-          }
+          transform: translate(-60px, -3.75px) scale(.95) !important;
         }
         #image-1 {
-          transform: translate(calc(-1.1 * 55px), -12.5px) scale(1.1);
-          div {
-            border-radius: 100%;
-          }
+          transform: translate(calc(-1.1 * 55px), -12.5px);
         }
       }
     }
@@ -97,7 +63,7 @@ const MangaSt = styled.article`
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-top: 100px;
+    margin-top: 125px;
     gap: 5px;
     & > li > button {
       cursor: pointer;
@@ -120,7 +86,7 @@ export default function Manga({id, title, path, images, options} : MangaInterfac
         <ul className="imagelist">
           {images?.map((img, indice) => {
             if(indice<3) {
-              return <Img 
+              return <PresentationImg 
                 id={`image-${indice}`}
                 key={img.name+img.id} 
                 url={`https://storage.cloud.google.com/xyz2-book-page-image-data/${img.name}`}

@@ -6,18 +6,14 @@ interface ImageInterface {
 }
 
 const ImagesStyle = styled.div<{url: string}>`
-  min-width: 110px;
-  min-height: 110px;
+  min-width: 140px;
+  min-height: 140px;
   background-image: url(${({url}) => url});
   background-position: center !important;
   background-size: 100% !important;
   background-repeat: no-repeat !important;
   position: absolute;
   border-radius: 10px;
-  @media(max-width:700px) {
-    width: 180px !important;
-    min-height: 180px !important;
-  }
 `;
 
 export default function Image({id, url} : ImageInterface) {

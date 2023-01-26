@@ -7,8 +7,8 @@ const SelectSt = styled.div`
   border: none;
   grid-area: bookcategoryselect;
   text-align: center;
-  background-color: #0c0c0c;
-  border-radius: 15px;
+  background-color: #292929;
+  border-radius: 30px;
   > input[type=text] {
     display: none;
   }
@@ -19,7 +19,7 @@ const SelectSt = styled.div`
   .optionlist {
     margin-top: 10px;
     position: absolute;
-    z-index: 5;
+    z-index: 6;
     background-color: #0c0c0c;
     border-radius: 15px;
     .option {

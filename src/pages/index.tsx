@@ -1,20 +1,17 @@
-import styles from '../components/components.module.css';
 import { GetServerSideProps } from "next";
-import Header from '@/components/Header';
+import Header from '@/components/sections/Header';
 import { Books, getAllBooks } from '@/lib/db';
-import Mangas from '@/components/lists/Mangas';
-import { useCallback, useRef, useState } from 'react';
-import Select from '../components/Select';
+import Mangas from '@/components/sections/lists/Mangas';
+import { useRef, useState } from 'react';
+import Select from '../components/ultis/Select';
 import { MdOutlineManageSearch } from 'react-icons/md';
 import Head from 'next/head';
-import * as gcs from '../lib/gcs'
 
 export const getServerSideProps: GetServerSideProps = async ({ res })  => {
   res.setHeader(
     'Cache-Control',
     'public, s-maxage=5, stale-while-revalidate=150'
-  )
-
+  );
   const books = await getAllBooks();
   return {props: {books}}
 }
@@ -49,7 +46,7 @@ export default function Home({books}: {books: Books[]}) {
     >
       <Select ref={categorySearchPicker}/>
     </Header>
-    <main className={styles.main}>
+    <main>
       <Mangas books={(!searchContent ? books : searchContent)}/>
     </main>
   </>)
