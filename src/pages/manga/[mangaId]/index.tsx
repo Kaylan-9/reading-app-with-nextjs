@@ -1,9 +1,9 @@
 import Header from '@/components/sections/Header';
-import { Books, getBook, Images } from '@/lib/db';
-import { css } from '@emotion/css';
+import { Books, getBook } from '@/lib/db';
 import styled from '@emotion/styled';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
+import { MouseEvent } from 'react';
 import { useState, useRef, useEffect, ReactNode, useCallback } from "react";
 import { AiOutlineRead } from 'react-icons/ai';
 
@@ -20,21 +20,20 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }};
 }
 
-const Presentation = styled.div<{image: string}>`
+const Presentation = styled.div`
   width: 100%;
   min-height: 350px;
   top: 20px;
   padding: 50px;
   display: grid;
-  column-gap: 50px;
-  row-gap: 10px;
+  gap: 25px;
   grid-template-rows: min-content min-content !important;
   grid-template-columns: min-content auto !important;
   grid-template-areas: 
-    'mangaoptions mangatitle'
-    'mangaoptions mangacategory'
-    'presentationimage mangadescription';
-  background-image: linear-gradient(to right, black 25%, #00000076 100%), url(${({image}) => image});
+    'mangatitle mangatitle'
+    'mangacategory mangadescription'
+    'presentationimage mangadescription'
+    'mangaoptions .';
   background-size: cover;
   > * {
     font-family: 'Roboto', sans-serif !important;
@@ -55,8 +54,10 @@ const Presentation = styled.div<{image: string}>`
 `;
 
 const MangaContentSt = styled.div`
-  background-color: black;
   color: white;
+  max-width: var(--max-width);
+  width: 100%;
+  margin: 0 auto;
 `;
 
 type OptionsType = {
@@ -104,13 +105,13 @@ const ViewerSt = styled.ul`
   background-color: #000000ac;
   min-height: 100vh;
   min-width: 100vw;
-  padding: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  padding-top: 50px;
+  transition: top 500ms;
   & > li > img {
+    position: relative;
     max-height: calc(100vh - 100px);
-    min-height: calc(100vh - 100px);
+    left: 50%;
+    transform: translateX(-50%);
   }
 `;
 
@@ -118,28 +119,60 @@ const Viewer = ({bookData, viewContent, setViewContent}: {bookData: Books | null
   const [pagePosition, setPagePosition] = useState<number>(0);
   const numberPages = bookData?.imagepaths.length-1;
   const imagesEle = useRef<HTMLUListElement>(null);
-  const [mouseDown, setMouseDown] = useState<boolean>(false)
-  const [periodyActive, setPeriodyActive] = useState<boolean>(false)
-  const [moveTime, setMoveTime] = useState(0);
-
-  const mouseActiveMove = useCallback(() => { 
-    setMoveTime(oldMoveTime => oldMoveTime+1);
-    // setPeriodyActive(oldPeriodyActive => !oldPeriodyActive);
-    setTimeout(() => {
-      setMoveTime(0);
-    }, moveTime);
-  }, [setMouseDown, moveTime, setMoveTime])
-
-
-  const movePage = useCallback(() => {
-    const currentRight = Number(imagesEle?.current?.style.right.split("px")[0]) ?? 0;
-    if(imagesEle.current !== null) {
-      imagesEle.current.style.right = `${currentRight+300}px`;
-      alert(currentRight)
+  const handleScroll = useCallback(async (e: WheelEvent)=> {
+    const {deltaY} = e;    
+    let scrollLimit = 4;
+    if(viewContent && imagesEle.current!==null && scrollLimit===4) {
+      let lockScroll = new Promise(async (resolve)=> resolve(''));
+      for(let i=0;i<=4;i++) {
+        let scroll = (100/((i+1)*1.5));        
+        scrollLimit--;
+        lockScroll = new Promise((resolve) => {
+          setTimeout(() => {
+            if(imagesEle.current!==null) {
+              let top: unknown = Number(imagesEle.current.style.top.replace(/px/, ''));
+              if(typeof top==='number') {  
+                let {height} = imagesEle.current?.getClientRects()[0];
+                const allImages = imagesEle.current?.querySelectorAll('img');
+                height = height - allImages[allImages.length-1].getClientRects()[0].height;
+                if(top>0 || (top*-1)>height) setViewContent(false);
+                const newTop = (deltaY>0 ? `${top-scroll}px` : `${top+scroll}px`);
+                imagesEle.current.style.top = newTop;
+                scrollLimit++;
+                resolve(false);
+              }
+            }
+          }, (200+(i**2*50)));      
+        });
+        await lockScroll;
+      }
     }
-  }, [])
+    
+  }, [imagesEle]);
+  const handleClick = useCallback((e: MouseEvent<HTMLUListElement>) => {
+    if(viewContent && imagesEle.current!==null) {
+      type imagePositionsType = undefined | null | {
+        left: number,
+        right: number
+      };
+      const imgObj = imagesEle.current.querySelectorAll('img');
+      const imgPositions: imagePositionsType = imgObj[imgObj.length-1].getBoundingClientRect();
+      const {clientX} = e;
+      if(
+        typeof imgPositions?.left==='number' && 
+        typeof imgPositions.right==='number' && 
+        (clientX < (imgPositions.left) || clientX > (imgPositions.right))
+      )
+        setViewContent(false);
+    }
+  }, [viewContent]);
 
-  return (viewContent ? (<ViewerSt ref={imagesEle} onClick={movePage} onMouseMove={mouseActiveMove}>
+  useEffect(() => {
+    imagesEle.current?.removeEventListener('wheel', handleScroll);
+    imagesEle.current?.addEventListener('wheel', handleScroll);
+  }, []);
+
+  return (<ViewerSt ref={imagesEle} onClick={handleClick}>
     {bookData?.imagepaths.map((image: {name: string}, indice: number) => {
       return (indice>=pagePosition || indice<=pagePosition+10 || (numberPages<10 && indice<=numberPages) ?
         (<li key={image.name}>
@@ -155,41 +188,30 @@ const Viewer = ({bookData, viewContent, setViewContent}: {bookData: Books | null
         />
       </li>) : null);
     })}
-  </ViewerSt>) : 
-  null);
+  </ViewerSt>);
 }
 
 export default function Manga({bookData}: {bookData: Books | null}) {
   const [viewContent, setViewContent] = useState<boolean>(false);
-  const [viewPosition, setViewPosition] = useState<number>(0);
-
-  useEffect(() => {
-    setTimeout(() => {
-      const numberPages = bookData?.imagepaths.length-1;
-      setViewPosition(currentViewPosition => {
-        return ((numberPages<=6 && currentViewPosition<numberPages) ? 
-          (currentViewPosition+1) : ((currentViewPosition<=6 && numberPages>6) ? (currentViewPosition+1) : 0));
-      });
-    }, 5000);
-  }, [viewPosition, setViewPosition]);
 
   return <>
     <Head>
       <title>{bookData?.title}</title>
     </Head>
-    <Viewer 
+    {viewContent ? <Viewer
+      viewContent={viewContent} 
       bookData={bookData} 
-      viewContent={viewContent}
       setViewContent={setViewContent}
-    />
+    />: null }
     <Header/>
     <MangaContentSt>
       {((bookData ?? false)!=false) ? (<>
-        <Presentation image={`https://storage.cloud.google.com/xyz2-book-page-image-data/${bookData?.imagepaths[viewPosition].name}`}>
+        <Presentation>
           <img
             className='presentationimage'
             alt={`${bookData?.imagepaths[0].name}-0`}
             src={`https://storage.cloud.google.com/xyz2-book-page-image-data/${bookData?.imagepaths[0].name}`}
+            onClick={()=>setViewContent(true)}
           />
           <h2 className='title'>{bookData?.title}</h2>
           <h3 className='category'>{bookData?.categorie}</h3>

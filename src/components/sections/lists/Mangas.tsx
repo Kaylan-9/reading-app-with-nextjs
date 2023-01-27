@@ -7,7 +7,7 @@ import { GrFavorite } from 'react-icons/gr';
 import { MdOutlineFavorite } from 'react-icons/md';
 
 const MangaList = styled.div`
-  max-width: 1600px;
+  max-width: var(--max-width);
   width: 100%;
   padding: 0 100px;
   display: flex;
