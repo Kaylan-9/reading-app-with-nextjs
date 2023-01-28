@@ -4,6 +4,7 @@ import styled from "@emotion/styled";
 interface InputLabelInterface {
   label: string;
   area: string;
+  type?: string;
   placeholder?: string;
 }
 
@@ -29,10 +30,10 @@ const InputLabelSt = styled.div<{area: string}>`
   }
 `;
 
-const InputLabel = forwardRef(({label, placeholder="", area}: InputLabelInterface, ref: any) => {
+const InputLabel = forwardRef(({label, type="text", placeholder="", area}: InputLabelInterface, ref: any) => {
   return (<InputLabelSt area={area}>
     <label>{label}</label>
-    <input type="text" placeholder={placeholder} ref={ref}/>
+    <input type={type} placeholder={placeholder} ref={ref}/>
   </InputLabelSt>);
 });
 

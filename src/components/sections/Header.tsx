@@ -1,13 +1,17 @@
-import { ReactNode, useContext } from "react";
+import { ReactNode, useContext, useState } from "react";
 import Link from 'next/link';
 import Image from 'next/image';
 import { SessionContext } from '@/contexts/SessionContext';
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
+import Login from "./Login";
+import ProfileAccess from "./ProfileAccess";
+import { css } from "@emotion/css";
 
 type NavItemType = {
   name: string,
-  href: string,
+  href?: string | false,
+  onClick?: () => void,
 }
 
 const NavItemSt = styled.li`
@@ -22,10 +26,13 @@ const NavItemSt = styled.li`
   }
 `;
 
-function NavItem({name, href}: NavItemType) {
+function NavItem({name, href=false, onClick}: NavItemType) {
   const router = useRouter();
   return (router.asPath!==`/${href}` ? (<NavItemSt>
-    <button onClick={() => router.push(`/${href}`, undefined, { shallow: true })}>
+    <button onClick={href || onClick===undefined ? 
+      () => router.push(`/${href}`, undefined, { shallow: true }) :
+      onClick
+    }>
       {name}
     </button>
   </NavItemSt>) : null);
@@ -35,26 +42,28 @@ const HeaderSt = styled.header`
   align-items: center;
   padding: 10px 25px;
   display: grid;
-  grid-template-columns: 285px auto 285px;
-  grid-template-rows:  125px auto;
+  grid-template-columns: 60px auto 60px !important;
+  grid-template-rows: 125px auto;
   grid-template-areas: 
     'adverts adverts adverts'
-    'inputicon headeritems bookcategoryselect';
-  gap: 15px;
+    'logotipo headeritems .'
+    'search search search';
+  row-gap: 15px;
   background-color: rgb(0, 0, 0);
   box-shadow: 0px 0px 50px 1px rgba(0, 0, 0, 0.5);
   @media(max-width: 1100px) {
-    grid-template-columns: auto !important;
+    grid-template-columns: min-content auto !important;
     grid-template-rows: min-content auto auto auto;
     grid-template-areas: 
       'adverts'
       'headeritems'
-      'bookcategoryselect'
-      'inputicon';
+      'search';
+  }
+  & > .logotipo {
+    grid-area: logotipo;
   }
   & > .items {
     display: flex;
-    justify-content: center;
     gap: 50px;
     align-items: center;
     margin: 0 auto;
@@ -73,35 +82,42 @@ const HeaderSt = styled.header`
   & > .adverts {
     grid-area: adverts;
   }
-  & > .inputicon {
-    align-items: center;
+  & > .search {
     display: flex;
-    grid-area: inputicon;
-    font-size: 25px;
-    border-radius: 30px;
-    background-color: #292929;
-    padding-left: 15px;
-    gap: 15px;
-    @media(max-width:700px) {
-      display: grid;
-      grid-template-columns: auto auto;
-    }
-    & > input {
-      border: none;
-      background-color: transparent;
-      padding: 15px;
-      font-family: var(--font-one);
-      color: white;
-      min-width: 250px;
-      outline: none;
-      &::-webkit-input-placeholder {
-        color: white;
+    justify-content: center;
+    gap: 25px;
+    align-items: center;
+    grid-area: search;
+    & > .inputicon {
+      align-items: center;
+      display: flex;
+      grid-area: inputicon;
+      font-size: 25px;
+      border-radius: 30px;
+      background-color: #292929;
+      padding-left: 15px;
+      gap: 15px;
+      @media(max-width:700px) {
+        display: grid;
+        grid-template-columns: auto auto;
       }
-    }
-    & > svg {
-      min-width: 18px;
-      & > * {
+      & > input {
+        border: none;
+        background-color: transparent;
+        padding: 15px;
+        font-family: var(--font-one);
         color: white;
+        min-width: 250px;
+        outline: none;
+        &::-webkit-input-placeholder {
+          color: white;
+        }
+      }
+      & > svg {
+        min-width: 18px;
+        & > * {
+          color: white;
+        }
       }
     }
   }
@@ -114,28 +130,36 @@ interface HeaderInterface {
 
 export default function Header({children, search}: HeaderInterface) {
   const { userSession } = useContext<any>(SessionContext);
-  return (<HeaderSt>
-    <div className='adverts'>
+  const [ activeLogin, setActiveLogin  ] = useState<boolean>(false);
+  return (<>
+    {(activeLogin ? (<Login setActiveLogin={setActiveLogin}/>) : null)}
+    <HeaderSt>
+      <div className='adverts'>
 
-    </div>
-    {children}
-    <ul className="items">
-      <NavItem name='home' href=""/>
-      <li>
-        <Link href={`/`}>
-          <Image
-            src="/logo.png"
-            alt="logo do site" 
-            width={60}
-            height={60}
-          />
-        </Link>
-      </li>
-      <NavItem name='about' href="about"/>
-      {userSession.isLoggedIn ? 
-        (<NavItem name='profile' href="profile"/>) : 
-        (<NavItem name='login' href="login"/>)}
-    </ul>
-    {search}
-  </HeaderSt>);
+      </div>
+      
+      <Link className='logotipo' href={`/`}>
+        <Image
+          src="/logo.png"
+          alt="logo do site" 
+          width={60}
+          height={60}
+        />
+      </Link>
+
+      <ul className="items">
+        <NavItem name='home' href=""/>
+        <NavItem name='about' href="about"/>
+        {userSession.isLoggedIn ? 
+          (<ProfileAccess imagelink=''/>) : 
+          (<NavItem name='login' onClick={() => {
+            setActiveLogin(true);
+          }}/>)}
+      </ul>
+      <div className='search'>
+        {search}
+        {children}
+      </div>
+    </HeaderSt>
+  </>);
 }
