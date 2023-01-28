@@ -38,19 +38,41 @@ function NavItem({name, href=false, onClick}: NavItemType) {
   </NavItemSt>) : null);
 }
 
+
+const Items = styled.ul`
+  display: flex;
+  gap: 50px;
+  align-items: center;
+  margin: 0 auto;
+  grid-area: headeritems;
+  padding: 12.5px 25px;
+  @media(max-width:700px) {
+    flex-wrap: wrap;
+  }
+  & > li > a {
+    text-decoration: none;
+    font-weight: bold;
+    font-family: var(--font-one);
+    font-size: 15px;
+    color: white;
+  }
+`;
+
 const HeaderSt = styled.header`
   align-items: center;
-  padding: 10px 25px;
+  padding: 0 150px;
   display: grid;
-  grid-template-columns: 60px auto 60px !important;
-  grid-template-rows: 125px auto;
+  grid-template-columns: repeat(2, auto) !important;
+  grid-template-rows: 125px 60px auto;
   grid-template-areas: 
-    'adverts adverts adverts'
-    'logotipo headeritems .'
-    'search search search';
+    'adverts adverts'
+    '. .'
+    'headeritems search'
+  ;
   row-gap: 15px;
-  background-color: rgb(0, 0, 0);
+  background-color: rgb(22, 22, 22);
   box-shadow: 0px 0px 50px 1px rgba(0, 0, 0, 0.5);
+  padding-bottom: 25px;
   @media(max-width: 1100px) {
     grid-template-columns: min-content auto !important;
     grid-template-rows: min-content auto auto auto;
@@ -61,23 +83,9 @@ const HeaderSt = styled.header`
   }
   & > .logotipo {
     grid-area: logotipo;
-  }
-  & > .items {
-    display: flex;
-    gap: 50px;
-    align-items: center;
-    margin: 0 auto;
-    grid-area: headeritems;
-    @media(max-width:700px) {
-      flex-wrap: wrap;
-    }
-    & > li > a {
-      text-decoration: none;
-      font-weight: bold;
-      font-family: var(--font-one);
-      font-size: 15px;
-      color: white;
-    }
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 40px);
   }
   & > .adverts {
     grid-area: adverts;
@@ -147,7 +155,7 @@ export default function Header({children, search}: HeaderInterface) {
         />
       </Link>
 
-      <ul className="items">
+      <Items>
         <NavItem name='home' href=""/>
         <NavItem name='about' href="about"/>
         {userSession.isLoggedIn ? 
@@ -155,7 +163,7 @@ export default function Header({children, search}: HeaderInterface) {
           (<NavItem name='login' onClick={() => {
             setActiveLogin(true);
           }}/>)}
-      </ul>
+      </Items>
       <div className='search'>
         {search}
         {children}

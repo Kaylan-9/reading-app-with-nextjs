@@ -1,9 +1,11 @@
 import Header from '@/components/sections/Header';
+import { Message } from '@/components/ultis/Message';
+import { ModalContext } from '@/contexts/ModalContext';
 import { Books, getBook } from '@/lib/db';
 import styled from '@emotion/styled';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
-import { MouseEvent } from 'react';
+import { MouseEvent, useContext } from 'react';
 import { useState, useRef, useEffect, ReactNode, useCallback } from "react";
 import { AiOutlineRead } from 'react-icons/ai';
 
@@ -116,6 +118,7 @@ const ViewerSt = styled.ul`
 `;
 
 const Viewer = ({bookData, viewContent, setViewContent}: {bookData: Books | null, viewContent: boolean, setViewContent: any}) => {
+  const { handleModal } = useContext(ModalContext);
   const [pagePosition, setPagePosition] = useState<number>(0);
   const numberPages = bookData?.imagepaths.length-1;
   const imagesEle = useRef<HTMLUListElement>(null);
@@ -135,6 +138,9 @@ const Viewer = ({bookData, viewContent, setViewContent}: {bookData: Books | null
                 let {height} = imagesEle.current?.getClientRects()[0];
                 const allImages = imagesEle.current?.querySelectorAll('img');
                 height = height - allImages[allImages.length-1].getClientRects()[0].height;
+                if((top*-1)>height) {
+                  handleModal({type: 'add', newModal: {message: (<Message text={`🎉😋 Parabéns Mangá (${bookData?.title}) terminado 📚📕📖`}/>)}})
+                }
                 if(top>0 || (top*-1)>height) setViewContent(false);
                 const newTop = (deltaY>0 ? `${top-scroll}px` : `${top+scroll}px`);
                 imagesEle.current.style.top = newTop;
@@ -177,7 +183,7 @@ const Viewer = ({bookData, viewContent, setViewContent}: {bookData: Books | null
       return (indice>=pagePosition || indice<=pagePosition+10 || (numberPages<10 && indice<=numberPages) ?
         (<li key={image.name}>
         <img 
-          onClick={(e: any) => setPagePosition((currentPagePosition: number) => { 
+          onClick={(e: MouseEvent) => setPagePosition((currentPagePosition: number) => { 
             return (e.clientX > (window.innerWidth/2) ?
               (currentPagePosition === numberPages ? 0 : currentPagePosition+1) : 
               (currentPagePosition === 0 ? numberPages : currentPagePosition-1)

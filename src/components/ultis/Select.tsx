@@ -20,7 +20,7 @@ const SelectSt = styled.div`
     margin-top: 10px;
     position: absolute;
     z-index: 6;
-    background-color: #0c0c0c;
+    background-color: #292929;
     border-radius: 15px;
     .option {
       padding: 15px 35px;

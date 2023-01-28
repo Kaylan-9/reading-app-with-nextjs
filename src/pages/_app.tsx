@@ -1,3 +1,4 @@
+import ModalProvider from '@/contexts/ModalContext';
 import { SessionProvider } from '@/contexts/SessionContext';
 import '../app/globals.css';
 
@@ -7,7 +8,9 @@ interface MyAppInterface {
 }
 
 export default function MyApp({ Component, pageProps }: MyAppInterface) {
-  return <SessionProvider>
-    <Component {...pageProps} />
-  </SessionProvider>;
+  return (<SessionProvider>
+    <ModalProvider>
+      <Component {...pageProps} />
+    </ModalProvider>
+  </SessionProvider>);
 }
