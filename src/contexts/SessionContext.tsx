@@ -1,5 +1,7 @@
+import { css } from "@emotion/css";
 import Router, { useRouter } from "next/router";
-import { createContext, useReducer, ReactNode, useEffect, useCallback } from "react";
+import { createContext, useReducer, ReactNode, useEffect, useCallback, useContext } from "react";
+import { ModalContext } from "./ModalContext";
 
 export type UserDataType = {
   name: string,
@@ -44,6 +46,7 @@ export const sessionReducer = (state: any, action: any) => {
 export const SessionContext: any = createContext(initialValueSessionContext);
 
 export const SessionProvider = ({children}: {children: ReactNode}) => {
+  const {handleModal} = useContext(ModalContext);
   const [userSession, handleUserSession] = useReducer(sessionReducer, initialValueSessionContext.userSession);
   const areYouLoggedIn = useCallback(async () => {
     let getStorage: string | null | SessionInterface = sessionStorage.getItem("userdata");
@@ -70,13 +73,18 @@ export const SessionProvider = ({children}: {children: ReactNode}) => {
 
       console.log(userdata);
       if(userdata!==null) {
+        handleModal({type: 'add', newModal: {message: '😈👽🤖 Logado com sucesso!!'}});
         sessionStorage.setItem("userdata", JSON.stringify(body));
         handleUserSession({type: "login", userdata: body}); 
+      } else {
+        handleModal({type: 'add', newModal: {message: '😑 Usuário não encontrado!?'}});
       }
     } catch(error) {
-      console.log(error);
+      handleModal({type: 'add', newModal: {message: (
+        <p className={css`color: #ff0040;`}>😈👽🤖 @Falha ao logar !</p>
+      )}});
     }
-  }, [handleUserSession]);
+  }, [handleUserSession, handleModal]);
 
   useEffect(() => {
     areYouLoggedIn();
@@ -87,6 +95,7 @@ export const SessionProvider = ({children}: {children: ReactNode}) => {
       if(userSession.userdata!==null) {
         sessionStorage.removeItem("userdata");
         handleUserSession({type: "logout"}); 
+        handleModal({type: 'add', newModal: {message: '🔒 Usuário desconectado!?'}});
       }
     } catch(error) {
       console.log(error);

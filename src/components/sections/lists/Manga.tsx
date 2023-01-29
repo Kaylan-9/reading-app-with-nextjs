@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import PresentationImg from "./PresentationImg";
-import { Images } from "@/lib/db";
+import { Images } from "@/lib/db/db";
 import styled from "@emotion/styled";
 import Link from "next/link";
 
@@ -23,7 +23,7 @@ const MangaSt = styled.article`
   flex-direction: column;
   align-items: center;
   row-gap: 20px;
-  max-width: 261px;
+  max-width: 200px;
   & > a {
     display: flex;
     flex-direction: column;
@@ -34,26 +34,26 @@ const MangaSt = styled.article`
       margin-bottom: 15px;
     }
     & > .imagelist {
-      #image-0 {
-        transform: translateX(-130px) scale(.9) !important;
+      #image-1 {
+        transform: translateX(-100px) scale(.9) !important;
         transition: transform 300ms;
       }
-      #image-1 {
+      #image-0 {
         transform: translate(-70px, -7.5px) scale(1) !important;
         z-index: 5;
         position: relative;
         transition: transform 1s;
       }
       #image-2 {
-        transform: translate(-5px, -3.75px) scale(.95) !important;
+        transform: translate(-35px, -3.75px) scale(.95) !important;
         transition: transform 500ms;
       }
-      #image-0 > div, #image-2 > div {transition: transform 1s}
+      #image-1 > div, #image-2 > div {transition: transform 1s}
       &:hover {
-        #image-0, #image-2 {
+        #image-1, #image-2 {
           transform: translate(-60px, -3.75px) scale(.95) !important;
         }
-        #image-1 {
+        #image-0 {
           transform: translate(calc(-1.1 * 55px), -12.5px);
         }
       }
@@ -63,7 +63,7 @@ const MangaSt = styled.article`
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-top: 125px;
+    margin-top: 190px;
     gap: 5px;
     & > li > button {
       cursor: pointer;

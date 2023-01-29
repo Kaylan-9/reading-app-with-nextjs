@@ -2,8 +2,8 @@ import { Modals } from "@/components/sections/Modals";
 import { createContext, ReactNode, useReducer, use } from "react";
 
 export type TModal = {
-  id?: number,
-  message: string | ReactNode,
+  id?: number | string,
+  message: string | ReactNode | any,
   time?: number,
   function?: () => void
 };
@@ -23,15 +23,11 @@ export interface IPropsModal {
   handleModal: any;
 };
 const initialValueModalReducer: IModalReducerState = {
-  modals: [{
-    id: 0,
-    message: 'iniciando aplicação 🐲👹🐇',
-    time: 9000,
-    function () {}
-  }]
+  modals: []
 };
 
 export function modalReducer(state: IModalReducerState, action: IModalReducerAction): IModalReducerState {
+  console.log(action);
   const { type } = action;
   const { modals } = state;
   if(type==='reset')
@@ -39,14 +35,15 @@ export function modalReducer(state: IModalReducerState, action: IModalReducerAct
   else if(type==='add') {
     const { newModal } = action;
     return (
-      newModal!==undefined ? 
-      {modals: [...modals, {
-        ...newModal, 
-        id: modals.length,
-        time: 10000,
-        function() {}
-      }]}: 
-      state
+      newModal!==undefined && 
+      (newModal.id===undefined || (newModal.id!==undefined && !modals.map((modal: IModal) => modal.id).includes(newModal.id))) ?
+        {modals: [...modals, {
+          id: (newModal.id===undefined ? modals.length : newModal.id),
+          time: 10000,
+          function() {},
+          ...newModal, 
+        }]}:
+      state 
     );
   } else if(type==='remove') {
     const { id } = action;

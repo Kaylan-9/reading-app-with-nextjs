@@ -8,9 +8,9 @@ interface MyAppInterface {
 }
 
 export default function MyApp({ Component, pageProps }: MyAppInterface) {
-  return (<SessionProvider>
-    <ModalProvider>
+  return (<ModalProvider>
+    <SessionProvider>
       <Component {...pageProps} />
-    </ModalProvider>
-  </SessionProvider>);
+    </SessionProvider>
+  </ModalProvider>);
 }

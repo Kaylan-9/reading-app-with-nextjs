@@ -24,12 +24,25 @@ model Books {
   imagepaths  Images[] @relation("BookImages")
   path        String @db.Text
   description String @db.Text
-  categorie   String @db.Text
+  categorie   Categories @relation(fields: [idCategory], references: [id])
+  user        Users @relation(fields: [idUser], references: [id])
+  idCategory  Int  @unique
+  idUser      Int
+  @@index([idUser])
+}
+
+model Categories {
+  id          Int    @id @default(autoincrement()) 
+  name        String @db.Text
+  book        Books?
 }
 
 model Users {
   id          Int    @id @default(autoincrement())
+  photo       String @db.Text
   name        String @db.Text
   email       String @db.Text
   password    String @db.Text
+  permision   Int    @db.Int
+  book        Books[]
 }

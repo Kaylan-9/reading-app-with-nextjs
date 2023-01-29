@@ -1,11 +1,13 @@
 import { GetServerSideProps } from "next";
 import Header from '@/components/sections/Header';
-import { Books, getAllBooks } from '@/lib/db';
+import { Books, getAllBooks } from '@/lib/db/db';
 import Mangas from '@/components/sections/lists/Mangas';
-import { useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import Select from '../components/ultis/Select';
 import { MdOutlineManageSearch } from 'react-icons/md';
 import Head from 'next/head';
+import { ModalContext } from "@/contexts/ModalContext";
+import { AboutText } from "@/components/sections/AboutText";
 
 export const getServerSideProps: GetServerSideProps = async ({ res })  => {
   res.setHeader(
@@ -17,9 +19,13 @@ export const getServerSideProps: GetServerSideProps = async ({ res })  => {
 }
 
 export default function Home({books}: {books: Books[]}) {
+  const { handleModal } = useContext(ModalContext);
   const [ searchContent,  setSearchContent ] = useState<Books[] | false>(false);
   const searchInput = useRef<HTMLInputElement>(null);
   const categorySearchPicker = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    handleModal({type: 'add', newModal: {id: 0, message: (<AboutText/>)}});
+  }, [])
 
   return (<>
     <Head>

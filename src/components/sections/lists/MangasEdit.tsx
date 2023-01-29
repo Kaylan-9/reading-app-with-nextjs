@@ -4,7 +4,7 @@ import { MdOutlineManageSearch } from "react-icons/md";
 import { BiTrash } from "react-icons/bi";
 import { useRef, useState } from 'react';
 import Manga from "./Manga";
-import { Books } from "@/lib/db";
+import { Books } from "@/lib/db/db";
 
 const MangaEditSt = styled.div`
   & > ul {

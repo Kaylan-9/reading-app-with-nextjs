@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { rmdir } from "fs/promises";
-import { deleteBook as deleteBookInDB } from "@/lib/db"; 
+import { deleteBook as deleteBookInDB } from "@/lib/db/books"; 
 import { join } from "path";
 
 export const config = {

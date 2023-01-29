@@ -1,4 +1,4 @@
-import { getBooks } from "@/lib/db";
+import { getBooks } from "@/lib/db/books";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export const config = {

@@ -7,7 +7,7 @@ interface ImageInterface {
 
 const ImagesStyle = styled.div<{url: string}>`
   min-width: 140px;
-  min-height: 140px;
+  min-height: 200px;
   background-image: url(${({url}) => url});
   background-position: center !important;
   background-size: 100% !important;

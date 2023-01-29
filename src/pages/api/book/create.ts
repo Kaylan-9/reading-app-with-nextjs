@@ -1,5 +1,5 @@
 import * as gcs from "../../../lib/gcs";
-import { Books, createBook as createBookInDB } from "@/lib/db";
+import { Books, createBook as createBookInDB } from "@/lib/db/books";
 import { FormidableError, parseForm } from "@/lib/parse-form";
 import { createReadStream } from "fs";
 import type { NextApiRequest, NextApiResponse } from "next";

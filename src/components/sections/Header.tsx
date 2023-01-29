@@ -62,12 +62,12 @@ const HeaderSt = styled.header`
   align-items: center;
   padding: 0 150px;
   display: grid;
-  grid-template-columns: repeat(2, auto) !important;
+  grid-template-columns: min-content auto min-content !important;
   grid-template-rows: 125px 60px auto;
   grid-template-areas: 
-    'adverts adverts'
-    '. .'
-    'headeritems search'
+    'adverts adverts adverts'
+    '   .       .       .   '
+    'headeritems . search'
   ;
   row-gap: 15px;
   background-color: rgb(22, 22, 22);
@@ -93,15 +93,18 @@ const HeaderSt = styled.header`
   & > .search {
     display: flex;
     justify-content: center;
-    gap: 25px;
     align-items: center;
     grid-area: search;
+    border-radius: 30px;
+    & > .category {
+      border-radius: 0 30px 30px 0;
+    }
     & > .inputicon {
       align-items: center;
       display: flex;
       grid-area: inputicon;
       font-size: 25px;
-      border-radius: 30px;
+      border-radius: 30px 0 0 30px;
       background-color: #292929;
       padding-left: 15px;
       gap: 15px;

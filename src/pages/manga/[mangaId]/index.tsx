@@ -1,7 +1,7 @@
 import Header from '@/components/sections/Header';
 import { Message } from '@/components/ultis/Message';
 import { ModalContext } from '@/contexts/ModalContext';
-import { Books, getBook } from '@/lib/db';
+import { Books, getBook } from '@/lib/db/db';
 import styled from '@emotion/styled';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
@@ -104,7 +104,8 @@ const Options = ({options}: OptionsType) => {
 
 const ViewerSt = styled.ul`
   position: fixed;
-  background-color: #000000ac;
+  z-index: 1000;
+  background-color: #1f1f1fc6;
   min-height: 100vh;
   min-width: 100vw;
   padding-top: 50px;
@@ -128,7 +129,7 @@ const Viewer = ({bookData, viewContent, setViewContent}: {bookData: Books | null
     if(viewContent && imagesEle.current!==null && scrollLimit===4) {
       let lockScroll = new Promise(async (resolve)=> resolve(''));
       for(let i=0;i<=4;i++) {
-        let scroll = (100/((i+1)*1.5));        
+        let scroll = (100/((i+1)*1.1));        
         scrollLimit--;
         lockScroll = new Promise((resolve) => {
           setTimeout(() => {

@@ -1,4 +1,4 @@
-import { Books } from '@/lib/db';
+import { Books } from '@/lib/db/db';
 import { AiOutlineArrowDown, AiOutlineArrowUp } from 'react-icons/ai';
 import styled from '@emotion/styled';
 import Manga from "./Manga";
@@ -34,7 +34,7 @@ const MangaList = styled.div`
   }
   & > ul {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     row-gap: 65px;
     column-gap: 50px;
     width: 100%;
