@@ -1,9 +1,8 @@
-import { Books } from '@/lib/db/db';
+import { Books } from '@/lib/db/books';
 import { AiOutlineArrowDown, AiOutlineArrowUp } from 'react-icons/ai';
 import styled from '@emotion/styled';
 import Manga from "./Manga";
 import { useState } from 'react';
-import { GrFavorite } from 'react-icons/gr';
 import { MdOutlineFavorite } from 'react-icons/md';
 
 const MangaList = styled.div`
@@ -45,14 +44,14 @@ const MangaList = styled.div`
   }
 `;
 
-export default function Mangas({books}: {books: Books[]}) {
+export default function Mangas({title, books}: {title?: string, books: Books[]}) {
   const [viewContent, setViewContent] = useState<boolean>(true);
   const Icon = viewContent ? AiOutlineArrowUp : AiOutlineArrowDown;
   return (<MangaList>
-    <h2 className='title' onClick={() => setViewContent(oldViewContent => !oldViewContent)}>
-      <span>Mangás</span>
+    {title!==undefined ? (<h2 className='title' onClick={() => setViewContent(oldViewContent => !oldViewContent)}>
+      <span>{title}</span>
       <Icon/>
-    </h2>
+    </h2>) : null}
     {viewContent ? 
       <ul>
         {books.map((book: Books, indice) => 

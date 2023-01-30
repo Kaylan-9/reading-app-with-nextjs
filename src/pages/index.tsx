@@ -8,6 +8,7 @@ import { MdOutlineManageSearch } from 'react-icons/md';
 import Head from 'next/head';
 import { ModalContext } from "@/contexts/ModalContext";
 import { AboutText } from "@/components/sections/AboutText";
+import { SessionContext, SessionContextInterface } from "@/contexts/SessionContext";
 
 export const getServerSideProps: GetServerSideProps = async ({ res })  => {
   res.setHeader(
@@ -19,12 +20,14 @@ export const getServerSideProps: GetServerSideProps = async ({ res })  => {
 }
 
 export default function Home({books}: {books: Books[]}) {
+  const { userSession } = useContext<SessionContextInterface>(SessionContext);
   const { handleModal } = useContext(ModalContext);
   const [ searchContent,  setSearchContent ] = useState<Books[] | false>(false);
   const searchInput = useRef<HTMLInputElement>(null);
   const categorySearchPicker = useRef<HTMLInputElement>(null);
   useEffect(() => {
-    handleModal({type: 'add', newModal: {id: 0, message: (<AboutText/>)}});
+    if(!userSession.isLoggedIn) 
+      handleModal({type: 'add', newModal: {id: 0, message: (<AboutText/>)}});
   }, [])
 
   return (<>
@@ -53,7 +56,7 @@ export default function Home({books}: {books: Books[]}) {
       <Select ref={categorySearchPicker}/>
     </Header>
     <main>
-      <Mangas books={(!searchContent ? books : searchContent)}/>
+      <Mangas title='Mangás' books={(!searchContent ? books : searchContent)}/>
     </main>
   </>)
 }

@@ -94,18 +94,18 @@ export const SessionProvider = ({children}: {children: ReactNode}) => {
     try {
       if(userSession.userdata!==null) {
         sessionStorage.removeItem("userdata");
-        handleUserSession({type: "logout"}); 
         handleModal({type: 'add', newModal: {message: '🔒 Usuário desconectado!?'}});
+        handleUserSession({type: "logout"}); 
       }
     } catch(error) {
       console.log(error);
+      handleModal({type: 'add', newModal: {message: '📐'}});
     }
-  }, [handleUserSession]);
+  }, [handleUserSession, handleModal]);
 
   useEffect(() => {
     areYouLoggedIn();
   }, [])
-  
   
   return <SessionContext.Provider value={{
     handleLogIn, 

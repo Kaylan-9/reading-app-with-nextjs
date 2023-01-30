@@ -1,5 +1,5 @@
 import { Modals } from "@/components/sections/Modals";
-import { createContext, ReactNode, useReducer, use } from "react";
+import { createContext, ReactNode, useReducer, use, useEffect } from "react";
 
 export type TModal = {
   id?: number | string,
@@ -59,6 +59,7 @@ const initialValueModal = {
 export const ModalContext = createContext<IPropsModal>(initialValueModal);
 export default function ModalProvider({children}: {children: ReactNode}) {
   const [modal, handleModal] = useReducer<IModalReducer<IModalReducerState, IModalReducerAction>>(modalReducer, initialValueModalReducer);
+
   return (<ModalContext.Provider value={{modal, handleModal}}>
     {children}
     <Modals modals={modal.modals}/>

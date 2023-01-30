@@ -37,7 +37,7 @@ export default function OptionsMenu({selection, options} : OptionsMenuInterface)
         <button 
           className={selection.condi===indice ? css`
             border-radius: 0 0 15px 15px;
-            background-color: #292929 !important;
+            background-color: rgb(22 22 22) !important;
             box-shadow: 0px 37.5px 50px 1px rgba(0, 0, 0, 0.5);
           ` : ''}
           onClick={() => {              
