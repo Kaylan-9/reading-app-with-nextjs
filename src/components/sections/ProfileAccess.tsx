@@ -35,13 +35,14 @@ interface ProfileAccessInterface {
 
 export default function ProfileAccess({imagelink}: ProfileAccessInterface) {
   const router = useRouter();
-  const { handleLogOut } = useContext<SessionContextInterface>(SessionContext);
+  const { userSession, handleLogOut } = useContext<SessionContextInterface>(SessionContext);
+  const { userdata } = userSession;
   return(<ProfileAccessSt>
     <div className={css`
       background-image: url(${imagelink});
     `}/>
     <button id="btn-profile" onClick={() => {
-      router.push('/profile');
+      router.push(`/user/@${userdata?.id}`);
     }}>
       profile
     </button>

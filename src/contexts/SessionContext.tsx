@@ -88,20 +88,20 @@ export const SessionProvider = ({children}: {children: ReactNode}) => {
         <p className={css`color: #ff0040;`}>💣 @Falha ao logar !</p>
       )}});
     }
-  }, [handleUserSession, handleModal]);
+  }, [handleUserSession, handleModal, userSession]);
 
   const handleLogOut = useCallback(async () => {
     try {
       if(userSession.userdata!==null) {
-        sessionStorage.removeItem("userdata");
         handleModal({type: 'add', newModal: {message: '🔒 Usuário desconectado!?'}});
+        sessionStorage.removeItem("userdata");
         handleUserSession({type: "logout"}); 
       }
     } catch(error) {
       console.log(error);
       handleModal({type: 'add', newModal: {message: '📐'}});
     }
-  }, [handleUserSession, handleModal]);
+  }, [handleUserSession, handleModal, userSession]);
 
   useEffect(() => {
     areYouLoggedIn();

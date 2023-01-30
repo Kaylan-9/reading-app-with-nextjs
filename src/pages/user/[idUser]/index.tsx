@@ -1,13 +1,18 @@
+import ContainerBookAdd from '@/components/sections/ContainerAdd';
 import Header from '@/components/sections/Header';
 import Mangas from '@/components/sections/lists/Mangas';
+import MangaEdit from '@/components/sections/lists/MangasEdit';
+import Container from '@/components/ultis/Container';
+import OptionsMenu from '@/components/ultis/OptionsMenu';
 import { ModalContext } from '@/contexts/ModalContext';
+import { SessionContext, SessionContextInterface } from '@/contexts/SessionContext';
 import { Books } from '@/lib/db/books';
 import { getUserBooks, Users } from '@/lib/db/users';
 import styled from '@emotion/styled';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   context.res.setHeader(
@@ -17,7 +22,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   let { idUser } = context.query;  
   const userExist = typeof idUser==='string';
-  const userData = typeof idUser==='string' ? (await getUserBooks(Number(idUser.replace(/@/, '')))) : [];
+  const userData = typeof idUser==='string' ? (await getUserBooks(Number(idUser.replace(/@/, '')))) : null;
   
   return ({
     props: {
@@ -28,7 +33,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 };
 
 interface IUser {
-  userData: Users & {book: Books[]};
+  userData: (Users & {book: Books[]}) | null;
   userExist: boolean;
 };
 
@@ -38,27 +43,49 @@ const UserSt = styled.div`
 
 export default function User({userData, userExist}: IUser) {
   const router = useRouter();
+  const [optionPicker, setOptionPicker] = useState<number>(0);
   const {handleModal} = useContext(ModalContext);
+  const {userSession} = useContext<SessionContextInterface>(SessionContext);
+  const {isLoggedIn} = userSession;
+
   useEffect(() => {
-    console.log(userData);
-    if(!userExist) {
+    if(userData===null) {
       handleModal({type: 'add', newModal: {message: '💣 usuário não existe!'}});
       router.push('/');
     }
-    console.log(userData.book)
   }, []);
 
-  return (<> 
+  return (userExist && userData!==null ? (
+  <>
     <Head>
-      <title>{userData?.name}</title>
+      {<title>{userData?.name}</title>}
     </Head>
     <Header/>
-    {
-    (userExist ? (<UserSt>
-      <Mangas title={`Mangás ${userData.name}`} books={userData.book}/>
-    </UserSt>) :
-    null)
-    }
-  </>);
+    <UserSt>
+      {isLoggedIn ? (<OptionsMenu 
+        selection={{
+          condi: optionPicker,
+          func: (indice) => setOptionPicker(indice)
+        }} 
+        options={[
+          {name:'mangas', onClick(){}},
+          {name:'adicionar', onClick(){}},
+          {name:'remover', onClick(){}},
+        ]}
+      />) : null}
+      <Container>
+        {(optionPicker===0 || !isLoggedIn) ? <Mangas title={`Mangás ${userData?.name}`} books={userData?.book}/> : null}
+        {isLoggedIn ?
+          [
+            (optionPicker===1) ? <ContainerBookAdd/> : null,
+            (optionPicker===2) ? <MangaEdit/> : null
+          ] :
+          null
+        }
+      </Container>
+
+    </UserSt>
+  </>) :
+  null);
 }
 
