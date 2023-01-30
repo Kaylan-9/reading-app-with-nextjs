@@ -1,7 +1,9 @@
-import { useRef, useCallback, FormEvent, useContext, MouseEvent } from "react";
+import { useRef, useCallback, FormEvent, useContext, MouseEvent, useEffect, useState } from "react";
 import InputLabel from "@/components/ultis/InputLabel";
 import { SessionContext, SessionContextInterface } from "@/contexts/SessionContext";
 import styled from "@emotion/styled";
+import { FcGoogle } from 'react-icons/fc';
+import { signIn } from "next-auth/react";
 
 const LoginSt = styled.div`
   max-width: 100vw;
@@ -38,7 +40,7 @@ const LoginSt = styled.div`
         padding: 15px !important;
       }
     }
-    input[type="button"] {
+    .btn-provider, input[type="button"] {
       padding: 15px 30px;
       border-radius: 30px;
       border: none;
@@ -55,7 +57,22 @@ const LoginSt = styled.div`
 export default function Login({setActiveLogin}: {setActiveLogin: (state: boolean) => void}) {
   const input_usernameoremail = useRef<HTMLInputElement>(null);
   const input_password = useRef<HTMLInputElement>(null);
+  const [providers, setProviders] = useState<any>([]);
   const { handleLogIn: _Login, userSession } = useContext<SessionContextInterface>(SessionContext);
+
+  useEffect(() => {
+    const getData = async () => {
+      const request = await fetch('/api/providers', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'}
+      });
+      const responseData = await request.json();
+      setProviders(responseData?.providers); 
+    }
+    
+    getData();
+  }, []);
+
   const handleLogin = useCallback(async (e: FormEvent<HTMLInputElement>) => {
     e.preventDefault();  
     if(input_password.current!==null && input_usernameoremail.current!==null) {
@@ -76,6 +93,9 @@ export default function Login({setActiveLogin}: {setActiveLogin: (state: boolean
       <InputLabel ref={input_usernameoremail} label="usuário" placeholder="nome ou @e-mail de entrada" area={`usernameoremail`}/>
       <InputLabel ref={input_password} type='password' label="senha" area={`userpassword`}/>
       <input type="button" onClick={handleLogin} value="Logar"/>
+      {Object.values(providers)?.map(({name, id}: any) => (<button key={name} className='btn-provider' onClick={() => signIn(id)}>
+        {name==='Google' ? (<FcGoogle/>) : `Sign in with ${name}`}
+      </button>))}
     </form>
   </LoginSt>);
 }

@@ -6,7 +6,7 @@ import styled from "@emotion/styled";
 import { useRouter } from "next/router";
 import Login from "./Login";
 import ProfileAccess from "./ProfileAccess";
-import { css } from "@emotion/css";
+
 
 type NavItemType = {
   name: string,
@@ -165,7 +165,8 @@ export default function Header({children, search}: HeaderInterface) {
           (<ProfileAccess imagelink=''/>) : 
           (<NavItem name='login' onClick={() => {
             setActiveLogin(true);
-          }}/>)}
+          }}/>)
+        }
       </Items>
       <div className='search'>
         {search}

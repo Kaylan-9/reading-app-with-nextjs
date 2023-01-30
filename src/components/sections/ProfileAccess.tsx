@@ -29,14 +29,15 @@ const ProfileAccessSt = styled.li`
   & > #btn-logout {grid-area: btn-profile}
 `;
 
-interface ProfileAccessInterface {
+interface IProfileAccess {
   imagelink: string;  
 }
 
-export default function ProfileAccess({imagelink}: ProfileAccessInterface) {
+export default function ProfileAccess({imagelink}: IProfileAccess) {
   const router = useRouter();
   const { userSession, handleLogOut } = useContext<SessionContextInterface>(SessionContext);
   const { userdata } = userSession;
+
   return(<ProfileAccessSt>
     <div className={css`
       background-image: url(${imagelink});

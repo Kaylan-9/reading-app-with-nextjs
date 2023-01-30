@@ -1,5 +1,6 @@
 import ModalProvider from '@/contexts/ModalContext';
-import { SessionProvider } from '@/contexts/SessionContext';
+import { GetServerSideProps } from 'next';
+import { getCsrfToken, getProviders, SessionProvider } from 'next-auth/react';
 import '../app/globals.css';
 
 interface MyAppInterface {
@@ -7,9 +8,15 @@ interface MyAppInterface {
   pageProps: any;
 }
 
-export default function MyApp({ Component, pageProps }: MyAppInterface) {
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const providers = await getProviders();
+  const csrfToken = await getCsrfToken(context);
+  return {props: {providers, csrfToken}}
+}
+
+export default function MyApp({ Component, pageProps: {session, ...pageProps}}: MyAppInterface) {
   return (<ModalProvider>
-    <SessionProvider>
+    <SessionProvider session={session}>
       <Component {...pageProps} />
     </SessionProvider>
   </ModalProvider>);

@@ -9,14 +9,19 @@ import Head from 'next/head';
 import { ModalContext } from "@/contexts/ModalContext";
 import { AboutText } from "@/components/sections/AboutText";
 import { SessionContext, SessionContextInterface } from "@/contexts/SessionContext";
+import { useSession, getSession, getProviders, getCsrfToken, signIn } from "next-auth/react";
+
 
 export const getServerSideProps: GetServerSideProps = async ({ res })  => {
   res.setHeader(
     'Cache-Control',
     'public, s-maxage=5, stale-while-revalidate=150'
   );
+
   const books = await getAllBooks();
-  return {props: {books}}
+  return {props: {
+    books
+  }}
 }
 
 export default function Home({books}: {books: Books[]}) {
@@ -25,7 +30,10 @@ export default function Home({books}: {books: Books[]}) {
   const [ searchContent,  setSearchContent ] = useState<Books[] | false>(false);
   const searchInput = useRef<HTMLInputElement>(null);
   const categorySearchPicker = useRef<HTMLInputElement>(null);
+  const { data: session, status } = useSession();
+
   useEffect(() => {
+    console.log(session);
     if(!userSession.isLoggedIn) 
       handleModal({type: 'add', newModal: {id: 0, message: (<AboutText/>)}});
   }, [])
