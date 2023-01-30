@@ -1,6 +1,6 @@
 import { GetServerSideProps } from "next";
 import Header from '@/components/sections/Header';
-import { Books, getAllBooks } from '@/lib/db/db';
+import { Books, getAllBooks } from '@/lib/db/books';
 import Mangas from '@/components/sections/lists/Mangas';
 import { useContext, useEffect, useRef, useState } from 'react';
 import Select from '../components/ultis/Select';

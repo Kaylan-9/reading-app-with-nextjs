@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { forwardRef, useState } from "react";
+import { forwardRef, useState, useEffect } from "react";
 import { IoIosArrowForward } from 'react-icons/io';
 
 const SelectSt = styled.div`
@@ -36,15 +36,18 @@ const SelectSt = styled.div`
 
 const Select = forwardRef<HTMLInputElement>(({}, ref) => {
   const [viewContent, setViewContent] = useState<boolean>(false);
-  const [option, setOption] = useState<string>("");
-  const categories: string[] = [
-    "Shōnen",
-    "Seinen",
-    "Shōjo",
-    "Yaoi",
-    "Yuri",
-    "Josei"
-  ];
+  const [option, setOption] = useState<string | number>("");
+  const [categories, setCategories] = useState<{id: number, name: string}[]>([]);
+
+  useEffect(() => {
+    (async () => {
+      const data = await fetch('/api/category', {
+        method: 'GET',
+        headers: {'Content-Type' : 'application/json'},
+      });
+      setCategories(await data.json());
+    })();
+  }, [])
 
   return (<SelectSt className="category">
     <div id="select-button" onClick={() => setViewContent(oldViewContent => !oldViewContent)}>
@@ -53,12 +56,12 @@ const Select = forwardRef<HTMLInputElement>(({}, ref) => {
     </div>
     <input type="text" ref={ref} defaultValue={option}/>
     {viewContent ?
-      <div className="optionlist">{categories?.map((category: string) => 
-        <div key={category} className="option" onClick={()=> [
-          setOption(category),
+      <div className="optionlist">{categories?.map((category: {id: number, name: string}) => 
+        <div key={category.id} className="option" onClick={()=> [
+          setOption(category.id),
           setViewContent(false)
         ]}>
-          {category}
+          {category.name}
         </div>
       )}</div> :
       null

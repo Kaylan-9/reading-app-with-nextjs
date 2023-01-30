@@ -1,7 +1,7 @@
 import Header from '@/components/sections/Header';
 import { Message } from '@/components/ultis/Message';
 import { ModalContext } from '@/contexts/ModalContext';
-import { Books, getBook } from '@/lib/db/db';
+import { Books, getBook } from '@/lib/db/books';
 import styled from '@emotion/styled';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
@@ -198,7 +198,7 @@ const Viewer = ({bookData, viewContent, setViewContent}: {bookData: Books | null
   </ViewerSt>);
 }
 
-export default function Manga({bookData}: {bookData: Books | null}) {
+export default function Manga({bookData}: {bookData: Books & {categorie: {name: string}} | null}) {
   const [viewContent, setViewContent] = useState<boolean>(false);
 
   return <>
@@ -221,7 +221,7 @@ export default function Manga({bookData}: {bookData: Books | null}) {
             onClick={()=>setViewContent(true)}
           />
           <h2 className='title'>{bookData?.title}</h2>
-          <h3 className='category'>{bookData?.categorie}</h3>
+          <h3 className='category'>{bookData?.categorie.name}</h3>
           <p className='description'>{bookData?.description}</p>
           <Options options={[
             {name: "read", Icon: <AiOutlineRead/>, onClick() {

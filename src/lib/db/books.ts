@@ -7,7 +7,8 @@ export interface Books {
   imagepaths: any;
   path: string;
   description: string;
-  categorie: string;
+  idCategory: number;
+  idUser: number;
 }
 
 export async function deleteBook(id: number) {
@@ -48,23 +49,25 @@ export async function getBook(id: number) {
       id: id
     },
     include: {
-      imagepaths: true
+      imagepaths: true,
+      categorie: true
     }
   });
   return data;
 }
 
-export async function getBooks(title: string, category: string | false) {
+export async function getBooks(title: string, category: number | false) {
   type whereType = {
     title?: string,
-    categorie?: string
+    idCategory?: number
   }
   let where: whereType = {}
   if(typeof title==="string") where.title= title;
-  if(typeof category==="string") where.categorie = category;
+  if(typeof category==="string") where.idCategory = category;
   const data = await prisma.books.findMany({
     where: where,
     include: {
+      categorie: true,
       imagepaths: true
     }
   });

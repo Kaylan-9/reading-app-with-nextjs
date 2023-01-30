@@ -24,8 +24,8 @@ model Books {
   imagepaths  Images[] @relation("BookImages")
   path        String @db.Text
   description String @db.Text
-  categorie   Categories @relation(fields: [idCategory], references: [id])
-  user        Users @relation(fields: [idUser], references: [id])
+  categorie   Categories? @relation(fields: [idCategory], references: [id])
+  user        Users? @relation(fields: [idUser], references: [id])
   idCategory  Int  @unique
   idUser      Int
   @@index([idUser])

@@ -12,7 +12,7 @@ const InputLabelSt = styled.div<{area: string}>`
   display: grid;
   grid-template-columns: 50px auto;
   align-items: center;
-  gap: 5px;
+  gap: 10px;
   width: 100%;
   grid-area: ${({area}) => area};
   & > label {

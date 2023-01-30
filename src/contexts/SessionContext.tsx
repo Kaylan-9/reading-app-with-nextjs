@@ -4,6 +4,7 @@ import { createContext, useReducer, ReactNode, useEffect, useCallback, useContex
 import { ModalContext } from "./ModalContext";
 
 export type UserDataType = {
+  id?: number,
   name: string,
   password: string
 }
@@ -46,6 +47,7 @@ export const sessionReducer = (state: any, action: any) => {
 export const SessionContext: any = createContext(initialValueSessionContext);
 
 export const SessionProvider = ({children}: {children: ReactNode}) => {
+  const router = useRouter();
   const {handleModal} = useContext(ModalContext);
   const [userSession, handleUserSession] = useReducer(sessionReducer, initialValueSessionContext.userSession);
   const areYouLoggedIn = useCallback(async () => {
@@ -58,7 +60,9 @@ export const SessionProvider = ({children}: {children: ReactNode}) => {
       } catch(error) {
         console.log(error);
       }
-    }
+      return;
+    } 
+    if(router.asPath === '/profile') router.push('/');
   }, []);
 
   const handleLogIn = useCallback(async (body: UserDataType) => {
@@ -74,21 +78,17 @@ export const SessionProvider = ({children}: {children: ReactNode}) => {
       console.log(userdata);
       if(userdata!==null) {
         handleModal({type: 'add', newModal: {message: '😈👽🤖 Logado com sucesso!!'}});
-        sessionStorage.setItem("userdata", JSON.stringify(body));
-        handleUserSession({type: "login", userdata: body}); 
+        sessionStorage.setItem("userdata", JSON.stringify(userdata));
+        handleUserSession({type: "login", userdata}); 
       } else {
         handleModal({type: 'add', newModal: {message: '😑 Usuário não encontrado!?'}});
       }
     } catch(error) {
       handleModal({type: 'add', newModal: {message: (
-        <p className={css`color: #ff0040;`}>😈👽🤖 @Falha ao logar !</p>
+        <p className={css`color: #ff0040;`}>💣 @Falha ao logar !</p>
       )}});
     }
   }, [handleUserSession, handleModal]);
-
-  useEffect(() => {
-    areYouLoggedIn();
-  }, []);
 
   const handleLogOut = useCallback(async () => {
     try {

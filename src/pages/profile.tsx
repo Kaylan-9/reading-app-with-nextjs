@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Header from '@/components/sections/Header';
 import OptionsMenu from '@/components/ultis/OptionsMenu';
 import MangaEdit from '@/components/sections/lists/MangasEdit';
-import ContainerAddBook from '@/components/sections/ContainerAddBook';
+import ContainerAdd from '@/components/sections/ContainerAdd';
 import Container from '@/components/ultis/Container';
 
 export default function Profile() {
@@ -22,7 +22,7 @@ export default function Profile() {
         ]}
       />
       <Container>
-        {(optionPicker==0) ? <ContainerAddBook/> : <MangaEdit/>}
+        {(optionPicker==0) ? <ContainerAdd/> : <MangaEdit/>}
       </Container>
     </main>
   </div>);
