@@ -6,6 +6,7 @@ import styled from "@emotion/styled";
 import { useRouter } from "next/router";
 import Login from "./Login";
 import ProfileAccess from "./ProfileAccess";
+import { useSession } from "next-auth/react";
 
 
 type NavItemType = {
@@ -140,7 +141,8 @@ interface HeaderInterface {
 }
 
 export default function Header({children, search}: HeaderInterface) {
-  const { userSession } = useContext<any>(SessionContext);
+  const {data: session, status} = useSession();
+
   const [ activeLogin, setActiveLogin  ] = useState<boolean>(false);
   return (<>
     {(activeLogin ? (<Login setActiveLogin={setActiveLogin}/>) : null)}
@@ -161,8 +163,8 @@ export default function Header({children, search}: HeaderInterface) {
       <Items>
         <NavItem name='home' href=""/>
         <NavItem name='about' href="about"/>
-        {userSession.isLoggedIn ? 
-          (<ProfileAccess imagelink=''/>) : 
+        { status==='authenticated' ? 
+          (<ProfileAccess imagelink={session.user?.image ?? ''}/>) : 
           (<NavItem name='login' onClick={() => {
             setActiveLogin(true);
           }}/>)

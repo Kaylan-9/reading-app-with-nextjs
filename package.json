@@ -13,8 +13,9 @@
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@google-cloud/storage": "^6.9.0",
+    "@next-auth/prisma-adapter": "^1.0.5",
     "@next/font": "13.1.2",
-    "@prisma/client": "^4.8.1",
+    "@prisma/client": "^4.9.0",
     "@types/formidable": "^2.0.5",
     "@types/node": "18.11.18",
     "@types/react": "18.0.26",
@@ -26,7 +27,6 @@
     "micro": "^10.0.1",
     "mime": "^3.0.0",
     "next": "13.1.2",
-    "next-auth": "^4.19.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.7.1",
@@ -35,6 +35,6 @@
   "devDependencies": {
     "@types/date-fns": "^2.6.0",
     "@types/mime": "^3.0.1",
-    "prisma": "^4.8.1"
+    "prisma": "^4.9.0"
   }
 }

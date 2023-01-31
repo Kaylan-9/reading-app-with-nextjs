@@ -1,4 +1,4 @@
-import { getUser, Users } from "@/lib/db/users";
+import { getUser } from "@/lib/db/users";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function login(

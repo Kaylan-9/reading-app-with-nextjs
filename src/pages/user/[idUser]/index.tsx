@@ -5,13 +5,13 @@ import MangaEdit from '@/components/sections/lists/MangasEdit';
 import Container from '@/components/ultis/Container';
 import OptionsMenu from '@/components/ultis/OptionsMenu';
 import { ModalContext } from '@/contexts/ModalContext';
-import { SessionContext, SessionContextInterface } from '@/contexts/SessionContext';
 import { Books } from '@/lib/db/books';
 import { getUserBooks, Users } from '@/lib/db/users';
 import styled from '@emotion/styled';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import { useSession } from 'next-auth/react';
 import { useContext, useEffect, useState } from 'react';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
@@ -22,7 +22,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   let { idUser } = context.query;  
   const userExist = typeof idUser==='string';
-  const userData = typeof idUser==='string' ? (await getUserBooks(Number(idUser.replace(/@/, '')))) : null;
+  const userData = typeof idUser==='string' ? (await getUserBooks(idUser.replace(/@/, ''))) : null;
   
   return ({
     props: {
@@ -45,8 +45,7 @@ export default function User({userData, userExist}: IUser) {
   const router = useRouter();
   const [optionPicker, setOptionPicker] = useState<number>(0);
   const {handleModal} = useContext(ModalContext);
-  const {userSession} = useContext<SessionContextInterface>(SessionContext);
-  const {isLoggedIn} = userSession;
+  const { data: session, status } = useSession();
 
   useEffect(() => {
     if(userData===null) {
@@ -62,7 +61,7 @@ export default function User({userData, userExist}: IUser) {
     </Head>
     <Header/>
     <UserSt>
-      {isLoggedIn ? (<OptionsMenu 
+      {status==='authenticated' ? (<OptionsMenu 
         selection={{
           condi: optionPicker,
           func: (indice) => setOptionPicker(indice)
@@ -74,8 +73,8 @@ export default function User({userData, userExist}: IUser) {
         ]}
       />) : null}
       <Container>
-        {(optionPicker===0 || !isLoggedIn) ? <Mangas title={`Mangás ${userData?.name}`} books={userData?.book}/> : null}
-        {isLoggedIn ?
+        {(optionPicker===0 || status!=='authenticated') ? <Mangas title={`Mangás ${userData?.name}`} books={userData?.book}/> : null}
+        {status==='authenticated' ?
           [
             (optionPicker===1) ? <ContainerBookAdd/> : null,
             (optionPicker===2) ? <MangaEdit/> : null

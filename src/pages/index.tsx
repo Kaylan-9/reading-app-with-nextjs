@@ -33,10 +33,11 @@ export default function Home({books}: {books: Books[]}) {
   const { data: session, status } = useSession();
 
   useEffect(() => {
-    console.log(session);
     if(!userSession.isLoggedIn) 
       handleModal({type: 'add', newModal: {id: 0, message: (<AboutText/>)}});
-  }, [])
+  }, []);
+
+  console.log(session);
 
   return (<>
     <Head>

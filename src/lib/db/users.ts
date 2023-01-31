@@ -4,18 +4,18 @@ export interface Users {
   id: number;
   name: string;
   email: string;
-  password: string;
-  isLoggedIn?: boolean;
+  image: string;
+  password?: string;
 }
 
 export async function getAllUsers() {
-  const data =await prisma.users.findMany();
+  const data =await prisma.user.findMany();
   return data;
 }
 
-export async function getUserBooks(id: number) {
+export async function getUserBooks(id: string) {
   const where = {id};
-  return (await prisma.users.findUnique({
+  return (await prisma.user.findUnique({
     where: where,
     include: {
       book: {
@@ -28,9 +28,9 @@ export async function getUserBooks(id: number) {
 }
 
 export async function getUser(data: Users) {
-  const {name, password} = data;
-  const user = await prisma.users.findFirst({
-    where: {name, password}
+  const {name, email, image} = data;
+  const user = await prisma.user.findFirst({
+    where: {name, email, image}
   });
   return user;
 }

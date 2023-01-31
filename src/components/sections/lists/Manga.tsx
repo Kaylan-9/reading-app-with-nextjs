@@ -1,6 +1,5 @@
 import { ReactNode } from "react";
 import PresentationImg from "./PresentationImg";
-import { Images } from "@/lib/db/db";
 import styled from "@emotion/styled";
 import Link from "next/link";
 
@@ -14,7 +13,7 @@ interface MangaInterface {
   id: number;
   title: string;
   path: string;
-  images: Images[];
+  images: any[];
   options: OptionType[];
 }
 
@@ -71,8 +70,8 @@ const MangaSt = styled.article`
       border: none;
       font-size: 18px;
       & > svg * {
-        color: white;
-        stroke: white;
+        color: #ff0f4f;
+        stroke: #ff144e;
       }
     }
   }
