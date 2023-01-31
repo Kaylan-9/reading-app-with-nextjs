@@ -26,15 +26,16 @@ model Books {
   description String @db.Text
   categorie   Categories? @relation(fields: [idCategory], references: [id])
   user        User? @relation(fields: [idUser], references: [id])
-  idCategory  Int  @unique
+  idCategory  Int    
   idUser      String
   @@index([idUser])
+  @@index([idCategory])
 }
 
 model Categories {
   id          Int    @id @default(autoincrement()) 
   name        String @db.Text
-  book        Books?
+  book        Books[]
 }
 
 model Account {

@@ -27,7 +27,7 @@ export default async function createBook(
         idUser: fields.bookiduser as string,
         imagepaths: [],
       };
-      filesdata.map(({filepath, newFilename: filename}: filesdataType) => {
+      filesdata.map(({newFilename: filename}: filesdataType) => {
         const filenametype = filename.split('.');
         const _filename = filenametype[0];
         const filetype = filenametype[1];
@@ -35,14 +35,22 @@ export default async function createBook(
           name: _filename,
           type: filetype,
         })
-        createReadStream(filepath)
-          .pipe(gcs.createWriteStream(_filename, filetype))
-          .on("finish", () => console.log("File Upload Complete"))
-          .on("error", (err) => console.error(err.message));      
       });
 
-      try{await createBookInDB(newBook)} 
-      catch(error) {console.log(error)} 
+      try{
+        const responseData = await createBookInDB(newBook);
+        filesdata.map(({filepath, newFilename: filename}: filesdataType) => {
+          const filenametype = filename.split('.');
+          const _filename = filenametype[0];
+          const filetype = filenametype[1];
+          createReadStream(filepath)
+            .pipe(gcs.createWriteStream(_filename, filetype))
+            .on("finish", () => console.log("File Upload Complete"))
+            .on("error", (err) => console.error(err.message));      
+        });
+      } catch(error) {
+        console.log(error)
+      } 
       return res.status(200).json({data: {newBook}, error: null});
     }
     return res.status(400).json({data: null, error: 'Cadastro ilegal!'});

@@ -38,14 +38,16 @@ interface IProfileAccess {
 export default function ProfileAccess({imagelink}: IProfileAccess) {
   const {data: session}: any = useSession();
   const router = useRouter();
+  const goToProfile = () => {
+    router.push(`/user/@${session?.user?.id ?? ''}`);
+  };
 
   return(<ProfileAccessSt>
-    <div className={css`
+
+    <div onClick={goToProfile} className={css`
       background-image: url(${imagelink});
     `}/>
-    <button id="btn-profile" onClick={() => {
-      router.push(`/user/@${session?.user?.id ?? ''}`);
-    }}>
+    <button id="btn-profile" onClick={goToProfile}>
       profile
     </button>
     <button id="btn-logout" onClick={() => signOut()}>

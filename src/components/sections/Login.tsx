@@ -1,6 +1,5 @@
 import { useRef, useCallback, FormEvent, useContext, MouseEvent, useEffect, useState } from "react";
 import InputLabel from "@/components/ultis/InputLabel";
-import { SessionContext, SessionContextInterface } from "@/contexts/SessionContext";
 import styled from "@emotion/styled";
 import { FcGoogle } from 'react-icons/fc';
 import { signIn } from "next-auth/react";
@@ -58,7 +57,6 @@ export default function Login({setActiveLogin}: {setActiveLogin: (state: boolean
   const input_usernameoremail = useRef<HTMLInputElement>(null);
   const input_password = useRef<HTMLInputElement>(null);
   const [providers, setProviders] = useState<any>([]);
-  const { handleLogIn: _Login, userSession } = useContext<SessionContextInterface>(SessionContext);
 
   useEffect(() => {
     const getData = async () => {
@@ -76,10 +74,6 @@ export default function Login({setActiveLogin}: {setActiveLogin: (state: boolean
   const handleLogin = useCallback(async (e: FormEvent<HTMLInputElement>) => {
     e.preventDefault();  
     if(input_password.current!==null && input_usernameoremail.current!==null) {
-      _Login({
-        name: input_usernameoremail.current?.value,
-        password: input_password.current?.value
-      });
     }
   }, []);
 

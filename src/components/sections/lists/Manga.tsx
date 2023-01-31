@@ -33,28 +33,29 @@ const MangaSt = styled.article`
       margin-bottom: 15px;
     }
     & > .imagelist {
-      #image-1 {
-        transform: translateX(-100px) scale(.9) !important;
-        transition: transform 300ms;
-      }
       #image-0 {
-        transform: translate(-70px, -7.5px) scale(1) !important;
-        z-index: 5;
+        transform: translateX(-100px) scale(1) !important;
+        position: relative;
+        transition: transform 300ms;
+        z-index: 2 !important;
+      }
+      #image-1 {
+        transform: translate(-70px, 6px) scale(.95) !important;
         position: relative;
         transition: transform 1s;
+        z-index: 1 !important;
       }
       #image-2 {
-        transform: translate(-35px, -3.75px) scale(.95) !important;
+        transform: translate(-35px, 10px) scale(.9) !important;
+        position: relative;
         transition: transform 500ms;
+        z-index: 0 !important;
       }
       #image-1 > div, #image-2 > div {transition: transform 1s}
       &:hover {
-        #image-1, #image-2 {
-          transform: translate(-60px, -3.75px) scale(.95) !important;
-        }
-        #image-0 {
-          transform: translate(calc(-1.1 * 55px), -12.5px);
-        }
+        #image-0 {transform: translateX(-80px) scale(1) !important;}
+        #image-1 {transform: translateX(-70px) scale(1) !important;}
+        #image-2 {transform: translateX(-60px) scale(1) !important;}
       }
     }
   }
@@ -62,7 +63,7 @@ const MangaSt = styled.article`
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-top: 190px;
+    margin-top: 195px;
     gap: 5px;
     & > li > button {
       cursor: pointer;
@@ -77,7 +78,7 @@ const MangaSt = styled.article`
   }
 `;
 
-export default function Manga({id, title, path, images, options} : MangaInterface) {
+export default function Manga({id, title, images, options} : MangaInterface) {
   return <li>
     <MangaSt>
       <Link href={`/manga/@${id}`}>

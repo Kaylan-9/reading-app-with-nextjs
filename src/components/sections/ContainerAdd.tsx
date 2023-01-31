@@ -1,12 +1,12 @@
-import { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import Select from '../ultis/Select';
 import SelectedImages from '../ultis/SelectedImages';
 import InputLabel from "../ultis/InputLabel";
 import TextArea from '../ultis/TextArea';
 import Button from '../ultis/Button';
 import styled from '@emotion/styled';
-import { SessionContext, SessionContextInterface } from '@/contexts/SessionContext';
 import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
 
 const FormAddBook = styled.form`
   display: grid;
@@ -30,8 +30,7 @@ const FormAddCategory = styled.form`
 
 
 export default function ContainerBookAdd() {
-  const {data: session} = useSession();
-  const [userData, setUserData] = useState<any>({});
+  const {data: session}: any = useSession();
 
   const booknameinput = useRef<HTMLInputElement>(null);
   const bookimagesinput = useRef<HTMLInputElement>(null);
@@ -41,13 +40,16 @@ export default function ContainerBookAdd() {
 
   const [newImages, setNewImages] = useState<FileList | []>([]);
   const [filesDataURL, setFilesDataURL] = useState<string[]>([]);
+
+  const router = useRouter();
+
   const handleAddBook = useCallback(async () => {
     const formData = new FormData();
     formData.append('bookpath', '');
     formData.append('bookname', booknameinput.current?.value ?? '');
     formData.append('bookdescription', bookdescriptioninput.current?.value ?? '');
     formData.append('bookidcategory', bookcategoryselect.current?.value ?? '');
-    formData.append('bookiduser', userData?.id ?? '');
+    formData.append('bookiduser', session?.user?.id ?? '');
     const validFiles: File[] = [];
     for (let i = 0; i < newImages.length; i++) {
       const file = newImages[i];
@@ -62,25 +64,11 @@ export default function ContainerBookAdd() {
       method: 'POST',
       body: formData
     });
-    console.log(await responseData.json());
-  }, [newImages, userData]);
+    // router.push('/');
+    console.log(responseData);
+  }, [newImages]);
 
   useEffect(() => {
-    const getUserData = async () => {
-      const requestUserData = await fetch('/api/auth/userdata', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'json/application'
-        },
-        body: JSON.stringify(session?.user)
-      });
-      const newUserData = await requestUserData.json();
-      console.log(userData);
-      setUserData(newUserData);
-    };
-
-    getUserData();
-
     for(let newImage of Array.from(newImages)) {
       let fileReader = new FileReader();
       fileReader.onload = ({target}) => {

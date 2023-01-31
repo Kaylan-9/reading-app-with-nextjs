@@ -23,6 +23,7 @@ export async function deleteBook(id: number) {
 export async function createBook(data: Prisma.BooksCreateInput) {
   const imagepaths: any = data.imagepaths;
   delete data.imagepaths;
+  console.log(data);
   const newBook = await prisma.books.create({data});
   Promise.all(await imagepaths.map(async (img: Prisma.ImagesCreateManyBookInput) => {
     await prisma.images.create({

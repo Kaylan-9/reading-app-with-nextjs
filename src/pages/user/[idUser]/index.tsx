@@ -49,7 +49,7 @@ export default function User({userData, userExist, loggedInUser}: IUser) {
   const { data: session, status } = useSession();
 
   useEffect(() => {
-    if(userData===null) {
+    if(!userExist) {
       handleModal({type: 'add', newModal: {message: '💣 usuário não existe!'}});
       router.push('/');
     }

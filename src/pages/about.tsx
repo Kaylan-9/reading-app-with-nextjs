@@ -1,6 +1,4 @@
-import { useContext } from "react";
 import Header from "@/components/sections/Header";
-import { SessionContext } from "@/contexts/SessionContext";
 import Head from "next/head";
 import { css } from "@emotion/css";
 import { AboutText } from "@/components/sections/AboutText";
@@ -21,9 +19,6 @@ const AboutPage = css`
 `;
 
 export default function About() {
-  const { userSession } = useContext<any>(SessionContext);
-
-  console.log(userSession)
   return (<>
     <Head>
       <title>Reading App About</title>

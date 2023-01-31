@@ -1,7 +1,6 @@
-import { ReactNode, useContext, useState } from "react";
+import { ReactNode, useState } from "react";
 import Link from 'next/link';
 import Image from 'next/image';
-import { SessionContext } from '@/contexts/SessionContext';
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
 import Login from "./Login";
@@ -75,12 +74,17 @@ const HeaderSt = styled.header`
   box-shadow: 0px 0px 50px 1px rgba(0, 0, 0, 0.5);
   padding-bottom: 25px;
   @media(max-width: 1100px) {
-    grid-template-columns: min-content auto !important;
-    grid-template-rows: min-content auto auto auto;
+    padding: 0;
+    grid-template-columns: auto !important;
+    grid-template-rows: 50px 60px auto auto !important;
     grid-template-areas: 
       'adverts'
+      '.'
       'headeritems'
       'search';
+    & > .logotipo {
+      transform: translate(-50%, -35px) !important;
+    }
   }
   & > .logotipo {
     grid-area: logotipo;

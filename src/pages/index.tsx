@@ -8,7 +8,6 @@ import { MdOutlineManageSearch } from 'react-icons/md';
 import Head from 'next/head';
 import { ModalContext } from "@/contexts/ModalContext";
 import { AboutText } from "@/components/sections/AboutText";
-import { SessionContext, SessionContextInterface } from "@/contexts/SessionContext";
 import { useSession, getSession, getProviders, getCsrfToken, signIn } from "next-auth/react";
 
 
@@ -25,7 +24,6 @@ export const getServerSideProps: GetServerSideProps = async ({ res })  => {
 }
 
 export default function Home({books}: {books: Books[]}) {
-  const { userSession } = useContext<SessionContextInterface>(SessionContext);
   const { handleModal } = useContext(ModalContext);
   const [ searchContent,  setSearchContent ] = useState<Books[] | false>(false);
   const searchInput = useRef<HTMLInputElement>(null);
