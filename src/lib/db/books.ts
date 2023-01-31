@@ -8,7 +8,7 @@ export interface Books {
   path: string;
   description: string;
   idCategory: number;
-  idUser: number;
+  idUser: string;
 }
 
 export async function deleteBook(id: number) {

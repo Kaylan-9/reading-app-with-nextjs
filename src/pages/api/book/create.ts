@@ -24,7 +24,7 @@ export default async function createBook(
         path: fields.bookpath as string,
         description: fields.bookdescription as string,
         idCategory: Number(fields.bookidcategory),
-        idUser: Number(fields.bookiduser),
+        idUser: fields.bookiduser as string,
         imagepaths: [],
       };
       filesdata.map(({filepath, newFilename: filename}: filesdataType) => {

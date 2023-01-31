@@ -1,9 +1,7 @@
-import { SessionContext, SessionContextInterface } from "@/contexts/SessionContext";
 import { css } from "@emotion/css";
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
 import { useSession, signOut } from 'next-auth/react';
-import { useContext, useEffect, useState } from "react";
 
 const ProfileAccessSt = styled.li`
   align-items: center;
@@ -26,7 +24,11 @@ const ProfileAccessSt = styled.li`
     cursor: pointer;
   }
   & > #btn-profile {grid-area: btn-profile}
-  & > #btn-logout {grid-area: btn-profile}
+  & > #btn-logout {
+    grid-area: btn-profile;
+    font-weight: bold;
+    color: #ff7a7a !important;
+  }
 `;
 
 interface IProfileAccess {
@@ -34,32 +36,15 @@ interface IProfileAccess {
 }
 
 export default function ProfileAccess({imagelink}: IProfileAccess) {
-  const {data: session} = useSession();
-  const [userData, setUserData] = useState<any>({});
+  const {data: session}: any = useSession();
   const router = useRouter();
-  useEffect(() => {
-    const getUserData = async () => {
-      const requestUserData = await fetch('/api/auth/userdata', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'json/application'
-        },
-        body: JSON.stringify(session?.user)
-      });
-      const newUserData = await requestUserData.json();
-      console.log(userData);
-      setUserData(newUserData);
-    };
-
-    getUserData();
-  }, [])
 
   return(<ProfileAccessSt>
     <div className={css`
       background-image: url(${imagelink});
     `}/>
     <button id="btn-profile" onClick={() => {
-      router.push(`/user/@${userData?.id}`);
+      router.push(`/user/@${session?.user?.id ?? ''}`);
     }}>
       profile
     </button>

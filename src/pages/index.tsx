@@ -33,11 +33,9 @@ export default function Home({books}: {books: Books[]}) {
   const { data: session, status } = useSession();
 
   useEffect(() => {
-    if(!userSession.isLoggedIn) 
+    if(status==='unauthenticated') 
       handleModal({type: 'add', newModal: {id: 0, message: (<AboutText/>)}});
-  }, []);
-
-  console.log(session);
+  }, [session]);
 
   return (<>
     <Head>

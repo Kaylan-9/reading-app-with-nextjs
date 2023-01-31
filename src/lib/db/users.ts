@@ -21,6 +21,9 @@ export async function getUserBooks(id: string) {
       book: {
         include: {
           imagepaths: true
+        },
+        where: {
+          idUser: id
         }
       }      
     }

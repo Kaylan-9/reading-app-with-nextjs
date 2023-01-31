@@ -13,21 +13,21 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 import { useContext, useEffect, useState } from 'react';
+import { authOptions } from '@/pages/api/auth/[...nextauth]';
+import { getServerSession } from 'next-auth/next';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  context.res.setHeader(
-    'Cache-Control',
-    'public, s-maxage=5, stale-while-revalidate=50'
-  )
-
+  const session = await getServerSession(context.req, context.res, authOptions);
   let { idUser } = context.query;  
   const userExist = typeof idUser==='string';
   const userData = typeof idUser==='string' ? (await getUserBooks(idUser.replace(/@/, ''))) : null;
-  
+  const loggedInUser = session?.user?.email===userData?.email;
+
   return ({
     props: {
       userExist,
       userData,
+      loggedInUser,
     }
   });
 };
@@ -35,13 +35,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 interface IUser {
   userData: (Users & {book: Books[]}) | null;
   userExist: boolean;
+  loggedInUser: boolean;
 };
 
 const UserSt = styled.div`
 
 `;
 
-export default function User({userData, userExist}: IUser) {
+export default function User({userData, userExist, loggedInUser}: IUser) {
   const router = useRouter();
   const [optionPicker, setOptionPicker] = useState<number>(0);
   const {handleModal} = useContext(ModalContext);
@@ -52,7 +53,8 @@ export default function User({userData, userExist}: IUser) {
       handleModal({type: 'add', newModal: {message: '💣 usuário não existe!'}});
       router.push('/');
     }
-  }, []);
+    console.log(userData);
+  }, [session]);
 
   return (userExist && userData!==null ? (
   <>
@@ -61,7 +63,7 @@ export default function User({userData, userExist}: IUser) {
     </Head>
     <Header/>
     <UserSt>
-      {status==='authenticated' ? (<OptionsMenu 
+      {loggedInUser ? (<OptionsMenu 
         selection={{
           condi: optionPicker,
           func: (indice) => setOptionPicker(indice)
@@ -73,7 +75,7 @@ export default function User({userData, userExist}: IUser) {
         ]}
       />) : null}
       <Container>
-        {(optionPicker===0 || status!=='authenticated') ? <Mangas title={`Mangás ${userData?.name}`} books={userData?.book}/> : null}
+        {(optionPicker===0 || !loggedInUser) ? <Mangas title={`Mangás ${userData?.name}`} books={userData?.book}/> : null}
         {status==='authenticated' ?
           [
             (optionPicker===1) ? <ContainerBookAdd/> : null,

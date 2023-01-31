@@ -6,6 +6,7 @@ import TextArea from '../ultis/TextArea';
 import Button from '../ultis/Button';
 import styled from '@emotion/styled';
 import { SessionContext, SessionContextInterface } from '@/contexts/SessionContext';
+import { useSession } from 'next-auth/react';
 
 const FormAddBook = styled.form`
   display: grid;
@@ -29,7 +30,9 @@ const FormAddCategory = styled.form`
 
 
 export default function ContainerBookAdd() {
-  const { userSession } = useContext<SessionContextInterface>(SessionContext);
+  const {data: session} = useSession();
+  const [userData, setUserData] = useState<any>({});
+
   const booknameinput = useRef<HTMLInputElement>(null);
   const bookimagesinput = useRef<HTMLInputElement>(null);
   const bookdescriptioninput = useRef<HTMLTextAreaElement>(null);
@@ -44,7 +47,7 @@ export default function ContainerBookAdd() {
     formData.append('bookname', booknameinput.current?.value ?? '');
     formData.append('bookdescription', bookdescriptioninput.current?.value ?? '');
     formData.append('bookidcategory', bookcategoryselect.current?.value ?? '');
-    formData.append('bookiduser', String(userSession.userdata?.id ?? ''));
+    formData.append('bookiduser', userData?.id ?? '');
     const validFiles: File[] = [];
     for (let i = 0; i < newImages.length; i++) {
       const file = newImages[i];
@@ -55,13 +58,29 @@ export default function ContainerBookAdd() {
       validFiles.push(file);
     }
     validFiles.forEach((file) => formData.append("bookimages", file));
-    await fetch('/api/book/create', {
+    const responseData = await fetch('/api/book/create', {
       method: 'POST',
       body: formData
     });
-  }, [newImages]);
+    console.log(await responseData.json());
+  }, [newImages, userData]);
 
   useEffect(() => {
+    const getUserData = async () => {
+      const requestUserData = await fetch('/api/auth/userdata', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'json/application'
+        },
+        body: JSON.stringify(session?.user)
+      });
+      const newUserData = await requestUserData.json();
+      console.log(userData);
+      setUserData(newUserData);
+    };
+
+    getUserData();
+
     for(let newImage of Array.from(newImages)) {
       let fileReader = new FileReader();
       fileReader.onload = ({target}) => {

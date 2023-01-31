@@ -10,7 +10,16 @@ export const authOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string
     })
   ],
-  adapter: PrismaAdapter(prisma)
+  adapter: PrismaAdapter(prisma),
+  callbacks: {
+    async session({ session, user }: any) {
+      if (session?.user) {
+        session.user.id = user.id;
+      }
+      return session;
+    },
+  },
 }
 
 export default NextAuth(authOptions);
+ 

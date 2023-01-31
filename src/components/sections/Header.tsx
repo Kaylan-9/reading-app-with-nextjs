@@ -42,7 +42,7 @@ function NavItem({name, href=false, onClick}: NavItemType) {
 
 const Items = styled.ul`
   display: flex;
-  gap: 50px;
+  gap: 25px;
   align-items: center;
   margin: 0 auto;
   grid-area: headeritems;

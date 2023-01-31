@@ -13,6 +13,10 @@ const nextConfig = {
         hostname: '/storage.cloud.google.com',
         pathname: '/xyz2-book-page-image-data/**',
       },
+      {
+        protocol: 'https',
+        hostname: '/lh3.googleusercontent.com'
+      }
     ]
   },
 }
