@@ -81,8 +81,17 @@ const MangaSt = styled.article`
 export default function Manga({id, title, images, options} : MangaInterface) {
   return <li>
     <MangaSt>
+      <h3 className="title">{title}</h3>
+      <ul className="options"> 
+        {options.map((option, indice) => (<li key={indice}>
+          <button onClick={() => {
+            option.func(id);
+          }}>
+            {option.object}
+          </button>
+        </li>))}
+      </ul>
       <Link href={`/manga/@${id}`}>
-        <h3 className="title">{title}</h3>
         <ul className="imagelist">
           {images?.map((img, indice) => {
             if(indice<3) {
@@ -95,15 +104,6 @@ export default function Manga({id, title, images, options} : MangaInterface) {
           })}
         </ul>
       </Link>
-      <ul className="options"> 
-        {options.map((option, indice) => (<li key={indice}>
-          <button onClick={() => {
-            option.func(id);
-          }}>
-            {option.object}
-          </button>
-        </li>))}
-      </ul>
     </MangaSt>
   </li>
 }

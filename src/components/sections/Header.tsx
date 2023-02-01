@@ -45,7 +45,7 @@ const Items = styled.ul`
   align-items: center;
   margin: 0 auto;
   grid-area: headeritems;
-  padding: 12.5px 25px;
+  padding: 12.5px 0;
   @media(max-width:700px) {
     flex-wrap: wrap;
   }
@@ -58,7 +58,7 @@ const Items = styled.ul`
   }
 `;
 
-const HeaderSt = styled.header`
+const StHeader = styled.header`
   align-items: center;
   padding: 0 150px;
   display: grid;
@@ -70,7 +70,7 @@ const HeaderSt = styled.header`
     'headeritems . search'
   ;
   row-gap: 15px;
-  background-color: rgb(22, 22, 22);
+  background-color: rgb(var(--secondary-background));
   box-shadow: 0px 0px 50px 1px rgba(0, 0, 0, 0.5);
   padding-bottom: 25px;
   @media(max-width: 1100px) {
@@ -150,7 +150,7 @@ export default function Header({children, search}: HeaderInterface) {
   const [ activeLogin, setActiveLogin  ] = useState<boolean>(false);
   return (<>
     {(activeLogin ? (<Login setActiveLogin={setActiveLogin}/>) : null)}
-    <HeaderSt>
+    <StHeader>
       <div className='adverts'>
 
       </div>
@@ -178,6 +178,6 @@ export default function Header({children, search}: HeaderInterface) {
         {search}
         {children}
       </div>
-    </HeaderSt>
+    </StHeader>
   </>);
 }

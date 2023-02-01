@@ -17,17 +17,25 @@ export const getServerSideProps: GetServerSideProps = async (context)  => {
     'public, s-maxage=5, stale-while-revalidate=150'
   );
 
-  
   const { n } = context.query;
-  const books = n!==undefined ? await getAllBooks(Number(n)) : await getAllBooks();
+  let currentPage = 0;
+  if(n!==undefined) currentPage = Number(n);
+  const books = await getAllBooks(currentPage);
   const nOfPages = await countPages();
   return {props: {
     books,
-    nOfPages
+    nOfPages,
+    currentPage
   }}
 }
 
-export default function Home({books, nOfPages}: {books: BookUser[], nOfPages: number}) {
+interface IHome {
+  books: BookUser[], 
+  nOfPages: number,
+  currentPage: number
+}
+
+export default function Home({books, nOfPages, currentPage}: IHome) {
   const { handleModal } = useContext(ModalContext);
   const [ searchContent,  setSearchContent ] = useState<BookUser[] | false>(false);
   const searchInput = useRef<HTMLInputElement>(null);
@@ -65,9 +73,8 @@ export default function Home({books, nOfPages}: {books: BookUser[], nOfPages: nu
       <Select ref={categorySearchPicker}/>
     </Header>
     <main>
-      <Pagination nOfPages={nOfPages}/>
+      <Pagination current={currentPage} nOfPages={nOfPages}/>
       <Mangas title='Mangás' books={(!searchContent ? books : searchContent)}/>
-      <Pagination nOfPages={nOfPages}/>
     </main>
   </>)
 }

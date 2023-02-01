@@ -59,7 +59,6 @@ export default function Mangas({title, books}: {title?: string, books: BookUser[
           path={book.path} 
           images={book.imagepaths}
           options={[
-            {object:<MdOutlineFavorite/>, func(){}},
             {object:<ProfilePic imgurl={book?.user?.image ?? ''} width='30px' min_height='30px'/>, func(){
               router.push(`/user/@${book.user.id}`);
             }},
