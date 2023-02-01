@@ -5,7 +5,7 @@ import MangaEdit from '@/components/sections/lists/MangasEdit';
 import Container from '@/components/ultis/Container';
 import OptionsMenu from '@/components/ultis/OptionsMenu';
 import { ModalContext } from '@/contexts/ModalContext';
-import { Books } from '@/lib/db/books';
+import { Books, BookUser } from '@/lib/db/books';
 import { getUserBooks, Users } from '@/lib/db/users';
 import styled from '@emotion/styled';
 import { GetServerSideProps } from 'next';
@@ -33,7 +33,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 };
 
 interface IUser {
-  userData: (Users & {book: Books[]}) | null;
+  userData: (Users & {book: BookUser[]}) | null;
   userExist: boolean;
   loggedInUser: boolean;
 };

@@ -9,12 +9,7 @@ const ProfileAccessSt = styled.li`
   flex-direction: row;
   gap: 25px;
   & > div {
-    border-radius: 100%;
-    background-size: cover !important;
-    background-repeat: no-repeat !important;
-    background-position: center !important;
-    min-height: 40px;
-    width: 40px;
+ 
   }
   & > #btn-profile, #btn-logout {
     background-color: transparent;
@@ -31,11 +26,21 @@ const ProfileAccessSt = styled.li`
   }
 `;
 
+export const ProfilePic = styled.div<{width: string, min_height: string, imgurl: string}>`
+  border-radius: 100%;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-image: url(${({imgurl}) => imgurl});
+  min-height: 40px;
+  width: 40px;
+`;
+
 interface IProfileAccess {
-  imagelink: string;  
+  imgurl: string;  
 }
 
-export default function ProfileAccess({imagelink}: IProfileAccess) {
+export default function ProfileAccess({imgurl}: IProfileAccess) {
   const {data: session}: any = useSession();
   const router = useRouter();
   const goToProfile = () => {
@@ -43,10 +48,7 @@ export default function ProfileAccess({imagelink}: IProfileAccess) {
   };
 
   return(<ProfileAccessSt>
-
-    <div onClick={goToProfile} className={css`
-      background-image: url(${imagelink});
-    `}/>
+    <ProfilePic onClick={goToProfile} imgurl={imgurl} width='40px' min_height='40px'/>
     <button id="btn-profile" onClick={goToProfile}>
       profile
     </button>

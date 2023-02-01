@@ -1,4 +1,4 @@
-import { Prisma } from "@prisma/client";
+import { Prisma, User } from "@prisma/client";
 import prisma from "./prisma";
 
 export interface Books {
@@ -9,6 +9,10 @@ export interface Books {
   description: string;
   idCategory: number;
   idUser: string;
+}
+
+export interface BookUser extends Books {
+  user: User
 }
 
 export async function deleteBook(id: number) {
@@ -35,13 +39,26 @@ export async function createBook(data: Prisma.BooksCreateInput) {
   }))
 }
 
-export async function getAllBooks() {
-  const data = await prisma.books.findMany({
+export async function getAllBooks(n?: number) {
+  return await prisma.books.findMany({
+    take: 2,
+    skip: 1,
+    cursor: {
+      id: (n!==undefined && typeof n==='number') ? n+25 : 25
+    },
     include: {
-      imagepaths: true
+      imagepaths: true,
+      user: true
+    },
+    orderBy: {
+      id: 'asc'
     }
   });
-  return data;
+}
+
+export async function countPages() {
+  const nBooks = await prisma.books.count();
+  return Math.round(nBooks/2);
 }
 
 export async function getBook(id: number) {
@@ -51,7 +68,8 @@ export async function getBook(id: number) {
     },
     include: {
       imagepaths: true,
-      categorie: true
+      categorie: true,
+      user: true
     }
   });
   return data;
@@ -69,7 +87,8 @@ export async function getBooks(title: string, category: number | false) {
     where: where,
     include: {
       categorie: true,
-      imagepaths: true
+      imagepaths: true,
+      user: true
     }
   });
   return data;

@@ -8,7 +8,7 @@ const LoginSt = styled.div`
   max-width: 100vw;
   min-height: 100vh;
   width: 100%;
-  position: absolute;
+  position: fixed;
   z-index: 1000;
   form {
     transition: left 1s;

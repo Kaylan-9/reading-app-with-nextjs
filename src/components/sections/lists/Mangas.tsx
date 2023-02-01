@@ -1,12 +1,15 @@
-import { Books } from '@/lib/db/books';
+import { BookUser } from '@/lib/db/books';
 import styled from '@emotion/styled';
 import Manga from "./Manga";
 import { MdOutlineFavorite } from 'react-icons/md';
+import { useRouter } from 'next/router';
+import { ProfilePic } from '../ProfileAccess';
+
 
 const MangaList = styled.div`
   max-width: var(--max-width);
   width: 100%;
-  padding: 0 100px;
+  padding: 25px 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -15,16 +18,15 @@ const MangaList = styled.div`
     padding: 0px;
   }
   & > h2 {
-    margin-bottom: 60px;
+    margin-bottom: 120px;
     text-align: center;
-    background: linear-gradient(90deg, #ffffff76 0%, #ffffff 50%, #ffffff13 100%);
+    background: #ffffff;
     font-weight: bold;
     background-clip: text;
     -webkit-text-fill-color: transparent;
     display: flex !important;
     align-items: center;
     gap: 15px;
-    margin-top: 50px;
     @media(max-width: 700px) {
       margin-bottom: 0;
     }
@@ -42,13 +44,14 @@ const MangaList = styled.div`
   }
 `;
 
-export default function Mangas({title, books}: {title?: string, books: Books[]}) {
+export default function Mangas({title, books}: {title?: string, books: BookUser[]}) {
+  const router = useRouter();
   return (<MangaList>
     {title!==undefined ? (<h2 className='title'>
       <span>{title}</span>
     </h2>) : null}
     <ul>
-      {books.map((book: Books, indice) => 
+      {books.map((book: BookUser, indice) => 
         <Manga
           key={book.id+book.title}
           id={book.id as number}
@@ -56,7 +59,10 @@ export default function Mangas({title, books}: {title?: string, books: Books[]})
           path={book.path} 
           images={book.imagepaths}
           options={[
-            {Icon:<MdOutlineFavorite/>, func(){}}
+            {object:<MdOutlineFavorite/>, func(){}},
+            {object:<ProfilePic imgurl={book?.user?.image ?? ''} width='30px' min_height='30px'/>, func(){
+              router.push(`/user/@${book.user.id}`);
+            }},
           ]}
         />
       )}

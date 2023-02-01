@@ -168,7 +168,7 @@ export default function Header({children, search}: HeaderInterface) {
         <NavItem name='home' href=""/>
         <NavItem name='about' href="about"/>
         { status==='authenticated' ? 
-          (<ProfileAccess imagelink={session.user?.image ?? ''}/>) : 
+          (<ProfileAccess imgurl={session.user?.image ?? ''}/>) : 
           (<NavItem name='login' onClick={() => {
             setActiveLogin(true);
           }}/>)

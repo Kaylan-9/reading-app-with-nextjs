@@ -191,7 +191,7 @@ const Viewer = ({bookData, viewContent, setViewContent}: {bookData: Books | null
             );
           })}
           alt={`${bookData?.imagepaths[pagePosition].name}-${pagePosition}`}
-          src={`https://storage.cloud.google.com/xyz2-book-page-image-data/${image.name}`}
+          src={`https://storage.cloud.google.com/xyz2-book-page-image-data/${image?.name}`}
         />
       </li>) : null);
     })}
@@ -221,7 +221,7 @@ export default function Manga({bookData}: {bookData: Books & {categorie: {name: 
             onClick={()=>setViewContent(true)}
           />
           <h2 className='title'>{bookData?.title}</h2>
-          <h3 className='category'>{bookData?.categorie.name}</h3>
+          <h3 className='category'>{bookData?.categorie?.name}</h3>
           <p className='description'>{bookData?.description}</p>
           <Options options={[
             {name: "read", Icon: <AiOutlineRead/>, onClick() {

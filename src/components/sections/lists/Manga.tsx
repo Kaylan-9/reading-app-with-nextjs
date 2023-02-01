@@ -5,7 +5,7 @@ import Link from "next/link";
 
 
 type OptionType = {
-  Icon: ReactNode,
+  object: ReactNode,
   func: (id: number) => void,
 }
 
@@ -100,7 +100,7 @@ export default function Manga({id, title, images, options} : MangaInterface) {
           <button onClick={() => {
             option.func(id);
           }}>
-            {option.Icon}
+            {option.object}
           </button>
         </li>))}
       </ul>

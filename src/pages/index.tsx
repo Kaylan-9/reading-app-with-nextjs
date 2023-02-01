@@ -1,6 +1,6 @@
 import { GetServerSideProps } from "next";
 import Header from '@/components/sections/Header';
-import { Books, getAllBooks } from '@/lib/db/books';
+import { BookUser, countPages, getAllBooks } from '@/lib/db/books';
 import Mangas from '@/components/sections/lists/Mangas';
 import { useContext, useEffect, useRef, useState } from 'react';
 import Select from '../components/ultis/Select';
@@ -8,24 +8,28 @@ import { MdOutlineManageSearch } from 'react-icons/md';
 import Head from 'next/head';
 import { ModalContext } from "@/contexts/ModalContext";
 import { AboutText } from "@/components/sections/AboutText";
-import { useSession, getSession, getProviders, getCsrfToken, signIn } from "next-auth/react";
+import { useSession } from "next-auth/react";
+import Pagination from "@/components/sections/lists/Pagination";
 
-
-export const getServerSideProps: GetServerSideProps = async ({ res })  => {
-  res.setHeader(
+export const getServerSideProps: GetServerSideProps = async (context)  => {
+  context.res.setHeader(
     'Cache-Control',
     'public, s-maxage=5, stale-while-revalidate=150'
   );
 
-  const books = await getAllBooks();
+  
+  const { n } = context.query;
+  const books = n!==undefined ? await getAllBooks(Number(n)) : await getAllBooks();
+  const nOfPages = await countPages();
   return {props: {
-    books
+    books,
+    nOfPages
   }}
 }
 
-export default function Home({books}: {books: Books[]}) {
+export default function Home({books, nOfPages}: {books: BookUser[], nOfPages: number}) {
   const { handleModal } = useContext(ModalContext);
-  const [ searchContent,  setSearchContent ] = useState<Books[] | false>(false);
+  const [ searchContent,  setSearchContent ] = useState<BookUser[] | false>(false);
   const searchInput = useRef<HTMLInputElement>(null);
   const categorySearchPicker = useRef<HTMLInputElement>(null);
   const { data: session, status } = useSession();
@@ -53,7 +57,7 @@ export default function Home({books}: {books: Books[]}) {
             body: dataToDoSearch
           });
           const dataResearch = await resultResearch.json();
-          setSearchContent(dataResearch.research as Books[]);
+          setSearchContent(dataResearch.research as BookUser[]);
         }}/>
         <input ref={searchInput} type="text" name="" id="" placeholder='pesquisar por nome'/>
       </div>}
@@ -61,7 +65,10 @@ export default function Home({books}: {books: Books[]}) {
       <Select ref={categorySearchPicker}/>
     </Header>
     <main>
+      <Pagination nOfPages={nOfPages}/>
       <Mangas title='Mangás' books={(!searchContent ? books : searchContent)}/>
+      <Pagination nOfPages={nOfPages}/>
     </main>
   </>)
 }
+
