@@ -1,7 +1,6 @@
 import { BookUser } from '@/lib/db/books';
 import styled from '@emotion/styled';
 import Manga from "./Manga";
-import { MdOutlineFavorite } from 'react-icons/md';
 import { useRouter } from 'next/router';
 import { ProfilePic } from '../ProfileAccess';
 
@@ -18,9 +17,9 @@ const MangaList = styled.div`
     padding: 0px;
   }
   & > h2 {
-    margin-bottom: 120px;
+    margin: 100px 0;
     text-align: center;
-    background: #ffffff;
+    background: white;
     font-weight: bold;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -44,6 +43,16 @@ const MangaList = styled.div`
   }
 `;
 
+export const UserProfile = styled.div`
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  width: 192px;
+  & > label {
+    color: var(--secondary-foreground);
+  }
+`;
+
 export default function Mangas({title, books}: {title?: string, books: BookUser[]}) {
   const router = useRouter();
   return (<MangaList>
@@ -59,7 +68,12 @@ export default function Mangas({title, books}: {title?: string, books: BookUser[
           path={book.path} 
           images={book.imagepaths}
           options={[
-            {object:<ProfilePic imgurl={book?.user?.image ?? ''} width='30px' min_height='30px'/>, func(){
+            {object: (<UserProfile>
+              <ProfilePic imgurl={book?.user?.image ?? ''} width='30px' min_height='30px'/>
+              <label>
+                <strong>por</strong> {book?.user?.name}
+              </label>
+            </UserProfile>), func(){
               router.push(`/user/@${book.user.id}`);
             }},
           ]}

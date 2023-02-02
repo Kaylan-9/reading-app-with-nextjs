@@ -4,12 +4,12 @@ import { BookUser, countPages, getAllBooks } from '@/lib/db/books';
 import Mangas from '@/components/sections/lists/Mangas';
 import { useContext, useEffect, useRef, useState } from 'react';
 import Select from '../components/ultis/Select';
-import { MdOutlineManageSearch } from 'react-icons/md';
 import Head from 'next/head';
 import { ModalContext } from "@/contexts/ModalContext";
 import { AboutText } from "@/components/sections/AboutText";
 import { useSession } from "next-auth/react";
 import Pagination from "@/components/sections/lists/Pagination";
+import { BiSearch } from "react-icons/bi";
 
 export const getServerSideProps: GetServerSideProps = async (context)  => {
   context.res.setHeader(
@@ -53,7 +53,7 @@ export default function Home({books, nOfPages, currentPage}: IHome) {
     </Head>
     <Header 
       search={<div className="inputicon">
-        <MdOutlineManageSearch onClick={async () => {
+        <BiSearch onClick={async () => {
           const dataToDoSearch = JSON.stringify({
             title: searchInput.current?.value==="" ? false : searchInput.current?.value,
             category: categorySearchPicker.current?.value==="" ? false : categorySearchPicker.current?.value

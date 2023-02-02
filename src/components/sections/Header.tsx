@@ -110,7 +110,7 @@ const StHeader = styled.header`
       grid-area: inputicon;
       font-size: 25px;
       border-radius: 30px 0 0 30px;
-      background-color: #292929;
+      background-color: var(--tertiary-background);
       padding-left: 15px;
       gap: 15px;
       @media(max-width:700px) {
@@ -122,7 +122,7 @@ const StHeader = styled.header`
         background-color: transparent;
         padding: 15px;
         font-family: var(--font-one);
-        color: white;
+        color: var(--secondary-foreground);
         min-width: 250px;
         outline: none;
         &::-webkit-input-placeholder {
@@ -131,8 +131,9 @@ const StHeader = styled.header`
       }
       & > svg {
         min-width: 18px;
+        cursor: pointer;
         & > * {
-          color: white;
+          color: var(--secondary-foreground);
         }
       }
     }

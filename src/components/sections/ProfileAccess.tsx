@@ -16,12 +16,12 @@ const ProfileAccessSt = styled.li`
     color: white;
     border: none;
     font-family: var(--font-one);
+    font-weight: bold;
     cursor: pointer;
   }
   & > #btn-profile {grid-area: btn-profile}
   & > #btn-logout {
     grid-area: btn-profile;
-    font-weight: bold;
     color: #ff7a7a !important;
   }
 `;

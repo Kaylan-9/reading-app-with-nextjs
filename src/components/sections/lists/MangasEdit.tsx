@@ -4,7 +4,7 @@ import { MdOutlineManageSearch } from "react-icons/md";
 import { BiTrash } from "react-icons/bi";
 import { useRef, useState } from 'react';
 import Manga from "./Manga";
-import { Books } from "@/lib/db/db";
+import { BookUser } from "@/lib/db/books";
 
 const MangaEditSt = styled.div`
   & > ul {
@@ -49,7 +49,7 @@ const MangaEditSt = styled.div`
 `;
 
 export default function MangaEdit() {
-  const [ searchContent,  setSearchContent ] = useState<Books[] | false>(false);
+  const [ searchContent,  setSearchContent ] = useState<BookUser[] | false>(false);
   const searchInput = useRef<HTMLInputElement>(null); 
   const router = useRouter();
 
@@ -64,19 +64,19 @@ export default function MangaEdit() {
         });
         const dataResearch = await resultResearch.json();
         console.log(dataResearch)
-        setSearchContent(dataResearch.research as Books[]);
+        setSearchContent(dataResearch.research as BookUser[]);
       }}/>
       <input ref={searchInput} type="text" name="" id="" placeholder='pesquisar por nome'/>
     </div>
     <ul>
-      {searchContent ? searchContent.map((book: Books) => <Manga
+      {searchContent ? searchContent.map((book: BookUser) => <Manga
         key={book.id+book.title}
         id={book.id as number}
         title={book.title} 
         path={book.path} 
         images={book.imagepaths}
         options={[
-          {Icon: <BiTrash/>, async func(id){
+          {object: <BiTrash/>, async func(id){
             const dataToDoDelete = JSON.stringify({id, path: book.path});
             await fetch('/api/book/delete', {
               method: 'DELETE',

@@ -21,7 +21,7 @@ const InputLabelSt = styled.div<{area: string}>`
   }
   & > input {
     font-weight: bold;
-    background-color: #292929;
+    background-color: var(--secondary-background);
     color: #ffffff;
     padding: 15px;
     border-radius: 30px;

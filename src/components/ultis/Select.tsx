@@ -8,6 +8,8 @@ const SelectSt = styled.div`
   grid-area: bookcategoryselect;
   text-align: center;
   background-color: var(--tertiary-background);
+  color: var(--secondary-foreground);
+  font-weight: bold;
   border-radius: 30px;
   > input[type=text] {
     display: none;

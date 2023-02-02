@@ -20,42 +20,42 @@ interface MangaInterface {
 const MangaSt = styled.article`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  row-gap: 20px;
+  align-items: flex-start;
+  row-gap: 10px;
   max-width: 200px;
+  min-height: 345.56px;
+  & > .title {
+    font-size: 18px !important;
+    font-family: var(--font-one);
+  }
   & > a {
     display: flex;
     flex-direction: column;
     align-items: center;
-    & > .title {
-      font-size: 18px !important;
-      font-family: var(--font-one);
-      margin-bottom: 15px;
-    }
     & > .imagelist {
       #image-0 {
-        transform: translateX(-100px) scale(1) !important;
+        transform: translateX(0px) scale(1) !important;
         position: relative;
         transition: transform 300ms;
         z-index: 2 !important;
       }
       #image-1 {
-        transform: translate(-70px, 6px) scale(.95) !important;
+        transform: translate(32.5px, 6px) scale(.95) !important;
         position: relative;
         transition: transform 1s;
         z-index: 1 !important;
       }
       #image-2 {
-        transform: translate(-35px, 10px) scale(.9) !important;
+        transform: translate(65px, 10px) scale(.9) !important;
         position: relative;
         transition: transform 500ms;
         z-index: 0 !important;
       }
       #image-1 > div, #image-2 > div {transition: transform 1s}
       &:hover {
-        #image-0 {transform: translateX(-80px) scale(1) !important;}
-        #image-1 {transform: translateX(-70px) scale(1) !important;}
-        #image-2 {transform: translateX(-60px) scale(1) !important;}
+        #image-0 {transform: translateX(10px) scale(1) !important;}
+        #image-1 {transform: translateX(32.5px) scale(1) !important;}
+        #image-2 {transform: translateX(40px) scale(1) !important;}
       }
     }
   }
@@ -63,7 +63,6 @@ const MangaSt = styled.article`
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-top: 195px;
     gap: 5px;
     & > li > button {
       cursor: pointer;

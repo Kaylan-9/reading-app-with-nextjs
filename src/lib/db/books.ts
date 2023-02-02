@@ -41,24 +41,20 @@ export async function createBook(data: Prisma.BooksCreateInput) {
 
 export async function getAllBooks(n?: number) {
   return await prisma.books.findMany({
-    take: 2,
-    skip: 1,
-    cursor: {
-      id: (n!==undefined && typeof n==='number') ? n+25 : 25
-    },
+    take: 4,
+    skip: (n!==undefined && typeof n==='number') ? n*4 : 0,
+    cursor: {id: (n!==undefined && typeof n==='number') ? n+25 : 25},
     include: {
       imagepaths: true,
       user: true
     },
-    orderBy: {
-      id: 'asc'
-    }
+    orderBy: {id: 'asc'}
   });
 }
 
 export async function countPages() {
   const nBooks = await prisma.books.count();
-  return Math.round(nBooks/2);
+  return Math.floor(nBooks/4)-1;
 }
 
 export async function getBook(id: number) {
