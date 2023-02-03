@@ -76,14 +76,18 @@ const StHeader = styled.header`
   @media(max-width: 1100px) {
     padding: 0;
     grid-template-columns: auto !important;
-    grid-template-rows: 50px 60px auto auto !important;
+    grid-template-rows: 0 60px auto auto !important;
     grid-template-areas: 
       'adverts'
-      '.'
+      'logotipo'
       'headeritems'
       'search';
     & > .logotipo {
-      transform: translate(-50%, -35px) !important;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transform: translate(0px, 0px) !important;
+      position: static !important;
     }
   }
   & > .logotipo {

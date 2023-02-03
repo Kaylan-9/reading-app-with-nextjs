@@ -10,6 +10,9 @@ import { AboutText } from "@/components/sections/AboutText";
 import { useSession } from "next-auth/react";
 import Pagination from "@/components/sections/lists/Pagination";
 import { BiSearch } from "react-icons/bi";
+import { Profiles } from "@/components/sections/lists/Profiles";
+import { getProfileData } from "@/lib/db/users";
+import IProfile from "@/types/IProfile";
 
 export const getServerSideProps: GetServerSideProps = async (context)  => {
   context.res.setHeader(
@@ -21,21 +24,24 @@ export const getServerSideProps: GetServerSideProps = async (context)  => {
   let currentPage = 0;
   if(n!==undefined) currentPage = Number(n);
   const books = await getAllBooks(currentPage);
+  const profiles = await getProfileData();
   const nOfPages = await countPages();
   return {props: {
     books,
     nOfPages,
-    currentPage
+    currentPage,
+    profiles
   }}
 }
 
-interface IHome {
-  books: BookUser[], 
-  nOfPages: number,
-  currentPage: number
+interface IHomeProps {
+  books: BookUser[];
+  nOfPages: number;
+  currentPage: number;
+  profiles: IProfile[];
 }
 
-export default function Home({books, nOfPages, currentPage}: IHome) {
+export default function Home({profiles, books, nOfPages, currentPage}: IHomeProps) {
   const { handleModal } = useContext(ModalContext);
   const [ searchContent,  setSearchContent ] = useState<BookUser[] | false>(false);
   const searchInput = useRef<HTMLInputElement>(null);
@@ -74,6 +80,7 @@ export default function Home({books, nOfPages, currentPage}: IHome) {
     </Header>
     <main>
       <Pagination current={currentPage} nOfPages={nOfPages}/>
+      <Profiles data={profiles}/>
       <Mangas title='Mangás' books={(!searchContent ? books : searchContent)}/>
     </main>
   </>)

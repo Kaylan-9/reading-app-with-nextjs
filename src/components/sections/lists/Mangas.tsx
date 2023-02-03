@@ -2,8 +2,7 @@ import { BookUser } from '@/lib/db/books';
 import styled from '@emotion/styled';
 import Manga from "./Manga";
 import { useRouter } from 'next/router';
-import { ProfilePic } from '../ProfileAccess';
-
+import ProfilePic from '../ProfilePic';
 
 const MangaList = styled.div`
   max-width: var(--max-width);

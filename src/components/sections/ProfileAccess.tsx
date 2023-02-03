@@ -2,6 +2,7 @@ import { css } from "@emotion/css";
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
 import { useSession, signOut } from 'next-auth/react';
+import ProfilePic from "./ProfilePic";
 
 const ProfileAccessSt = styled.li`
   align-items: center;
@@ -24,16 +25,6 @@ const ProfileAccessSt = styled.li`
     grid-area: btn-profile;
     color: #ff7a7a !important;
   }
-`;
-
-export const ProfilePic = styled.div<{width: string, min_height: string, imgurl: string}>`
-  border-radius: 100%;
-  background-size: cover !important;
-  background-repeat: no-repeat !important;
-  background-position: center !important;
-  background-image: url(${({imgurl}) => imgurl});
-  min-height: 40px;
-  width: 40px;
 `;
 
 interface IProfileAccess {

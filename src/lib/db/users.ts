@@ -30,6 +30,16 @@ export async function getUserBooks(id: string) {
   }));
 }
 
+export async function getProfileData() {
+  return (await prisma.user.findMany({
+    select: {
+      id: true,
+      name: true,
+      image: true,
+    }
+  }))
+};
+
 export async function getUser(data: Users) {
   const {name, email, image} = data;
   const user = await prisma.user.findFirst({
