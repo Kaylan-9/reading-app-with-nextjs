@@ -1,4 +1,4 @@
-import Header from "@/components/sections/Header";
+import Header from "@/components/sections/header/Header";
 import Head from "next/head";
 import { css } from "@emotion/css";
 import { AboutText } from "@/components/sections/AboutText";

@@ -2,42 +2,11 @@ import { ReactNode, useState } from "react";
 import Link from 'next/link';
 import Image from 'next/image';
 import styled from "@emotion/styled";
-import { useRouter } from "next/router";
-import Login from "./Login";
+import Login from "../Login";
 import ProfileAccess from "./ProfileAccess";
 import { useSession } from "next-auth/react";
-
-
-type NavItemType = {
-  name: string,
-  href?: string | false,
-  onClick?: () => void,
-}
-
-const NavItemSt = styled.li`
-  & > button {
-    background-color: transparent;
-    cursor: pointer;
-    font-family: 'Roboto', sans-serif !important;
-    font-weight: bold;
-    border: none;
-    padding:0px;
-    color: white;
-  }
-`;
-
-function NavItem({name, href=false, onClick}: NavItemType) {
-  const router = useRouter();
-  return (router.asPath!==`/${href}` ? (<NavItemSt>
-    <button onClick={href || onClick===undefined ? 
-      () => router.push(`/${href}`, undefined, { shallow: true }) :
-      onClick
-    }>
-      {name}
-    </button>
-  </NavItemSt>) : null);
-}
-
+import { IHeaderProps } from "@/types/components/IHeaderProps";
+import { NavItem } from "./NavItem";
 
 const Items = styled.ul`
   display: flex;
@@ -62,14 +31,15 @@ const StHeader = styled.header`
   align-items: center;
   padding: 0 150px;
   display: grid;
-  grid-template-columns: min-content auto min-content !important;
-  grid-template-rows: 125px 60px auto;
+  grid-template-columns: repeat(2, min-content) repeat(3, auto) min-content !important;
+  grid-template-rows: 60px auto !important;
   grid-template-areas: 
-    'adverts adverts adverts'
-    '   .       .       .   '
-    'headeritems . search'
+    'adv adv adv adv adv adv'
+    'logotipo headeritems . . allpagesbtn search'
+    'pagination pagination pagination pagination pagination pagination'
   ;
   row-gap: 15px;
+  column-gap: 25px;
   background-color: rgb(var(--secondary-background));
   box-shadow: 0px 0px 50px 1px rgba(0, 0, 0, 0.5);
   padding-bottom: 25px;
@@ -78,7 +48,7 @@ const StHeader = styled.header`
     grid-template-columns: auto !important;
     grid-template-rows: 0 60px auto auto !important;
     grid-template-areas: 
-      'adverts'
+      'adv'
       'logotipo'
       'headeritems'
       'search';
@@ -92,12 +62,9 @@ const StHeader = styled.header`
   }
   & > .logotipo {
     grid-area: logotipo;
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, 40px);
   }
-  & > .adverts {
-    grid-area: adverts;
+  & > .adv {
+    grid-area: adv;
   }
   & > .search {
     display: flex;
@@ -144,22 +111,14 @@ const StHeader = styled.header`
   }
 `;
 
-interface HeaderInterface {
-  children?: ReactNode,
-  search?: any
-}
-
-export default function Header({children, search}: HeaderInterface) {
+export default function Header({children}: IHeaderProps) {
   const {data: session, status} = useSession();
-
   const [ activeLogin, setActiveLogin  ] = useState<boolean>(false);
+
   return (<>
     {(activeLogin ? (<Login setActiveLogin={setActiveLogin}/>) : null)}
     <StHeader>
-      <div className='adverts'>
-
-      </div>
-      
+      <div className='adv'/>
       <Link className='logotipo' href={`/`}>
         <Image
           src="/logo.png"
@@ -168,7 +127,6 @@ export default function Header({children, search}: HeaderInterface) {
           height={60}
         />
       </Link>
-
       <Items>
         <NavItem name='home' href=""/>
         <NavItem name='about' href="about"/>
@@ -179,10 +137,8 @@ export default function Header({children, search}: HeaderInterface) {
           }}/>)
         }
       </Items>
-      <div className='search'>
-        {search}
-        {children}
-      </div>
+      {children}
     </StHeader>
   </>);
 }
+

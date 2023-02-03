@@ -1,11 +1,10 @@
 import ContainerBookAdd from '@/components/sections/ContainerAdd';
-import Header from '@/components/sections/Header';
+import Header from '@/components/sections/header/Header';
 import Mangas from '@/components/sections/lists/Mangas';
 import MangaEdit from '@/components/sections/lists/MangasEdit';
 import Container from '@/components/ultis/Container';
 import OptionsMenu from '@/components/ultis/OptionsMenu';
 import { ModalContext } from '@/contexts/ModalContext';
-import { Books, BookUser } from '@/lib/db/books';
 import { getUserBooks, Users } from '@/lib/db/users';
 import styled from '@emotion/styled';
 import { GetServerSideProps } from 'next';
@@ -15,6 +14,7 @@ import { useSession } from 'next-auth/react';
 import { useContext, useEffect, useState } from 'react';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import { getServerSession } from 'next-auth/next';
+import { IUserPageProps } from '@/types/pages/IUserPageProps';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -22,7 +22,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const userExist = typeof idUser==='string';
   const userData = typeof idUser==='string' ? (await getUserBooks(idUser.replace(/@/, ''))) : null;
   const loggedInUser = session?.user?.email===userData?.email;
-
   return ({
     props: {
       userExist,
@@ -32,17 +31,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   });
 };
 
-interface IUser {
-  userData: (Users & {book: BookUser[]}) | null;
-  userExist: boolean;
-  loggedInUser: boolean;
-};
-
 const UserSt = styled.div`
 
 `;
 
-export default function User({userData, userExist, loggedInUser}: IUser) {
+export default function User({userData, userExist, loggedInUser}: IUserPageProps) {
   const router = useRouter();
   const [optionPicker, setOptionPicker] = useState<number>(0);
   const {handleModal} = useContext(ModalContext);
@@ -84,7 +77,6 @@ export default function User({userData, userExist, loggedInUser}: IUser) {
           null
         }
       </Container>
-
     </UserSt>
   </>) :
   null);

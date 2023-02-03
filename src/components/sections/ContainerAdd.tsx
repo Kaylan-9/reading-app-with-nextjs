@@ -30,14 +30,12 @@ const FormAddCategory = styled.form`
 
 
 export default function ContainerBookAdd() {
-  const {data: session}: any = useSession();
-
+  const {data: session}: any = useSession()
   const booknameinput = useRef<HTMLInputElement>(null);
   const bookimagesinput = useRef<HTMLInputElement>(null);
   const bookdescriptioninput = useRef<HTMLTextAreaElement>(null);
   const bookcategoryselect = useRef<HTMLInputElement>(null);
-  const bookcategorynameinput = useRef<HTMLInputElement>(null);
-
+  const bookcategorynameinput = useRef<HTMLInputElement>(null)
   const [newImages, setNewImages] = useState<FileList | []>([]);
   const [filesDataURL, setFilesDataURL] = useState<string[]>([]);
 

@@ -1,7 +1,8 @@
 import { IModalReducerState as ModalsProps, ModalContext, TModal } from '../../contexts/ModalContext';
 import styled from '@emotion/styled';
-import { useContext, ReactNode } from 'react';
+import { useContext } from 'react';
 import { GrClose } from 'react-icons/gr';
+import { IModalProps } from '@/types/components/IModalProps';
 
 const ModalsSt = styled.ul`
   position: absolute;
@@ -50,11 +51,7 @@ const ModalSt = styled.div`
   }
 `;
 
-export interface TModalProps extends TModal {
-  onClick: () => void;
-  btnIcon: ReactNode;
-};
-const Modal = ({message, onClick, btnIcon}: TModalProps) => {
+const Modal = ({message, onClick, btnIcon}: IModalProps) => {
   return (<ModalSt>
     <p className='modal-message'>{message}</p>
     <button className='modal-button' onClick={onClick}> 

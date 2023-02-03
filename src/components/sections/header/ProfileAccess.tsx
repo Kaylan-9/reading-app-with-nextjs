@@ -2,7 +2,8 @@ import { css } from "@emotion/css";
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
 import { useSession, signOut } from 'next-auth/react';
-import ProfilePic from "./ProfilePic";
+import ProfilePic from "../ProfilePic";
+import { IProfileAccessProps } from "@/types/components/IProfileAccessProps";
 
 const ProfileAccessSt = styled.li`
   align-items: center;
@@ -25,13 +26,9 @@ const ProfileAccessSt = styled.li`
     grid-area: btn-profile;
     color: #ff7a7a !important;
   }
-`;
+`
 
-interface IProfileAccess {
-  imgurl: string;  
-}
-
-export default function ProfileAccess({imgurl}: IProfileAccess) {
+export default function ProfileAccess({imgurl}: IProfileAccessProps) {
   const {data: session}: any = useSession();
   const router = useRouter();
   const goToProfile = () => {
