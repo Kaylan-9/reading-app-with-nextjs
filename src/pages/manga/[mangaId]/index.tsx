@@ -8,6 +8,9 @@ import Head from 'next/head';
 import { MouseEvent, useContext } from 'react';
 import { useState, useRef, useEffect, ReactNode, useCallback } from "react";
 import { AiOutlineRead } from 'react-icons/ai';
+import { useSession } from 'next-auth/react';
+import { IoHeart } from 'react-icons/io5';
+
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   context.res.setHeader(
@@ -62,13 +65,6 @@ const MangaContentSt = styled.div`
   margin: 0 auto;
 `;
 
-type OptionsType = {
-  options: {
-    name: string,
-    Icon: ReactNode,
-    onClick: () => void
-  }[]
-}
 
 const OptionsSt = styled.ul`
   grid-area: mangaoptions;
@@ -87,20 +83,6 @@ const OptionsSt = styled.ul`
     }
   }
 `;
-
-const Options = ({options}: OptionsType) => {
-  return(<OptionsSt>
-    {options.map((option, indice) => {
-      return (<li 
-        key={option.name+indice+'0'} 
-        onClick={option.onClick}
-      >
-        <span>{option.name}</span>
-        {option.Icon}  
-      </li>);
-    })}
-  </OptionsSt>);
-}
 
 const ViewerSt = styled.ul`
   position: fixed;
@@ -199,8 +181,9 @@ const Viewer = ({bookData, viewContent, setViewContent}: {bookData: Books | null
 }
 
 export default function Manga({bookData}: {bookData: Books & {categorie: {name: string}} | null}) {
-  const [viewContent, setViewContent] = useState<boolean>(false);
-
+  const [ viewContent, setViewContent ] = useState<boolean>(false);
+  const { data: session, status  } = useSession();
+  const [ like, setLike ] = useState();
   return <>
     <Head>
       <title>{bookData?.title}</title>
@@ -223,11 +206,25 @@ export default function Manga({bookData}: {bookData: Books & {categorie: {name: 
           <h2 className='title'>{bookData?.title}</h2>
           <h3 className='category'>{bookData?.categorie?.name}</h3>
           <p className='description'>{bookData?.description}</p>
-          <Options options={[
-            {name: "read", Icon: <AiOutlineRead/>, onClick() {
-              setViewContent(true);
-            },}
-          ]}/>
+          <OptionsSt>
+            {[
+              {name: "read", Icon: <AiOutlineRead/>, onClick() {
+                setViewContent(true);
+              },},
+              {name: "like", Icon: <IoHeart/>, async onClick() {
+                if(status === 'authenticated')
+                  await fetch('/api/favorite/marked');
+              },}
+            ].map((option, indice) => {
+              return (<li 
+                key={option.name+indice+'0'} 
+                onClick={option.onClick}
+              >
+                <span>{option.name}</span>
+                {option.Icon}  
+              </li>);
+            })}
+          </OptionsSt>
         </Presentation>
       </>) :
         null      

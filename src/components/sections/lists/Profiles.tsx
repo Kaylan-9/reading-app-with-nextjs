@@ -9,9 +9,8 @@ export interface IProfilesProps {
 
 export const StProfiles = styled.div`
   display: flex;
-  justify-content: center;
   gap: 25px;
-  padding: 25px 0 0 0;
+  padding: 25px 150px 0 150px;
 `;
 
 export function Profiles ({data}: IProfilesProps) {

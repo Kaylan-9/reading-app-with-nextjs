@@ -31,18 +31,17 @@ const StHeader = styled.header`
   align-items: center;
   padding: 0 150px;
   display: grid;
-  grid-template-columns: repeat(2, min-content) repeat(3, auto) min-content !important;
-  grid-template-rows: 60px auto !important;
+  grid-template-columns: repeat(2, min-content) repeat(2, auto) max-content min-content !important;
+  grid-template-rows: 100px auto !important;
   grid-template-areas: 
     'adv adv adv adv adv adv'
     'logotipo headeritems . . allpagesbtn search'
     'pagination pagination pagination pagination pagination pagination'
   ;
-  row-gap: 15px;
   column-gap: 25px;
   background-color: rgb(var(--secondary-background));
   box-shadow: 0px 0px 50px 1px rgba(0, 0, 0, 0.5);
-  padding-bottom: 25px;
+  padding-bottom: 15px;
   @media(max-width: 1100px) {
     padding: 0;
     grid-template-columns: auto !important;

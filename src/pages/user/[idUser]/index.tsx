@@ -5,7 +5,7 @@ import MangaEdit from '@/components/sections/lists/MangasEdit';
 import Container from '@/components/ultis/Container';
 import OptionsMenu from '@/components/ultis/OptionsMenu';
 import { ModalContext } from '@/contexts/ModalContext';
-import { getUserBooks, Users } from '@/lib/db/users';
+import { getUserBooks } from '@/lib/db/users';
 import styled from '@emotion/styled';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
@@ -46,7 +46,6 @@ export default function User({userData, userExist, loggedInUser}: IUserPageProps
       handleModal({type: 'add', newModal: {message: '💣 usuário não existe!'}});
       router.push('/');
     }
-    console.log(userData);
   }, [session]);
 
   return (userExist && userData!==null ? (

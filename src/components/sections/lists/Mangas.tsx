@@ -66,17 +66,19 @@ export default function Mangas({title, books}: {title?: string, books: BookUser[
           title={book.title} 
           path={book.path} 
           images={book.imagepaths}
-          options={[
-            {object: (<UserProfile>
-              <ProfilePic imgurl={book?.user?.image ?? ''} width='30px' min_height='30px'/>
-              <label>
-                <strong>por</strong> {book?.user?.name}
-              </label>
-            </UserProfile>), func(){
-              router.push(`/user/@${book.user.id}`);
-            }},
-          ]}
-        />
+        >
+          {book.user !== undefined ?
+            (<li>
+              <UserProfile onClick={() => router.push(`/user/@${book.user.id}`)}>
+                <ProfilePic imgurl={book?.user?.image ?? ''} width='30px' min_height='30px'/>
+                <label>
+                  <strong>por</strong> {book?.user?.name}
+                </label>
+              </UserProfile>
+            </li>) :
+            null
+          }
+        </Manga>
       )}
     </ul>
   </MangaList>);

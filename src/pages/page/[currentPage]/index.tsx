@@ -1,32 +1,29 @@
-import { BookUser, countPages, getAllBooks } from "@/lib/db/books";
-import IProfile from "@/types/IProfile";
+import { countPages, getAllBooks } from "@/lib/db/books";
 import { GetStaticProps } from "next"
 import Header from '@/components/sections/header/Header';
 import Mangas from '@/components/sections/lists/Mangas';
 import { useContext, useEffect, useRef, useState } from 'react';
-import Select from '../../../components/ultis/Select';
 import Head from 'next/head';
 import { ModalContext } from "@/contexts/ModalContext";
 import { AboutText } from "@/components/sections/AboutText";
 import { useSession } from "next-auth/react";
 import Pagination from "@/components/sections/header/Pagination";
-import { BiSearch } from "react-icons/bi";
 import { IHomePageProps } from "@/types/pages/IHomePageProps";
 
 
 export async function getStaticPaths() {
   const nOfPages = await countPages();
   let paths = [];
-  for(let i=0;i<=nOfPages;i++) {
+  for(let i=0;i<=nOfPages;i++)
     paths.push({
       params: {
         currentPage: String(i)
       }
     });
-  }
+  
   return {
     paths,
-    fallback: false,
+    fallback: true,
   }
 };
 
@@ -45,7 +42,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   }
 }
 
-export default ({profiles, books, nOfPages, currentPage}: IHomePageProps & {currentPage: number}) => {
+export default ({currentPage, nOfPages, books}: IHomePageProps & {currentPage: number}) => {
   const { handleModal } = useContext(ModalContext);
   const { data: session, status } = useSession();
 

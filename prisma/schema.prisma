@@ -13,12 +13,12 @@ model Images {
   id          Int    @id @default(autoincrement())
   name        String @db.Text
   type        String @db.Text
-  book        Books?  @relation("BookImages", fields: [idBook], references: [id])
+  book        Book?  @relation("BookImages", fields: [idBook], references: [id])
   idBook      Int    
   @@index([idBook])
 }
 
-model Books {
+model Book {
   id          Int    @id @default(autoincrement())
   title       String @db.Text
   imagepaths  Images[] @relation("BookImages")
@@ -28,6 +28,7 @@ model Books {
   user        User? @relation(fields: [idUser], references: [id])
   idCategory  Int    
   idUser      String
+  favorites   Favorite[]
   @@index([idUser])
   @@index([idCategory])
 }
@@ -35,7 +36,7 @@ model Books {
 model Categories {
   id          Int    @id @default(autoincrement()) 
   name        String @db.Text
-  book        Books[]
+  book        Book[]
 }
 
 model Account {
@@ -51,10 +52,10 @@ model Account {
   scope              String?
   id_token           String?  @db.Text
   session_state      String?
-
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+  @@index([userId])
 }
 
 model Session {
@@ -63,6 +64,8 @@ model Session {
   userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }
 
 model User {
@@ -74,8 +77,20 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
-  book          Books[]
+  book          Book[]
+  favorites     Favorite[] 
 }
+
+model Favorite {
+  id            Int    @id @default(autoincrement())
+  user          User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  book          Book   @relation(fields: [bookId], references: [id], onDelete: Cascade) 
+  bookId        Int
+  userId        String 
+  @@index([userId])
+  @@index([bookId])
+}
+
 
 model VerificationToken {
   identifier String

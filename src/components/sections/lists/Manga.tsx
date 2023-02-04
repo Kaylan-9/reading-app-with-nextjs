@@ -3,18 +3,12 @@ import PresentationImg from "./PresentationImg";
 import styled from "@emotion/styled";
 import Link from "next/link";
 
-
-type OptionType = {
-  object: ReactNode,
-  func: (id: number) => void,
-}
-
 interface MangaInterface {
   id: number;
   title: string;
   path: string;
   images: any[];
-  options: OptionType[];
+  children: ReactNode;
 }
 
 const MangaSt = styled.article`
@@ -77,18 +71,12 @@ const MangaSt = styled.article`
   }
 `;
 
-export default function Manga({id, title, images, options} : MangaInterface) {
+export default function Manga({id, title, images, children} : MangaInterface) {
   return <li>
     <MangaSt>
       <h3 className="title">{title}</h3>
-      <ul className="options"> 
-        {options.map((option, indice) => (<li key={indice}>
-          <button onClick={() => {
-            option.func(id);
-          }}>
-            {option.object}
-          </button>
-        </li>))}
+      <ul className="options">
+        {children}
       </ul>
       <Link href={`/manga/@${id}`}>
         <ul className="imagelist">

@@ -20,18 +20,17 @@ import { css } from "@emotion/css";
 export const getStaticProps: GetStaticProps = async () => {
   const books = await getAllBooks();
   const profiles = await getProfileData();
-  const nOfPages = await countPages();
+  console.log(books);
   return {
     props: {
       books,
-      nOfPages,
       profiles
     }, 
     revalidate: 20
   }
 }
 
-export default ({profiles, books, nOfPages, pagination}: IHomePageProps) => {
+export default ({profiles, books}: IHomePageProps) => {
   const { handleModal } = useContext(ModalContext);
   const [ searchContent,  setSearchContent ] = useState<BookUser[] | false>(false);
   const searchInput = useRef<HTMLInputElement>(null);
@@ -73,7 +72,7 @@ export default ({profiles, books, nOfPages, pagination}: IHomePageProps) => {
       `} onClick={() => {
         router.push('/page/0');
       }}>
-        todos os mangás
+        lista completa
       </StPageButton>
     </Header>
     <main>

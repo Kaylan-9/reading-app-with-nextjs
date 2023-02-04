@@ -11,10 +11,8 @@ export interface IProfilesProps extends IProfile {
 export const StProfile = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   gap: 10px;
-  padding: 75px 0;
   cursor: pointer;
 `;
 
@@ -23,7 +21,7 @@ export function Profile ({link, name, image}: IProfilesProps) {
   return (<StProfile onClick={() => {
     router.push(link);
   }}>
-    <ProfilePic width='100px' min_height='100px' imgurl={image}/>
+    <ProfilePic width='50px' min_height='50px' imgurl={image}/>
     <label>{name}</label>
   </StProfile>);
 }
