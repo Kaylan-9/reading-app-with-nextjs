@@ -16,7 +16,7 @@ const ModalsSt = styled.ul`
 
 const ModalSt = styled.div`
   align-items: center;
-  background-color: #292929;
+  background-color: rgb(var(--secondary-background));
   border-radius: 25px;
   min-width: 700px;
   display: flex;

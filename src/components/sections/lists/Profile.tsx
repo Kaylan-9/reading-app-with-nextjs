@@ -14,6 +14,9 @@ export const StProfile = styled.div`
   align-items: center;
   gap: 10px;
   cursor: pointer;
+  & > label {
+    font-weight: bolder;
+  }
 `;
 
 export function Profile ({link, name, image}: IProfilesProps) {

@@ -13,6 +13,33 @@ export async function getAllUsers() {
   return data;
 }
 
+export async function createNewAccount(name: string, email: string, password: string) {
+  const newUser= await prisma.user.create({
+    data: {
+      name, 
+      email, 
+      password
+    }
+  });
+  return newUser;
+}
+
+export async function account(email: string, password: string) {
+  const where = { 
+    email, 
+    password
+  };
+  const newUser= await prisma.user.findFirst({
+    where,
+    select: {
+      id: true,
+      name: true,
+      image: true
+    }
+  });
+  return newUser;
+}
+
 export async function getUserBooks(id: string) {
   const where = {id};
   return (await prisma.user.findUnique({
