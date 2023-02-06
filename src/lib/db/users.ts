@@ -24,20 +24,20 @@ export async function createNewAccount(name: string, email: string, password: st
   return newUser;
 }
 
-export async function account(email: string, password: string) {
+export async function account(name: string, password: string) {
   const where = { 
-    email, 
+    name, 
     password
   };
-  const newUser= await prisma.user.findFirst({
+  const user= await prisma.user.findFirst({
     where,
     select: {
       id: true,
       name: true,
-      image: true
+      password: true
     }
   });
-  return newUser;
+  return user;
 }
 
 export async function getUserBooks(id: string) {

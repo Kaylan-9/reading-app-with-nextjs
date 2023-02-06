@@ -77,13 +77,13 @@ export default function Login({setActiveLogin}: {setActiveLogin: (state: boolean
 
   const handleLogin = useCallback(async (e: FormEvent<HTMLInputElement>) => {
     e.preventDefault();  
-    if(input_password.current!==null && input_usernameoremail.current!==null) {
+    if(input_password.current!==null && input_username.current!==null) {
       let ok = !newUser;
       const 
         password= input_password.current.value,
-        email= input_usernameoremail.current.value;
-      if(newUser && input_username.current!==null) {
-        const name = input_username.current.value;
+        name= input_username.current.value;
+      if(newUser && input_usernameoremail.current!==null) {
+        const email = input_usernameoremail.current.value;
         console.log(password, email, name);
         const createNewUser= await fetch('/api/user/', {
           method: 'POST',
@@ -100,9 +100,10 @@ export default function Login({setActiveLogin}: {setActiveLogin: (state: boolean
       if(ok) {
         const options = {
           redirect: false, 
-          email, password    
+          name, password    
         };
         const response = await signIn('credentials', options);
+        console.log(response)
         if(response?.error) handleModal({type: 'add',  newModal: {message: (<strong>{response.error} 🔥</strong>)}});
       }
     }
@@ -116,10 +117,10 @@ export default function Login({setActiveLogin}: {setActiveLogin: (state: boolean
     <form>
       <h3>Login</h3>  
       {newUser ?
-        (<InputLabel ref={input_username} type='text' label="nome" placeholder="nome do usuário" area={`username`}/>) :
+        (<InputLabel ref={input_usernameoremail} label="usuário" placeholder={`${!newUser ? 'nome ou ' : ''}@e-mail de entrada`} area={`usernameoremail`}/>) :
         null
       }
-      <InputLabel ref={input_usernameoremail} label="usuário" placeholder={`${!newUser ? 'nome ou ' : ''}@e-mail de entrada`} area={`usernameoremail`}/>
+      <InputLabel ref={input_username} type='text' label="nome" placeholder="nome do usuário" area={`username`}/>
       <InputLabel ref={input_password} type='password' label="senha" placeholder='senha de usuário' area={`userpassword`}/>
       <input type="button" onClick={handleLogin} value={newUser ?
         'cadastrar' :

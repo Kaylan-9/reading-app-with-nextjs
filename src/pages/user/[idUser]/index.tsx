@@ -13,20 +13,16 @@ import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 import { useContext, useEffect, useState } from 'react';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
-import { getServerSession } from 'next-auth/next';
 import { IUserPageProps } from '@/types/pages/IUserPageProps';
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const session = await getServerSession(context.req, context.res, authOptions);
-  let { idUser } = context.query;  
+export const getServerSideProps: GetServerSideProps = async ({req, res, query}) => {
+  let { idUser } = query;  
   const userExist = typeof idUser==='string';
   const userData = typeof idUser==='string' ? (await getUserBooks(idUser.replace(/@/, ''))) : null;
-  const loggedInUser = session?.user?.email===userData?.email;
   return ({
     props: {
       userExist,
-      userData,
-      loggedInUser,
+      userData
     }
   });
 };
@@ -35,13 +31,14 @@ const UserSt = styled.div`
 
 `;
 
-export default function User({userData, userExist, loggedInUser}: IUserPageProps) {
+export default function User({userData, userExist}: IUserPageProps) {
   const router = useRouter();
   const [optionPicker, setOptionPicker] = useState<number>(0);
   const {handleModal} = useContext(ModalContext);
   const { data: session, status } = useSession();
 
   useEffect(() => {
+    console.log(userData);
     if(!userExist) {
       handleModal({type: 'add', newModal: {message: '💣 usuário não existe!'}});
       router.push('/');
@@ -55,7 +52,7 @@ export default function User({userData, userExist, loggedInUser}: IUserPageProps
     </Head>
     <Header/>
     <UserSt>
-      {loggedInUser ? (<OptionsMenu 
+      {session?.user ? (<OptionsMenu 
         selection={{
           condi: optionPicker,
           func: (indice) => setOptionPicker(indice)
@@ -67,7 +64,7 @@ export default function User({userData, userExist, loggedInUser}: IUserPageProps
         ]}
       />) : null}
       <Container>
-        {(optionPicker===0 || !loggedInUser) ? <Mangas title={`Mangás ${userData?.name}`} books={userData?.book}/> : null}
+        {(optionPicker===0 || !session?.user) ? <Mangas title={`Mangás ${userData?.name}`} books={userData?.book}/> : null}
         {status==='authenticated' ?
           [
             (optionPicker===1) ? <ContainerBookAdd/> : null,
