@@ -7,7 +7,6 @@ import { account } from "@/lib/db/users";
 
 export const authOptions = {
   session: {
-    jwt: true,
     strategy: 'jwt',
     maxAge: 7 * 24 * 3600,
   },

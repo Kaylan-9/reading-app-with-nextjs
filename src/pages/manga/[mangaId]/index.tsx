@@ -5,24 +5,37 @@ import { Books, getBook } from '@/lib/db/books';
 import styled from '@emotion/styled';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
+import { getServerSession } from 'next-auth';
 import { MouseEvent, useContext } from 'react';
-import { useState, useRef, useEffect, ReactNode, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { AiOutlineRead } from 'react-icons/ai';
 import { useSession } from 'next-auth/react';
-import { IoHeart } from 'react-icons/io5';
+import { IoHeart, IoHeartOutline } from 'react-icons/io5';
+import { authOptions } from '@/pages/api/auth/[...nextauth]';
+import { isFavorite } from '@/lib/db/favorite';
 
+interface MangaPageProps { 
+  bookData?: any;
+  isfavorite?: boolean; 
+};
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   context.res.setHeader(
     'Cache-Control',
     'public, s-maxage=5, stale-while-revalidate=50'
   )
+  let props: MangaPageProps = {};
+
   let { mangaId } = context.query;
-  return {props: {
-    bookData: typeof mangaId==="string" ? 
-      await getBook(Number(mangaId.replace('@', ''))) :
-      null
-  }};
+  if(typeof mangaId==="string") {
+    props.bookData = await getBook(Number(mangaId.replace('@', '')));
+    const session: any = await getServerSession<any>(context.req, context.res, authOptions);
+    if(session.user!==undefined) {
+      const userId = session.user.id;
+      if(userId) props.isfavorite = await isFavorite(userId, Number(mangaId.replace('@', '')));
+    }
+  }
+  return { props };
 }
 
 const Presentation = styled.div`
@@ -180,10 +193,36 @@ const Viewer = ({bookData, viewContent, setViewContent}: {bookData: Books | null
   </ViewerSt>);
 }
 
-export default function Manga({bookData}: {bookData: Books & {categorie: {name: string}} | null}) {
+export default function Manga({bookData, isfavorite}: MangaPageProps) {
   const [ viewContent, setViewContent ] = useState<boolean>(false);
-  const { data: session, status  } = useSession();
-  const [ like, setLike ] = useState();
+  const { data: session, status }: any = useSession<any>();
+  const [ like, setLike ] = useState<boolean | null | undefined>(isfavorite);
+  let options = [
+    {name: "read", Icon: <AiOutlineRead/>, onClick() {
+      setViewContent(true);
+    },}
+  ];
+  
+  if(like!==null && like!==undefined) {
+    const Icon = (like ? <IoHeart/> : <IoHeartOutline/>);
+    options.push({name: "like", Icon, async onClick() {
+      if(status === 'authenticated' && session.user.id!==undefined) {
+        setLike(oldLike => !oldLike);
+        await fetch('/api/favorite/changemark', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            bookId: bookData.id,
+            userId: session.user.id,
+            isfavorite
+          })
+        });
+      }
+    },});
+  }
+
   return <>
     <Head>
       <title>{bookData?.title}</title>
@@ -207,15 +246,7 @@ export default function Manga({bookData}: {bookData: Books & {categorie: {name: 
           <h3 className='category'>{bookData?.categorie?.name}</h3>
           <p className='description'>{bookData?.description}</p>
           <OptionsSt>
-            {[
-              {name: "read", Icon: <AiOutlineRead/>, onClick() {
-                setViewContent(true);
-              },},
-              {name: "like", Icon: <IoHeart/>, async onClick() {
-                if(status === 'authenticated')
-                  await fetch('/api/favorite/marked');
-              },}
-            ].map((option, indice) => {
+            {options.map((option, indice) => {
               return (<li 
                 key={option.name+indice+'0'} 
                 onClick={option.onClick}
