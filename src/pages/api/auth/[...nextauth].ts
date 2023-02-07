@@ -12,9 +12,9 @@ export const authOptions = {
     maxAge: 7 * 24 * 3600,
   },
   jwt: {
+    secret: process.env.AUTH_SECRET,
     maxAge: 7 * 24 * 3600,
   },
-  secret: process.env.AUTH_SECRET,
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
@@ -31,7 +31,6 @@ export const authOptions = {
         const password = credentials?.password ?? '';
         const user = await account(name, password);
         if(typeof user?.id==='string') {
-          console.log(user);
           return user;
         }
         return null;
@@ -42,21 +41,13 @@ export const authOptions = {
   callbacks: {
     async session({ session, user, token }: any) {
       session.accessToken = token.accessToken;
-      if (session?.user && token) {
-        session.user.id = token.sub;
-      }
-      if (session?.user && !token) {
-        session.user.id = user.id;
-      }
+      if (session?.user && token) session.user.id = token.sub;
+      if (session?.user && !token) session.user.id = user.id;
       return session;
     },
     async jwt({ token, user, account, profile, isNewUser }: any) {
-      if (user) {
-        token.id = user.id;
-      }
-      if (account) {
-        token.accessToken = account.access_token;
-      }
+      if (user) token.id = user.id;
+      if (account) token.accessToken = account.access_token;
       return token;
     },
   },
