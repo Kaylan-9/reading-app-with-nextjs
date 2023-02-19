@@ -57,6 +57,29 @@ export async function getUserBooks(id: string) {
   }));
 }
 
+export async function getUserFavoriteBooks(id: string) {
+  return (await prisma.user.findUnique({
+    where: {
+      id
+    },
+    include: {
+      favorites: {
+        include: {
+          book: {
+            include: {
+              imagepaths: true
+            }
+          }
+        },
+        where: {
+          userId: id
+        }
+      }
+    }
+  }));
+}
+
+
 export async function getProfileData() {
   return (await prisma.user.findMany({
     select: {

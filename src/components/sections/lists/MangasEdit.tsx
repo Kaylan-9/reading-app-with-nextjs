@@ -73,20 +73,18 @@ export default function MangaEdit() {
         key={book.id+book.title}
         id={book.id as number}
         title={book.title} 
-        path={book.path} 
         images={book.imagepaths}
-        options={[
-          {object: <BiTrash/>, async func(id){
-            const dataToDoDelete = JSON.stringify({id, path: book.path});
-            await fetch('/api/book/delete', {
-              method: 'DELETE',
-              headers: {'Content-Type' : 'application/json'},
-              body: dataToDoDelete
-            });
-            router.push('/');
-          }}
-        ]}
-      />) : null}
+      >
+        <BiTrash onClick={async ()=> {
+          const dataToDoDelete = JSON.stringify({id: book.id as number, path: book.path});
+          await fetch('/api/book/delete', {
+            method: 'DELETE',
+            headers: {'Content-Type' : 'application/json'},
+            body: dataToDoDelete
+          });
+          router.push('/');
+        }}/>
+      </Manga>) : null}
     </ul>
   </MangaEditSt>);
 }

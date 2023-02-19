@@ -100,7 +100,7 @@ const OptionsSt = styled.ul`
 const ViewerSt = styled.ul`
   position: fixed;
   z-index: 1000;
-  background-color: #1f1f1fc6;
+  background-color: #000000c5;
   min-height: 100vh;
   min-width: 100vw;
   padding-top: 50px;
@@ -124,7 +124,7 @@ const Viewer = ({bookData, viewContent, setViewContent}: {bookData: Books | null
     if(viewContent && imagesEle.current!==null && scrollLimit===4) {
       let lockScroll = new Promise(async (resolve)=> resolve(''));
       for(let i=0;i<=4;i++) {
-        let scroll = (100/((i+1)*1.1));        
+        let scroll = (100/(i+1));        
         scrollLimit--;
         lockScroll = new Promise((resolve) => {
           setTimeout(() => {
@@ -144,7 +144,7 @@ const Viewer = ({bookData, viewContent, setViewContent}: {bookData: Books | null
                 resolve(false);
               }
             }
-          }, (200+(i**2*50)));      
+          }, (200+(i**2)));      
         });
         await lockScroll;
       }

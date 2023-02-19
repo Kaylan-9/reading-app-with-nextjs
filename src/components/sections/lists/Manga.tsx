@@ -6,7 +6,6 @@ import Link from "next/link";
 interface MangaInterface {
   id: number;
   title: string;
-  path: string;
   images: any[];
   children: ReactNode;
 }

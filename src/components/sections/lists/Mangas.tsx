@@ -52,19 +52,18 @@ export const UserProfile = styled.div`
   }
 `;
 
-export default function Mangas({title, books}: {title?: string, books: BookUser[]}) {
+export default function Mangas({title, books}: {title?: string, books: any[]}) {
   const router = useRouter();
   return (<MangaList>
     {title!==undefined ? (<h2 className='title'>
       <span>{title}</span>
     </h2>) : null}
     <ul>
-      {books.map((book: BookUser, indice) => 
+      {books?.map((book: BookUser) => 
         <Manga
           key={book.id+book.title}
           id={book.id as number}
           title={book.title} 
-          path={book.path} 
           images={book.imagepaths}
         >
           {book.user !== undefined ?

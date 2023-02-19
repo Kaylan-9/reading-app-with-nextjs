@@ -1,5 +1,7 @@
 import { css } from "@emotion/css";
 import styled from "@emotion/styled";
+import { useSession } from 'next-auth/react'
+import { useRouter } from "next/router";
 
 interface OptionsMenuInterface {
   selection: {
@@ -8,7 +10,8 @@ interface OptionsMenuInterface {
   };
   options: {
     name: string,
-    onClick: any
+    onClick?: any | undefined | null 
+    user?: undefined | null | boolean
   }[];
 }
 
@@ -31,9 +34,14 @@ const OptionsMenuSt = styled.ul`
 
 
 export default function OptionsMenu({selection, options} : OptionsMenuInterface) {
+  const { data: session }: { data: any } = useSession();
+  const { query: { idUser } } = useRouter();
   return (<OptionsMenuSt>
     {options.map((option, indice) => {
-      return (<li key={option.name+indice}>
+      return (
+        option?.user && typeof idUser==='string' && typeof session?.user?.id==='string' &&
+        session.user.id==idUser.replace(/@/, '')
+      ) || (option?.user===undefined) ?(<li key={option.name+indice}>
         <button 
           className={selection.condi===indice ? css`
             border-radius: 0 0 15px 15px;
@@ -42,12 +50,12 @@ export default function OptionsMenu({selection, options} : OptionsMenuInterface)
           ` : ''}
           onClick={() => {              
             selection.func(indice);
-            option.onClick();
+            if(typeof option.onClick==='function') option.onClick();
           }}
         >
           {option.name}
         </button>
-      </li>);
+      </li>) : null;
     })}
   </OptionsMenuSt>);
 }
