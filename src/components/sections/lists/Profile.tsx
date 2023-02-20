@@ -1,12 +1,8 @@
-import IProfile from '@/types/IProfile';
+import { IProfileProps } from '@/types/components/IProfileProps';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import ProfilePic from '../ProfilePic';
-
-export interface IProfilesProps extends IProfile {
-  link: string
-}
 
 export const StProfile = styled.div`
   display: flex;
@@ -19,7 +15,7 @@ export const StProfile = styled.div`
   }
 `;
 
-export function Profile ({link, name, image}: IProfilesProps) {
+export function Profile ({link, name, image}: IProfileProps) {
   const router = useRouter();
   return (<StProfile onClick={() => {
     router.push(link);

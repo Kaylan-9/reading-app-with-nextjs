@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react";
+import { useState } from "react";
 import Link from 'next/link';
 import Image from 'next/image';
 import styled from "@emotion/styled";

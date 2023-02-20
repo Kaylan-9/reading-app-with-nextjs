@@ -1,8 +1,9 @@
 import * as gcs from "../../../lib/gcs";
-import { Books, createBook as createBookInDB } from "@/lib/db/books";
+import { createBook as createBookInDB } from "@/lib/db/books";
 import { FormidableError, parseForm } from "@/lib/parse-form";
 import { createReadStream } from "fs";
 import type { NextApiRequest, NextApiResponse } from "next";
+import IBook, { IBookCreateInput, IBookCreateInputDB } from "@/types/data/Books";
 
 export const config = {
   api: {
@@ -19,7 +20,7 @@ export default async function createBook(
     type filesdataType = {filepath: string, newFilename: string};
     const filesdata: any = files.bookimages;
     if(fields.bookiduser!=='') {
-      let newBook: Books = {
+      let newBook: IBookCreateInput = {
         title: fields.bookname as string,
         path: fields.bookpath as string,
         description: fields.bookdescription as string,
@@ -38,7 +39,7 @@ export default async function createBook(
       });
 
       try{
-        const responseData = await createBookInDB(newBook);
+        await createBookInDB(newBook as IBookCreateInputDB);
         filesdata.map(({filepath, newFilename: filename}: filesdataType) => {
           const filenametype = filename.split('.');
           const _filename = filenametype[0];

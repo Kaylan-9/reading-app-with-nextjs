@@ -1,12 +1,5 @@
+import { IUser } from "@/types/data/Users";
 import prisma from "./prisma";
-
-export interface Users {
-  id: number;
-  name: string;
-  email: string;
-  image: string;
-  password?: string;
-}
 
 export async function getAllUsers() {
   const data =await prisma.user.findMany();
@@ -90,7 +83,7 @@ export async function getProfileData() {
   }))
 };
 
-export async function getUser(data: Users) {
+export async function getUser(data: IUser) {
   const {name, email, image} = data;
   const user = await prisma.user.findFirst({
     where: {name, email, image}

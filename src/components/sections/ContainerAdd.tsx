@@ -6,7 +6,6 @@ import TextArea from '../ultis/TextArea';
 import Button from '../ultis/Button';
 import styled from '@emotion/styled';
 import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/router';
 
 const FormAddBook = styled.form`
   display: grid;
@@ -39,8 +38,6 @@ export default function ContainerBookAdd() {
   const [newImages, setNewImages] = useState<FileList | []>([]);
   const [filesDataURL, setFilesDataURL] = useState<string[]>([]);
 
-  const router = useRouter();
-
   const handleAddBook = useCallback(async () => {
     const formData = new FormData();
     formData.append('bookpath', '');
@@ -62,7 +59,6 @@ export default function ContainerBookAdd() {
       method: 'POST',
       body: formData
     });
-    // router.push('/');
     console.log(responseData);
   }, [newImages]);
 

@@ -1,11 +1,7 @@
-import IProfile from '@/types/IProfile';
+import { IProfilesProps } from '@/types/components/IProfilesProps';
 import styled from '@emotion/styled';
 import * as React from 'react';
 import { Profile } from './Profile';
-
-export interface IProfilesProps {
-  data: IProfile[];
-}
 
 export const StProfiles = styled.div`
   display: flex;

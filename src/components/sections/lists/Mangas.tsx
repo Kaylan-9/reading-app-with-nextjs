@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import Manga from "./Manga";
 import { useRouter } from 'next/router';
 import ProfilePic from '../ProfilePic';
+import IMangas from '@/types/components/IMangas';
 
 const MangaList = styled.div`
   max-width: var(--max-width);
@@ -52,14 +53,14 @@ export const UserProfile = styled.div`
   }
 `;
 
-export default function Mangas({title, books}: {title?: string, books: any[]}) {
+export default function Mangas({title, books}: IMangas) {
   const router = useRouter();
   return (<MangaList>
     {title!==undefined ? (<h2 className='title'>
       <span>{title}</span>
     </h2>) : null}
     <ul>
-      {books?.map((book: BookUser) => 
+      {books?.map((book: BookUser, indice) => 
         <Manga
           key={book.id+book.title}
           id={book.id as number}

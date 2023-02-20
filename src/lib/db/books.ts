@@ -1,19 +1,6 @@
-import { Prisma, User } from "@prisma/client";
+import { IBookCreateInputDB } from "@/types/data/Books";
+import { ImagesCreateManyBookInput } from "@/types/data/Images";
 import prisma from "./prisma";
-
-export interface Books {
-  id?: number;
-  title: string;
-  imagepaths: any;
-  path: string;
-  description: string;
-  idCategory: number;
-  idUser: string;
-}
-
-export interface BookUser extends Books {
-  user: User
-}
 
 export async function deleteBook(id: number) {
   await prisma.images.deleteMany({
@@ -24,11 +11,11 @@ export async function deleteBook(id: number) {
   });
 }
 
-export async function createBook(data: Prisma.BookCreateInput) {
+export async function createBook(data: IBookCreateInputDB) {
   const imagepaths: any = data.imagepaths;
   delete data.imagepaths;
   const newBook = await prisma.book.create({data});
-  Promise.all(await imagepaths.map(async (img: Prisma.ImagesCreateManyBookInput) => {
+  Promise.all(await imagepaths.map(async (img: ImagesCreateManyBookInput) => {
     await prisma.images.create({
       data: {
         ...img,
@@ -71,14 +58,11 @@ export async function getBook(id: number) {
   return data;
 }
 
-export async function getBooks(title: string, category: number | false) {
-  type whereType = {
-    title?: string,
-    idCategory?: number
+export const getBooks = async (title?: string, idCategory?: number) => {
+  let where = {
+    title, 
+    idCategory
   }
-  let where: whereType = {}
-  if(typeof title==="string") where.title= title;
-  if(typeof category==="string") where.idCategory = category;
   const data = await prisma.book.findMany({
     where: where,
     include: {

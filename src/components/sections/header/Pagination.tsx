@@ -4,7 +4,6 @@ import { useRouter } from "next/router";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import StPageButton from "./StPageButton";
 
-
 const StPagination = styled.nav`
   width: 100%;
   background-color: rgb(var(--secondary-background));

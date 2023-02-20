@@ -1,14 +1,7 @@
-import { ReactNode } from "react";
 import PresentationImg from "./PresentationImg";
 import styled from "@emotion/styled";
 import Link from "next/link";
-
-interface MangaInterface {
-  id: number;
-  title: string;
-  images: any[];
-  children: ReactNode;
-}
+import { IManga } from "@/types/components/IManga";
 
 const MangaSt = styled.article`
   display: flex;
@@ -70,7 +63,7 @@ const MangaSt = styled.article`
   }
 `;
 
-export default function Manga({id, title, images, children} : MangaInterface) {
+export default function Manga({id, title, images, children} : IManga) {
   return <li>
     <MangaSt>
       <h3 className="title">{title}</h3>

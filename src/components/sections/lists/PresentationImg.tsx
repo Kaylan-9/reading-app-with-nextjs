@@ -1,9 +1,5 @@
+import { IImg } from '@/types/components/IImg';
 import styled from '@emotion/styled';
-
-interface ImageInterface {
-  id: string;
-  url: string;
-}
 
 const ImagesStyle = styled.div<{url: string}>`
   min-width: 140px;
@@ -16,7 +12,7 @@ const ImagesStyle = styled.div<{url: string}>`
   border-radius: 10px;
 `;
 
-export default function Image({id, url} : ImageInterface) {
+export default function Image({id, url} : IImg) {
   return <li id={id}>
     <ImagesStyle url={url}/>
   </li>

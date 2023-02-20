@@ -1,27 +1,11 @@
 import { Modals } from "@/components/sections/Modals";
-import { createContext, ReactNode, useReducer, use, useEffect } from "react";
+import { IPropsModal } from "@/types/contexts/ModalContext/components/IPropsModal";
+import { IModal } from "@/types/contexts/ModalContext/IModal";
+import { IModalReducerAction } from "@/types/contexts/ModalContext/reducers/IModalReducerAction";
+import { IModalReducerState } from "@/types/contexts/ModalContext/reducers/IModalReducerState";
+import { TModalReducer } from "@/types/contexts/ModalContext/reducers/TModalReducer";
+import { createContext, ReactNode, useReducer } from "react";
 
-export type TModal = {
-  id?: number | string,
-  message: string | ReactNode | any,
-  time?: number,
-  function?: () => void
-};
-export interface IModal extends Required<TModal> {};
-export interface IModalReducerState {
-  modals: IModal[];
-};
-export interface IModalReducerAction {
-  type: string;
-  newModal?: TModal;
-  id?: number;
-};
-export type IModalReducer<State, Action> = (state: State, action: Action) => State;
-
-export interface IPropsModal {
-  modal: IModalReducerState;
-  handleModal: any;
-};
 const initialValueModalReducer: IModalReducerState = {
   modals: []
 };
@@ -58,7 +42,7 @@ const initialValueModal = {
 
 export const ModalContext = createContext<IPropsModal>(initialValueModal);
 export default function ModalProvider({children}: {children: ReactNode}) {
-  const [modal, handleModal] = useReducer<IModalReducer<IModalReducerState, IModalReducerAction>>(modalReducer, initialValueModalReducer);
+  const [modal, handleModal] = useReducer<TModalReducer<IModalReducerState, IModalReducerAction>>(modalReducer, initialValueModalReducer);
 
   return (<ModalContext.Provider value={{modal, handleModal}}>
     {children}

@@ -1,19 +1,8 @@
+import { IOptionsMenu } from "@/types/components/ultis/IOptionsMenu";
 import { css } from "@emotion/css";
 import styled from "@emotion/styled";
 import { useSession } from 'next-auth/react'
 import { useRouter } from "next/router";
-
-interface OptionsMenuInterface {
-  selection: {
-    condi: number;
-    func: (indice: number) => void;
-  };
-  options: {
-    name: string,
-    onClick?: any | undefined | null 
-    user?: undefined | null | boolean
-  }[];
-}
 
 const OptionsMenuSt = styled.ul`
   display: flex;
@@ -33,7 +22,7 @@ const OptionsMenuSt = styled.ul`
 `;
 
 
-export default function OptionsMenu({selection, options} : OptionsMenuInterface) {
+export default function OptionsMenu({selection, options} : IOptionsMenu) {
   const { data: session }: { data: any } = useSession();
   const { query: { idUser } } = useRouter();
   return (<OptionsMenuSt>

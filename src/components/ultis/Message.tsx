@@ -1,3 +1,4 @@
+import { IMessageProps } from '@/types/components/ultis/ImessageProps';
 import styled from '@emotion/styled';
 import * as React from 'react';
 
@@ -8,10 +9,6 @@ const MessageSt = styled.article`
   background-color: black;
   padding: 10px;
 `;
-
-export interface IMessageProps {
-  text: string;
-}
 
 export function Message({ text }: IMessageProps) {
   return (

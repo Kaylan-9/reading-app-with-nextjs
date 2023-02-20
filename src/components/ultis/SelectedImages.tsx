@@ -1,3 +1,4 @@
+import { ISelectedImages } from '@/types/components/ultis/ISelectedImages';
 import styled from '@emotion/styled';
 import { forwardRef, ChangeEvent } from 'react';
 
@@ -35,12 +36,9 @@ const ListSelectedImages = styled.ul`
   }
 `;
 
-interface SelectedImagesInterface {
-  setNewImages: (NewImages: FileList) => void;
-  filesDataURL: string[];
-}
 
-const SelectedImages = forwardRef<HTMLInputElement, SelectedImagesInterface>(({setNewImages, filesDataURL}, ref) => {
+
+const SelectedImages = forwardRef<HTMLInputElement, ISelectedImages>(({setNewImages, filesDataURL}, ref) => {
   return (<>
     <input 
       ref={ref} 

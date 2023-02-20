@@ -1,12 +1,6 @@
 import { forwardRef } from "react";
 import styled from "@emotion/styled";
-
-interface InputLabelInterface {
-  label: string;
-  area: string;
-  type?: string;
-  placeholder?: string;
-}
+import { IInputLabel } from "@/types/components/ultis/IInputLabel";
 
 const InputLabelSt = styled.div<{area: string}>`
   display: grid;
@@ -30,7 +24,7 @@ const InputLabelSt = styled.div<{area: string}>`
   }
 `;
 
-const InputLabel = forwardRef(({label, type="text", placeholder="", area}: InputLabelInterface, ref: any) => {
+const InputLabel = forwardRef(({label, type="text", placeholder="", area}: IInputLabel, ref: any) => {
   return (<InputLabelSt area={area}>
     <label>{label}</label>
     <input type={type} placeholder={placeholder} ref={ref}/>
