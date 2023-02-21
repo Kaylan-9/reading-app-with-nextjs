@@ -1,9 +1,9 @@
-import { BookUser } from "@/lib/db/books";
-import IProfile from "../IProfile";
+import { IBookUserCategories } from "../data/Books";
+import { ICategory } from "../data/Category";
 
 export interface IHomePageProps {
-  books: BookUser[];
+  books: IBookUserCategories[];
   nOfPages: number;
   pagination: number;
-  profiles: IProfile[];
+  categories: ICategory[];
 };

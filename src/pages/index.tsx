@@ -9,27 +9,28 @@ import { ModalContext } from "@/contexts/ModalContext";
 import { AboutText } from "@/components/sections/AboutText";
 import { useSession } from "next-auth/react";
 import { BiSearch } from "react-icons/bi";
-import { Profiles } from "@/components/sections/lists/Profiles";
+import { Categories } from "@/components/sections/lists/Categories";
 import Select from "@/components/ultis/Select";
 import { useRouter } from "next/router";
 import { IHomePageProps } from "@/types/pages/IHomePageProps";
 import StPageButton from "@/components/sections/header/StPageButton";
 import { css } from "@emotion/css";
 import { IBookUser } from "@/types/data/Books";
+import { getAllCategory } from "@/lib/db/categories";
 
 
 export const getStaticProps: GetServerSideProps = async () => {
   const books = await getRandomBooks();
-  const profiles = await getProfileData();
+  const categories = await getAllCategory();
   return {
     props: {
       books,
-      profiles
+      categories
     }
   }
 }
 
-export default ({profiles, books}: IHomePageProps) => {
+export default ({categories, books}: IHomePageProps) => {
   const { handleModal } = useContext(ModalContext);
   const [ searchContent,  setSearchContent ] = useState<IBookUser[] | false>(false);
   const searchInput = useRef<HTMLInputElement>(null);
@@ -77,7 +78,7 @@ export default ({profiles, books}: IHomePageProps) => {
       </StPageButton>
     </Header>
     <main>
-      <Profiles data={profiles}/>
+      <Categories data={categories}/>
       <Mangas title='Mangás' books={(!searchContent ? books : searchContent)}/>
     </main>
   </>)
