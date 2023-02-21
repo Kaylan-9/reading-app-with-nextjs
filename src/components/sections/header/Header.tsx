@@ -14,7 +14,6 @@ const Items = styled.ul`
   align-items: center;
   margin: 0 auto;
   grid-area: headeritems;
-  padding: 12.5px 0;
   @media(max-width:700px) {
     flex-wrap: wrap;
   }
@@ -37,20 +36,21 @@ const StHeader = styled.header`
     'adv adv adv adv adv adv'
     'logotipo headeritems . . allpagesbtn search'
     'pagination pagination pagination pagination pagination pagination'
+    'categories categories categories categories categories categories'
   ;
   column-gap: 25px;
-  background-color: rgb(var(--secondary-background));
-  box-shadow: 0px 0px 50px 1px rgba(0, 0, 0, 0.5);
-  padding-bottom: 15px;
+  box-shadow: 0px 0px 50px 1px rgba(0, 0, 0, 0.25);
   @media(max-width: 1100px) {
-    padding: 0;
     grid-template-columns: auto !important;
     grid-template-rows: 0 60px auto auto !important;
     grid-template-areas: 
       'adv'
       'logotipo'
       'headeritems'
-      'search';
+      'search'
+      'pagination'
+      'categories'
+    ;
     & > .logotipo {
       display: flex;
       justify-content: center;

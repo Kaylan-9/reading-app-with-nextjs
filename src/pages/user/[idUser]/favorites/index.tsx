@@ -11,7 +11,7 @@ import { useContext, useEffect, useState } from 'react';
 import { IUserPageProps } from '@/types/pages/user/IUserPageProps';
 import UserProfile from '@/components/page/user/UserProfile';
 
-export const getStaticProps: GetServerSideProps = async ({req, res, query}) => {
+export const  getServerSideProps: GetServerSideProps = async ({req, res, query}) => {
   let { idUser } = query;  
   const userExist = typeof idUser==='string';
   const userData = typeof idUser==='string' ? (await getUserFavoriteBooks(idUser.replace(/@/, ''))) : null;
@@ -19,8 +19,7 @@ export const getStaticProps: GetServerSideProps = async ({req, res, query}) => {
     props: {
       userExist,
       userData
-    },
-    revalidate: 100
+    }
   });
 };
 
@@ -58,10 +57,7 @@ export default function User({userData, userExist}: IUserPageProps & {userData: 
         ]}
       />
       <Container>
-        <Mangas 
-          title={`Favoritos de ${userData?.name}`} 
-          books={userData?.favorites?.map((favorite: any)=> favorite?.book)}
-        /> : 
+        <Mangas books={userData?.favorites?.map((favorite: any)=> favorite.book)}/>
       </Container>
     </>
   </>) :

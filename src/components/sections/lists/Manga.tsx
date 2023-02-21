@@ -2,6 +2,7 @@ import PresentationImg from "./PresentationImg";
 import styled from "@emotion/styled";
 import Link from "next/link";
 import { IManga } from "@/types/components/IManga";
+import CategoryButton from "@/styles/components/CategoryButton";
 
 const MangaSt = styled.article`
   display: flex;
@@ -9,7 +10,7 @@ const MangaSt = styled.article`
   align-items: flex-start;
   row-gap: 10px;
   max-width: 200px;
-  min-height: 345.56px;
+  min-width: 192px;
   & > .title {
     font-size: 18px !important;
     font-family: var(--font-one);
@@ -18,7 +19,7 @@ const MangaSt = styled.article`
     display: flex;
     flex-direction: column;
     align-items: center;
-    & > .imagelist {
+    & > .image-list {
       #image-0 {
         transform: translateX(0px) scale(1) !important;
         position: relative;
@@ -61,31 +62,27 @@ const MangaSt = styled.article`
       }
     }
   }
+  .category {
+    margin: 0 auto;
+    margin-top: 206px;
+  }
 `;
 
 export default function Manga({id, title, category, images, children} : IManga) {
   return <li>
     <MangaSt>
       <h3 className="title">{title}</h3>
-      <h3 className="title">{category}</h3>
-      <ul className="options">
-        {children}
-      </ul>
+      <ul className="options">{children}</ul>
       <Link href={`/manga/@${id}`}>
-        <ul className="imagelist">
+        <ul className="image-list">
           {images?.map((img, indice) => {
-            if(indice<3) {
-              return <PresentationImg 
-                id={`image-${indice}`}
-                key={img.name+img.id} 
-                url={`https://storage.cloud.google.com/xyz2-book-page-image-data/${img.name}`}
-              />
-            }
+            if(indice<3) return <PresentationImg id={`image-${indice}`} key={img.name+img.id} url={`https://storage.cloud.google.com/xyz2-book-page-image-data/${img.name}`}/>
           })}
         </ul>
       </Link>
+      <CategoryButton className="category">{category}</CategoryButton>
     </MangaSt>
-  </li>
+  </li>;
 }
 
 

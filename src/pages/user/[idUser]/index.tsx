@@ -5,7 +5,6 @@ import MangaEdit from '@/components/sections/lists/MangasEdit';
 import Container from '@/components/ultis/Container';
 import { ModalContext } from '@/contexts/ModalContext';
 import { getUserBooks } from '@/lib/db/users';
-import styled from '@emotion/styled';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -61,7 +60,7 @@ export default function User({userData, userExist}: IUserPageProps) {
         ]}
       />
       <Container>
-        {(optionPicker===0 || !session?.user) ? <Mangas title={`Mangás ${userData?.name}`} books={userData?.book}/> : null}
+        {(optionPicker===0 || !session?.user) ? <Mangas books={userData.book}/> : null}
         {status==='authenticated' ? [
           (optionPicker===2) ? <ContainerBookAdd/> : null,
           (optionPicker===3) ? <MangaEdit/> : null

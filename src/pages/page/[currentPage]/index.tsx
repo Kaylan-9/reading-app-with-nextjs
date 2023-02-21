@@ -2,11 +2,7 @@ import { countPages, getAllBooks } from "@/lib/db/books";
 import { GetStaticProps } from "next"
 import Header from '@/components/sections/header/Header';
 import Mangas from '@/components/sections/lists/Mangas';
-import { useContext, useEffect, useRef, useState } from 'react';
 import Head from 'next/head';
-import { ModalContext } from "@/contexts/ModalContext";
-import { AboutText } from "@/components/sections/AboutText";
-import { useSession } from "next-auth/react";
 import Pagination from "@/components/sections/header/Pagination";
 import { IHomePageProps } from "@/types/pages/IHomePageProps";
 
@@ -43,13 +39,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
 }
 
 export default ({currentPage, nOfPages, books}: IHomePageProps & {currentPage: number}) => {
-  const { handleModal } = useContext(ModalContext);
-  const { data: session, status } = useSession();
-
-  useEffect(() => {
-    if(status==='unauthenticated') 
-      handleModal({type: 'add', newModal: {id: 0, message: (<AboutText/>)}});
-  }, [session]);
 
   return (<>
     <Head>

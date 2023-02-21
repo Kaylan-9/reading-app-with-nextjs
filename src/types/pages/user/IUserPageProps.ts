@@ -1,8 +1,8 @@
 
-import { IUserBook } from "../../data/Users";
+import { IUserBookCategories } from "../../data/Users";
 
 export interface IUserPageProps {
-  userData: IUserBook | null;
+  userData: IUserBookCategories | null;
   userExist: boolean;
   loggedInUser: boolean;
 };

@@ -40,7 +40,8 @@ export async function getUserBooks(id: string) {
     include: {
       book: {
         include: {
-          imagepaths: true
+          imagepaths: true,
+          categorie: true
         },
         where: {
           idUser: id
@@ -60,7 +61,8 @@ export async function getUserFavoriteBooks(id: string) {
         include: {
           book: {
             include: {
-              imagepaths: true
+              imagepaths: true,
+              categorie: true
             }
           }
         },

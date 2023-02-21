@@ -1,6 +1,8 @@
-import { BookUser } from "@/lib/db/books";
+import { IBookUserCategories } from "../data/Books";
 
 export default interface IMangas {
-  title?: string, 
-  books: BookUser[]
+  title?: string;
+  link?: string;
+  linkname?: string;
+  books: IBookUserCategories[];
 };

@@ -1,23 +1,16 @@
-import { countPages, getAllBooks, getRandomBooks } from "@/lib/db/books";
-import { getProfileData } from "@/lib/db/users";
-import { GetServerSideProps, GetStaticProps } from "next"
+import { getRandomBooks } from "@/lib/db/books";
+import { GetServerSideProps } from "next"
 import Header from '@/components/sections/header/Header';
 import Mangas from '@/components/sections/lists/Mangas';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import Head from 'next/head';
-import { ModalContext } from "@/contexts/ModalContext";
-import { AboutText } from "@/components/sections/AboutText";
-import { useSession } from "next-auth/react";
 import { BiSearch } from "react-icons/bi";
-import { Categories } from "@/components/sections/lists/Categories";
+import { Categories } from "@/components/sections/header/Categories";
 import Select from "@/components/ultis/Select";
-import { useRouter } from "next/router";
 import { IHomePageProps } from "@/types/pages/IHomePageProps";
-import StPageButton from "@/components/sections/header/StPageButton";
-import { css } from "@emotion/css";
-import { IBookUser } from "@/types/data/Books";
+import { IBookUserCategories } from "@/types/data/Books";
 import { getAllCategory } from "@/lib/db/categories";
-
+import Footer from "@/components/Footer";
 
 export const getStaticProps: GetServerSideProps = async () => {
   const books = await getRandomBooks();
@@ -28,20 +21,12 @@ export const getStaticProps: GetServerSideProps = async () => {
       categories
     }
   }
-}
+};
 
 export default ({categories, books}: IHomePageProps) => {
-  const { handleModal } = useContext(ModalContext);
-  const [ searchContent,  setSearchContent ] = useState<IBookUser[] | false>(false);
+  const [ searchContent,  setSearchContent ] = useState<IBookUserCategories[] | false>(false);
   const searchInput = useRef<HTMLInputElement>(null);
   const categorySearchPicker = useRef<HTMLInputElement>(null);
-  const { data: session, status } = useSession();
-  const router = useRouter();
-
-  useEffect(() => {
-    if(status==='unauthenticated') 
-      handleModal({type: 'add', newModal: {id: 0, message: (<AboutText/>)}});
-  }, [session]);
 
   return (<>
     <Head>
@@ -61,25 +46,17 @@ export default ({categories, books}: IHomePageProps) => {
               body: dataToDoSearch
             });
             const dataResearch = await resultResearch.json();
-            setSearchContent(dataResearch.research as IBookUser[]);
+            setSearchContent(dataResearch.research);
           }}/>
           <input ref={searchInput} type="text" name="" id="" placeholder='pesquisar por nome'/>
         </div>
         <Select ref={categorySearchPicker}/>
       </div>
-      <StPageButton className={css`
-        grid-area: allpagesbtn;
-        border-radius: 30px;
-        padding: 0 15px;
-      `} onClick={() => {
-        router.push('/page/0');
-      }}>
-        outros
-      </StPageButton>
+      <Categories data={categories}/>
     </Header>
     <main>
-      <Categories data={categories}/>
-      <Mangas title='Mangás' books={(!searchContent ? books : searchContent)}/>
+      <Mangas title='Mangás' link={`/page/0`} linkname={`ver todos`} books={(!searchContent ? books : searchContent)}/>
     </main>
+    <Footer/>
   </>)
 };
