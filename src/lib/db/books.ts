@@ -1,5 +1,6 @@
-import { IBookCreateInputDB } from "@/types/data/Books";
+import { IBookCreateInputDB, IBookUser, IBookUserCategories } from "@/types/data/Books";
 import { ImagesCreateManyBookInput } from "@/types/data/Images";
+import { IUserBook } from "@/types/data/Users";
 import prisma from "./prisma";
 
 export async function deleteBook(id: number) {
@@ -40,8 +41,41 @@ export async function getAllBooks(n?: number) {
   return data;
 }
 
+export async function getRandomBooks() {
+  const amountData = 4;
+  let nBooks= await prisma.book.count();
+  let 
+    randomIDs: number[] = [],
+    ignoreIDs: number[] = []
+  ;
+  let data: IBookUserCategories[] = [];
+  while(randomIDs.length<amountData) {
+    const randomID= Math.round(Math.random()*nBooks);
+    if(!randomIDs.includes(randomID) && !ignoreIDs.includes(randomID)) {
+      const newData = await prisma.book.findUnique({
+        where: {id: randomID},
+        include: {
+          imagepaths: true,
+          categorie: true,
+          user: true
+        },
+      });
+
+      if(newData!==null) {
+        data.push(newData as IBookUserCategories)
+        randomIDs.push(randomID);
+      } else {
+        ignoreIDs.push(randomID)
+        nBooks++;
+      }
+    }
+  }
+  return data;
+}
+
+
 export async function countPages() {
-  const nBooks = await prisma.book.count();
+  const nBooks= await prisma.book.count();
   return Math.floor(nBooks/4);
 }
 

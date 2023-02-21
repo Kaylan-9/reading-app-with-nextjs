@@ -11,7 +11,7 @@ import { useContext, useEffect, useState } from 'react';
 import { IUserPageProps } from '@/types/pages/user/IUserPageProps';
 import UserProfile from '@/components/page/user/UserProfile';
 
-export const getServerSideProps: GetServerSideProps = async ({req, res, query}) => {
+export const getStaticProps: GetServerSideProps = async ({req, res, query}) => {
   let { idUser } = query;  
   const userExist = typeof idUser==='string';
   const userData = typeof idUser==='string' ? (await getUserFavoriteBooks(idUser.replace(/@/, ''))) : null;
@@ -19,7 +19,8 @@ export const getServerSideProps: GetServerSideProps = async ({req, res, query}) 
     props: {
       userExist,
       userData
-    }
+    },
+    revalidate: 100
   });
 };
 
@@ -27,7 +28,7 @@ export default function User({userData, userExist}: IUserPageProps & {userData: 
   const router = useRouter();
   const [optionPicker, setOptionPicker] = useState<number>(0);
   const {handleModal} = useContext(ModalContext);
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
 
   useEffect(() => {
     if(!userExist) {

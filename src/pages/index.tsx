@@ -1,6 +1,6 @@
-import { BookUser, countPages, getAllBooks } from "@/lib/db/books";
+import { countPages, getAllBooks, getRandomBooks } from "@/lib/db/books";
 import { getProfileData } from "@/lib/db/users";
-import { GetStaticProps } from "next"
+import { GetServerSideProps, GetStaticProps } from "next"
 import Header from '@/components/sections/header/Header';
 import Mangas from '@/components/sections/lists/Mangas';
 import { useContext, useEffect, useRef, useState } from 'react';
@@ -15,24 +15,23 @@ import { useRouter } from "next/router";
 import { IHomePageProps } from "@/types/pages/IHomePageProps";
 import StPageButton from "@/components/sections/header/StPageButton";
 import { css } from "@emotion/css";
+import { IBookUser } from "@/types/data/Books";
 
 
-export const getStaticProps: GetStaticProps = async () => {
-  const books = await getAllBooks();
+export const getStaticProps: GetServerSideProps = async () => {
+  const books = await getRandomBooks();
   const profiles = await getProfileData();
-  console.log(books);
   return {
     props: {
       books,
       profiles
-    }, 
-    revalidate: 20
+    }
   }
 }
 
 export default ({profiles, books}: IHomePageProps) => {
   const { handleModal } = useContext(ModalContext);
-  const [ searchContent,  setSearchContent ] = useState<BookUser[] | false>(false);
+  const [ searchContent,  setSearchContent ] = useState<IBookUser[] | false>(false);
   const searchInput = useRef<HTMLInputElement>(null);
   const categorySearchPicker = useRef<HTMLInputElement>(null);
   const { data: session, status } = useSession();
@@ -49,7 +48,7 @@ export default ({profiles, books}: IHomePageProps) => {
     </Head>
     <Header>
       <div className='search'>
-        <div className="inputicon">
+        <div className="input-icon">
           <BiSearch onClick={async () => {
             const dataToDoSearch = JSON.stringify({
               title: searchInput.current?.value==="" ? false : searchInput.current?.value,
@@ -61,7 +60,7 @@ export default ({profiles, books}: IHomePageProps) => {
               body: dataToDoSearch
             });
             const dataResearch = await resultResearch.json();
-            setSearchContent(dataResearch.research as BookUser[]);
+            setSearchContent(dataResearch.research as IBookUser[]);
           }}/>
           <input ref={searchInput} type="text" name="" id="" placeholder='pesquisar por nome'/>
         </div>
@@ -69,10 +68,12 @@ export default ({profiles, books}: IHomePageProps) => {
       </div>
       <StPageButton className={css`
         grid-area: allpagesbtn;
+        border-radius: 30px;
+        padding: 0 15px;
       `} onClick={() => {
         router.push('/page/0');
       }}>
-        lista completa
+        outros
       </StPageButton>
     </Header>
     <main>

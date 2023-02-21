@@ -74,7 +74,7 @@ const StHeader = styled.header`
     & > .category {
       border-radius: 0 30px 30px 0;
     }
-    & > .inputicon {
+    & > .input-icon {
       align-items: center;
       display: flex;
       grid-area: inputicon;
