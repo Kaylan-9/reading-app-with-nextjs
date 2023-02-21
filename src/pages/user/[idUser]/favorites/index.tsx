@@ -1,17 +1,15 @@
 import Header from '@/components/sections/header/Header';
 import Mangas from '@/components/sections/lists/Mangas';
 import Container from '@/components/ultis/Container';
-import OptionsMenu from '@/components/ultis/OptionsMenu';
 import { ModalContext } from '@/contexts/ModalContext';
 import { getUserFavoriteBooks } from '@/lib/db/users';
-import styled from '@emotion/styled';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 import { useContext, useEffect, useState } from 'react';
-import { IUserPageProps } from '@/types/pages/IUserPageProps';
-import { Books } from '@/lib/db/books';
+import { IUserPageProps } from '@/types/pages/user/IUserPageProps';
+import UserProfile from '@/components/page/user/UserProfile';
 
 export const getServerSideProps: GetServerSideProps = async ({req, res, query}) => {
   let { idUser } = query;  
@@ -24,10 +22,6 @@ export const getServerSideProps: GetServerSideProps = async ({req, res, query}) 
     }
   });
 };
-
-const UserSt = styled.div`
-
-`;
 
 export default function User({userData, userExist}: IUserPageProps & {userData: any}) {
   const router = useRouter();
@@ -48,8 +42,9 @@ export default function User({userData, userExist}: IUserPageProps & {userData: 
       {<title>{userData?.name}</title>}
     </Head>
     <Header/>
-    <UserSt>
-      <OptionsMenu 
+    <>
+      <UserProfile 
+        userData={userData}
         selection={{
           condi: optionPicker,
           func(indice){ setOptionPicker(indice)}
@@ -67,7 +62,7 @@ export default function User({userData, userExist}: IUserPageProps & {userData: 
           books={userData?.favorites?.map((favorite: any)=> favorite?.book)}
         /> : 
       </Container>
-    </UserSt>
+    </>
   </>) :
   null);
 }

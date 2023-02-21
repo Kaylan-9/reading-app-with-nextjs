@@ -1,4 +1,7 @@
-export interface IOptionsMenu {
+import { IUserBook } from "@/types/data/Users";
+
+export interface IUserProfileProps {
+  userData: IUserBook;
   selection: {
     condi: number;
     func: (indice: number) => void;

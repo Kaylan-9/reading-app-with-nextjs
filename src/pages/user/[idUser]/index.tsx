@@ -3,7 +3,6 @@ import Header from '@/components/sections/header/Header';
 import Mangas from '@/components/sections/lists/Mangas';
 import MangaEdit from '@/components/sections/lists/MangasEdit';
 import Container from '@/components/ultis/Container';
-import OptionsMenu from '@/components/ultis/OptionsMenu';
 import { ModalContext } from '@/contexts/ModalContext';
 import { getUserBooks } from '@/lib/db/users';
 import styled from '@emotion/styled';
@@ -12,8 +11,8 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 import { useContext, useEffect, useState } from 'react';
-import { authOptions } from '@/pages/api/auth/[...nextauth]';
-import { IUserPageProps } from '@/types/pages/IUserPageProps';
+import { IUserPageProps } from '@/types/pages/user/IUserPageProps';
+import UserProfile from '@/components/page/user/UserProfile';
 
 export const getServerSideProps: GetServerSideProps = async ({req, res, query}) => {
   let { idUser } = query;  
@@ -27,10 +26,6 @@ export const getServerSideProps: GetServerSideProps = async ({req, res, query}) 
   });
 };
 
-const UserSt = styled.div`
-
-`;
-
 export default function User({userData, userExist}: IUserPageProps) {
   const router = useRouter();
   const [optionPicker, setOptionPicker] = useState<number>(0);
@@ -42,6 +37,7 @@ export default function User({userData, userExist}: IUserPageProps) {
       handleModal({type: 'add', newModal: {message: '💣 usuário não existe!'}});
       router.push('/');
     }
+    console.log(userData)
   }, [session]);
 
   return (userExist && userData!==null ? (
@@ -50,17 +46,16 @@ export default function User({userData, userExist}: IUserPageProps) {
       {<title>{userData?.name}</title>}
     </Head>
     <Header/>
-    <UserSt>
-      <OptionsMenu 
+    <>
+      <UserProfile 
+        userData={userData}
         selection={{
           condi: optionPicker,
           func: (indice) => setOptionPicker(indice)
         }} 
         options={[
           {name:'mangas', user: true},
-          {name:'favoritos', onClick(){
-            router.push(`${router.query.idUser}/favorites`);
-          }},
+          {name:'favoritos', onClick: () => router.push(`${router.query.idUser}/favorites`)},
           {name:'adicionar', user: true},
           {name:'remover', user: true},
         ]}
@@ -72,7 +67,7 @@ export default function User({userData, userExist}: IUserPageProps) {
           (optionPicker===3) ? <MangaEdit/> : null
         ] : null}
       </Container>
-    </UserSt>
+    </>
   </>) :
   null);
 }
