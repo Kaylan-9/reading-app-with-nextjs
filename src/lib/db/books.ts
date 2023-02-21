@@ -32,6 +32,7 @@ export async function getAllBooks(n?: number) {
     cursor: {id: (n!==undefined && typeof n==='number') ? n+2 : 2},
     include: {
       imagepaths: true,
+      categorie: true,
       user: true
     },
     orderBy: {id: 'asc'}
@@ -65,9 +66,9 @@ export const getBooks = async (title?: string, idCategory?: number) => {
   }
   const data = await prisma.book.findMany({
     where: where,
-    include: {
-      categorie: true,
+    include: {      
       imagepaths: true,
+      categorie: true,
       user: true
     }
   });

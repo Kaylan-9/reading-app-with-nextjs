@@ -63,10 +63,11 @@ const MangaSt = styled.article`
   }
 `;
 
-export default function Manga({id, title, images, children} : IManga) {
+export default function Manga({id, title, category, images, children} : IManga) {
   return <li>
     <MangaSt>
       <h3 className="title">{title}</h3>
+      <h3 className="title">{category}</h3>
       <ul className="options">
         {children}
       </ul>

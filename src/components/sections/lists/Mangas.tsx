@@ -1,9 +1,9 @@
-import { BookUser } from '@/lib/db/books';
 import styled from '@emotion/styled';
 import Manga from "./Manga";
 import { useRouter } from 'next/router';
 import ProfilePic from '../ProfilePic';
 import IMangas from '@/types/components/IMangas';
+import { IBookUserCategories } from '@/types/data/Books';
 
 const MangaList = styled.div`
   max-width: var(--max-width);
@@ -60,11 +60,12 @@ export default function Mangas({title, books}: IMangas) {
       <span>{title}</span>
     </h2>) : null}
     <ul>
-      {books?.map((book: BookUser, indice) => 
+      {books?.map((book: IBookUserCategories, indice) => 
         <Manga
           key={book.id+book.title}
           id={book.id as number}
           title={book.title} 
+          category={book.categorie.name}
           images={book.imagepaths}
         >
           {book.user !== undefined ?

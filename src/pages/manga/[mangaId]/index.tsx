@@ -1,7 +1,7 @@
 import Header from '@/components/sections/header/Header';
 import { Message } from '@/components/ultis/Message';
 import { ModalContext } from '@/contexts/ModalContext';
-import { Books, getBook } from '@/lib/db/books';
+import { getBook } from '@/lib/db/books';
 import styled from '@emotion/styled';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
@@ -13,6 +13,7 @@ import { useSession } from 'next-auth/react';
 import { IoHeart, IoHeartOutline } from 'react-icons/io5';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import { isFavorite } from '@/lib/db/favorite';
+import { IBookUser } from '@/types/data/Books';
 
 interface MangaPageProps { 
   bookData?: any;
@@ -113,10 +114,10 @@ const ViewerSt = styled.ul`
   }
 `;
 
-const Viewer = ({bookData, viewContent, setViewContent}: {bookData: Books | null, viewContent: boolean, setViewContent: any}) => {
+const Viewer = ({bookData, viewContent, setViewContent}: {bookData: IBookUser, viewContent: boolean, setViewContent: any}) => {
   const { handleModal } = useContext(ModalContext);
   const [pagePosition, setPagePosition] = useState<number>(0);
-  const numberPages = bookData?.imagepaths.length-1;
+  const numberPages = bookData.imagepaths.length-1;
   const imagesEle = useRef<HTMLUListElement>(null);
   const handleScroll = useCallback(async (e: WheelEvent)=> {
     const {deltaY} = e;    
