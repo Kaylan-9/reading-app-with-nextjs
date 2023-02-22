@@ -17,7 +17,7 @@ const Items = styled.ul`
   @media(max-width:700px) {
     flex-wrap: wrap;
   }
-  & > li > a {
+  > li > a {
     text-decoration: none;
     font-weight: bold;
     font-family: var(--font-one);
@@ -51,7 +51,7 @@ const StHeader = styled.header`
       'pagination'
       'categories'
     ;
-    & > .logotipo {
+    > .logotipo {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -59,35 +59,35 @@ const StHeader = styled.header`
       position: static !important;
     }
   }
-  & > .logotipo {
+  > .logotipo {
     grid-area: logotipo;
   }
-  & > .adv {
+  > .adv {
     grid-area: adv;
   }
-  & > .search {
+  > .search {
     display: flex;
     justify-content: center;
     align-items: center;
     grid-area: search;
     border-radius: 30px;
-    & > .category {
+    > .category {
       border-radius: 0 30px 30px 0;
+      background-color: transparent;
     }
-    & > .input-icon {
+    > .input-icon {
       align-items: center;
       display: flex;
       grid-area: inputicon;
       font-size: 25px;
       border-radius: 30px 0 0 30px;
-      background-color: var(--tertiary-background);
       padding-left: 15px;
       gap: 15px;
       @media(max-width:700px) {
         display: grid;
         grid-template-columns: auto auto;
       }
-      & > input {
+      > input {
         border: none;
         background-color: transparent;
         padding: 15px;
@@ -99,10 +99,10 @@ const StHeader = styled.header`
           color: white;
         }
       }
-      & > svg {
+      > svg {
         min-width: 18px;
         cursor: pointer;
-        & > * {
+        > * {
           color: var(--secondary-foreground);
         }
       }
@@ -128,13 +128,13 @@ export default function Header({children}: IHeaderProps) {
       </Link>
       <Items>
         <NavItem name='home' href=""/>
-        <NavItem name='about' href="about"/>
         { status==='authenticated' ? 
           (<ProfileAccess imgurl={session.user?.image ?? ''}/>) : 
           (<NavItem name='login' onClick={() => {
             setActiveLogin(true);
           }}/>)
         }
+        <NavItem name='about' href="#about"/>
       </Items>
       {children}
     </StHeader>

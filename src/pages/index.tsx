@@ -10,7 +10,6 @@ import Select from "@/components/ultis/Select";
 import { IHomePageProps } from "@/types/pages/IHomePageProps";
 import { IBookUserCategories } from "@/types/data/Books";
 import { getAllCategory } from "@/lib/db/categories";
-import Footer from "@/components/Footer";
 
 export const getStaticProps: GetServerSideProps = async () => {
   const books = await getRandomBooks();
@@ -33,7 +32,7 @@ export default ({categories, books}: IHomePageProps) => {
       <title>Reading App</title>
     </Head>
     <Header>
-      <div className='search'>
+      {/* <div className='search'>
         <div className="input-icon">
           <BiSearch onClick={async () => {
             const dataToDoSearch = JSON.stringify({
@@ -51,12 +50,11 @@ export default ({categories, books}: IHomePageProps) => {
           <input ref={searchInput} type="text" name="" id="" placeholder='pesquisar por nome'/>
         </div>
         <Select ref={categorySearchPicker}/>
-      </div>
+      </div> */}
       <Categories data={categories}/>
     </Header>
     <main>
       <Mangas title='Mangás' link={`/page/0`} linkname={`ver todos`} books={(!searchContent ? books : searchContent)}/>
     </main>
-    <Footer/>
   </>)
 };

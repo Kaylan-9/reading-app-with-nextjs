@@ -9,10 +9,9 @@ const ProfileAccessSt = styled.li`
   display: flex;
   flex-direction: row;
   gap: 25px;
-  & > div {
- 
-  }
-  & > #btn-profile, #btn-logout {
+  & > #btn-logout {
+    grid-area: btn-profile;
+    color: #ff7a7a !important;
     background-color: transparent;
     color: white;
     border: none;
@@ -20,25 +19,14 @@ const ProfileAccessSt = styled.li`
     font-weight: bold;
     cursor: pointer;
   }
-  & > #btn-profile {grid-area: btn-profile}
-  & > #btn-logout {
-    grid-area: btn-profile;
-    color: #ff7a7a !important;
-  }
 `
 
 export default function ProfileAccess({imgurl}: IProfileAccessProps) {
   const {data: session}: any = useSession();
   const router = useRouter();
-  const goToProfile = () => {
-    router.push(`/user/@${session?.user?.id ?? ''}`);
-  };
-
+  const goToProfile = () => router.push(`/user/@${session?.user?.id ?? ''}`);
   return(<ProfileAccessSt>
     <ProfilePic onClick={goToProfile} imgurl={imgurl} width='40px' min_height='40px'/>
-    <button id="btn-profile" onClick={goToProfile}>
-      profile
-    </button>
     <button id="btn-logout" onClick={() => signOut()}>
       logOut
     </button>

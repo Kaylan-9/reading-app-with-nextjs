@@ -45,7 +45,7 @@ export default function User({userData, userExist}: IUserPageProps) {
       {<title>{userData?.name}</title>}
     </Head>
     <Header/>
-    <>
+    <main>
       <UserProfile 
         userData={userData}
         selection={{
@@ -66,7 +66,7 @@ export default function User({userData, userExist}: IUserPageProps) {
           (optionPicker===3) ? <MangaEdit/> : null
         ] : null}
       </Container>
-    </>
+    </main>
   </>) :
   null);
 }

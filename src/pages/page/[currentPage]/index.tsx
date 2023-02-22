@@ -45,7 +45,7 @@ export default ({currentPage, nOfPages, books}: IHomePageProps & {currentPage: n
       <title>Reading App</title>
     </Head>
     <Header>
-      <Pagination current={currentPage} nOfPages={nOfPages}/>
+      <Pagination baseURL={`/page`} current={currentPage} nOfPages={nOfPages}/>
     </Header>
     <main>
       <Mangas title='Mangás' books={books}/>

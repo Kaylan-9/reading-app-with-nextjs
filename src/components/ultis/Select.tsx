@@ -37,8 +37,16 @@ const SelectSt = styled.div`
 `;
 
 const Select = forwardRef<HTMLInputElement>(({}, ref) => {
+  interface IStateOption {
+    id: null | string | number;
+    name: string
+  }
+
   const [viewContent, setViewContent] = useState<boolean>(false);
-  const [option, setOption] = useState<string | number>("");
+  const [option, setOption] = useState<IStateOption>({
+    id: null,
+    name: ''
+  });
   const [categories, setCategories] = useState<{id: number, name: string}[]>([]);
 
   useEffect(() => {
@@ -53,14 +61,17 @@ const Select = forwardRef<HTMLInputElement>(({}, ref) => {
 
   return (<SelectSt className="category">
     <div id="select-button" onClick={() => setViewContent(oldViewContent => !oldViewContent)}>
-      <span>category {option==="" ? "" : ":"+option}</span>
+      <span>{option.id===null ? `categoria` : `${option.name}`}</span>
       <IoIosArrowForward/>
     </div>
-    <input type="text" ref={ref} defaultValue={option}/>
+    <input type="text" ref={ref} defaultValue={option?.id as string}/>
     {viewContent ?
       <div className="optionlist">{categories?.map((category: {id: number, name: string}) => 
         <div key={category.id} className="option" onClick={()=> [
-          setOption(category.id),
+          setOption({
+            id: category.id,
+            name: category.name
+          }),
           setViewContent(false)
         ]}>
           {category.name}

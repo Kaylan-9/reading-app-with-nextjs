@@ -14,6 +14,8 @@ import { IoHeart, IoHeartOutline } from 'react-icons/io5';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import { isFavorite } from '@/lib/db/favorite';
 import { IBookUser } from '@/types/data/Books';
+import CategoryButton from '@/styles/components/CategoryButton';
+import { useRouter } from 'next/router';
 
 interface MangaPageProps { 
   bookData?: any;
@@ -43,7 +45,7 @@ const Presentation = styled.div`
   width: 100%;
   min-height: 350px;
   top: 20px;
-  padding: 50px;
+  padding: 50px 150px;
   display: grid;
   gap: 25px;
   grid-template-rows: min-content min-content !important;
@@ -61,6 +63,7 @@ const Presentation = styled.div`
     border-radius: 15px;
     grid-area: presentationimage;
     width: 250px;
+    cursor: pointer;
   }
   .title {grid-area: mangatitle}
   .category {grid-area: mangacategory}
@@ -81,7 +84,10 @@ const MangaContentSt = styled.div`
 
 
 const OptionsSt = styled.ul`
+  display: flex;
+  justify-content: space-between;
   grid-area: mangaoptions;
+  flex-flow: row wrap;
   & > li {
     display: flex;
     align-items: center;
@@ -195,18 +201,22 @@ const Viewer = ({bookData, viewContent, setViewContent}: {bookData: IBookUser, v
 }
 
 export default function Manga({bookData, isfavorite}: MangaPageProps) {
+  const router= useRouter();
   const [ viewContent, setViewContent ] = useState<boolean>(false);
   const { data: session, status }: any = useSession<any>();
   const [ like, setLike ] = useState<boolean | null | undefined>(isfavorite);
-  let options = [
-    {name: "read", Icon: <AiOutlineRead/>, onClick() {
-      setViewContent(true);
-    },}
+  type TOption = {
+    name?: string;
+    Icon: React.ReactNode
+    onClick: () => void
+  }
+  let options: TOption[] = [
+    {name: "ler", Icon: <AiOutlineRead/>, onClick: () => setViewContent(true),}
   ];
   
   if(like!==null && like!==undefined) {
     const Icon = (like ? <IoHeart/> : <IoHeartOutline/>);
-    options.push({name: "like", Icon, async onClick() {
+    options.push({Icon, onClick: async () => {
       if(status === 'authenticated' && session.user.id!==undefined) {
         setLike(oldLike => !oldLike);
         await fetch('/api/favorite/changemark', {
@@ -243,16 +253,18 @@ export default function Manga({bookData, isfavorite}: MangaPageProps) {
             src={`https://storage.cloud.google.com/xyz2-book-page-image-data/${bookData?.imagepaths[0].name}`}
             onClick={()=>setViewContent(true)}
           />
-          <h2 className='title'>{bookData?.title}</h2>
-          <h3 className='category'>{bookData?.categorie?.name}</h3>
+          <h2 className='title'>{bookData.title}</h2>
+          <CategoryButton onClick={() => router.push(`/page/category/${bookData.categorie.name}/0`)} className='category'>
+            {bookData.categorie.name}
+          </CategoryButton>
           <p className='description'>{bookData?.description}</p>
           <OptionsSt>
             {options.map((option, indice) => {
               return (<li 
-                key={option.name+indice+'0'} 
+                key={(option?.name ?? 'option')+indice+'0'} 
                 onClick={option.onClick}
               >
-                <span>{option.name}</span>
+                <span>{option?.name}</span>
                 {option.Icon}  
               </li>);
             })}

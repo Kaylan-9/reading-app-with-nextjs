@@ -22,44 +22,46 @@ const StPagination = styled.nav`
   }
 `;
 
-export default function Pagination({nOfPages, current} : IPaginationProps){
+export default function Pagination({baseURL, nOfPages, current} : IPaginationProps){
   const router = useRouter();
-  let linkList: string[]= [];
-  console.log(nOfPages)
-  for(let i=0;i<=nOfPages;i++) linkList.push(`/page/${i}`);
-  return (<StPagination>
-    <ul>
-      {current!==0 ?
-        <li>
+  if(nOfPages===1) {
+    let linkList: string[]= [];
+    for(let i=0;i<=nOfPages;i++) linkList.push(`${baseURL}/${i}`);
+    return (<StPagination>
+      <ul>
+        {current!==0 ?
+          <li>
+            <StPageButton onClick={() => {
+              router.push(`${baseURL}/0`);
+            }}>
+              <IoIosArrowBack/>
+              <IoIosArrowBack/>
+            </StPageButton>
+          </li> :
+        null}
+        {linkList       
+        .map((link: string, indice: number) =>  {
+          return (current>=0 && current<2 && (indice<=2)) || 
+          (indice>=(current-1) && indice<=(current+1) && current!==(linkList.length-1)) ||
+          (indice>=(current-2) && indice<=current && current===(linkList.length-1)) ? 
+          <li key={link}>
+            <StPageButton className={current===indice ? 'marked' : ''} onClick={() => {
+              router.push(link);
+            }}>{indice}</StPageButton>
+          </li> : null;
+        })}
+        {current!==nOfPages ? <li>
           <StPageButton onClick={() => {
-            router.push(`/page/0`);
+            router.push(`${baseURL}/${nOfPages}`);
           }}>
-            <IoIosArrowBack/>
-            <IoIosArrowBack/>
+            <IoIosArrowForward/>
+            <IoIosArrowForward/>
           </StPageButton>
-        </li> :
-      null}
-      {linkList       
-      .map((link: string, indice: number) =>  {
-        return (current>=0 && current<2 && (indice<=2)) || 
-        (indice>=(current-1) && indice<=(current+1) && current!==(linkList.length-1)) ||
-        (indice>=(current-2) && indice<=current && current===(linkList.length-1)) ? 
-        <li key={link}>
-          <StPageButton className={current===indice ? 'marked' : ''} onClick={() => {
-            router.push(link);
-          }}>{indice}</StPageButton>
-        </li> : null;
-      })}
-      {current!==nOfPages ? <li>
-        <StPageButton onClick={() => {
-          router.push(`/page/${nOfPages}`);
-        }}>
-          <IoIosArrowForward/>
-          <IoIosArrowForward/>
-        </StPageButton>
-      </li> : 
-      null
-      } 
-    </ul>  
-  </StPagination>);
+        </li> : 
+        null
+        } 
+      </ul>  
+    </StPagination>);
+  }
+  return null;
 }

@@ -1,3 +1,4 @@
+import Footer from '@/components/Footer';
 import ModalProvider from '@/contexts/ModalContext';
 import { IMyAppProps } from '@/types/pages/IMyAppProps';
 import styled from '@emotion/styled';
@@ -50,7 +51,10 @@ export default function MyApp({ Component, pageProps: {session, ...pageProps}}: 
   }, [screenHeight, setScreenHeight]);
 
   return (<ModalProvider>
-    <SessionProvider session={session}><Component {...pageProps}/></SessionProvider>
+    <SessionProvider session={session}>
+      <Component {...pageProps}/>
+      <Footer/>
+    </SessionProvider>
     {enoughPosition ? <ButtonBackToTop/> : null}
   </ModalProvider>);
 }

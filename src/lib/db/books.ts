@@ -1,6 +1,5 @@
 import { IBookCreateInputDB, IBookUser, IBookUserCategories } from "@/types/data/Books";
 import { ImagesCreateManyBookInput } from "@/types/data/Images";
-import { IUserBook } from "@/types/data/Users";
 import prisma from "./prisma";
 
 export async function deleteBook(id: number) {
@@ -28,8 +27,8 @@ export async function createBook(data: IBookCreateInputDB) {
 
 export async function getAllBooks(n?: number) {
   const data = await prisma.book.findMany({
-    take: 4,
-    skip: (n!==undefined && typeof n==='number') ? n*4 : 0,
+    take: 10,
+    skip: (n!==undefined && typeof n==='number') ? n*10 : 0,
     cursor: {id: (n!==undefined && typeof n==='number') ? n+2 : 2},
     include: {
       imagepaths: true,
@@ -41,8 +40,29 @@ export async function getAllBooks(n?: number) {
   return data;
 }
 
+export async function getAllBooksByCategory(n: number, category: string) {
+  const data = await prisma.book.findMany({
+    take: 10,
+    skip: n*10,
+    cursor: {id: n+2},
+    where: {
+      categorie: {
+        name: category
+      }
+    },
+    include: {
+      imagepaths: true,
+      categorie: true,
+      user: true
+    },
+    orderBy: {id: 'asc'}
+  });
+  return data;
+}
+
+
 export async function getRandomBooks() {
-  const amountData = 4;
+  const amountData = 10;
   let nBooks= await prisma.book.count();
   let 
     randomIDs: number[] = [],
@@ -74,9 +94,20 @@ export async function getRandomBooks() {
 }
 
 
-export async function countPages() {
-  const nBooks= await prisma.book.count();
-  return Math.floor(nBooks/4);
+export async function countPages(category?: string) {
+  let nBooks: number;
+  if(typeof category==='string') {
+    nBooks= await prisma.book.count({
+      where: {
+        categorie: {
+          name: category
+        }
+      }
+    });
+  } else {
+    nBooks= await prisma.book.count();
+  }
+  return Math.floor(nBooks/10);
 }
 
 export async function getBook(id: number) {

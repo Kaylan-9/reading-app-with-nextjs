@@ -1,10 +1,11 @@
-import './globals.css'
+import { ReactNode } from 'react';
+import './globals.css';
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export interface IRootLayout {
+  children: ReactNode
+}
+
+export default function RootLayout({children}: IRootLayout) {
   return (
     <html lang="en">
       <head/>

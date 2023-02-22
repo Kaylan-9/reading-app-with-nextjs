@@ -19,7 +19,7 @@ export function Categories ({data}: ICategoriesProps) {
     <StCategories>
       {data?.map((profile) => {
         let { name } = profile;
-        const link = `/category/${name}`;
+        const link = `/page/category/${name}/0`;
         return (<CategoryButton onClick={() => router.push(link)}>{name}</CategoryButton>);
       })}
     </StCategories>

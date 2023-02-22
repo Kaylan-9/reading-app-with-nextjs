@@ -1,8 +1,10 @@
+import { useEffect } from 'react';
 import PresentationImg from "./PresentationImg";
 import styled from "@emotion/styled";
 import Link from "next/link";
 import { IManga } from "@/types/components/IManga";
 import CategoryButton from "@/styles/components/CategoryButton";
+import { useRouter } from "next/router";
 
 const MangaSt = styled.article`
   display: flex;
@@ -69,6 +71,8 @@ const MangaSt = styled.article`
 `;
 
 export default function Manga({id, title, category, images, children} : IManga) {
+  const router= useRouter();
+
   return <li>
     <MangaSt>
       <h3 className="title">{title}</h3>
@@ -80,7 +84,7 @@ export default function Manga({id, title, category, images, children} : IManga) 
           })}
         </ul>
       </Link>
-      <CategoryButton className="category">{category}</CategoryButton>
+      <CategoryButton onClick={() => router.push(`/page/category/${category}/0`)} className="category">{category}</CategoryButton>
     </MangaSt>
   </li>;
 }

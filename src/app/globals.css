@@ -25,14 +25,21 @@ form > * {
 
 html,
 body {
-  max-width: 100vw;
   overflow-x: hidden;
 }
 
-body {
+body > div {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: min-content auto min-content !important;
+  grid-template-areas: 'pageh' 'm' 'pagef' !important;
   color: rgb(var(--foreground));
   background: rgb(var(--background));
 }
+
+body > div > header {grid-area: pageh;}
+body > div > main {grid-area: m;}
+body > div > footer {grid-area: pagef;}
 
 ul {
   margin: 0;

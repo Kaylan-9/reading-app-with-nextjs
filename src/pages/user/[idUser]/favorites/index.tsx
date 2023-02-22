@@ -30,6 +30,8 @@ export default function User({userData, userExist}: IUserPageProps & {userData: 
   const { data: session } = useSession();
 
   useEffect(() => {
+    console.log(userData);
+    
     if(!userExist) {
       handleModal({type: 'add', newModal: {message: '💣 usuário não existe!'}});
       router.push('/');
@@ -42,7 +44,7 @@ export default function User({userData, userExist}: IUserPageProps & {userData: 
       {<title>{userData?.name}</title>}
     </Head>
     <Header/>
-    <>
+    <main>
       <UserProfile 
         userData={userData}
         selection={{
@@ -59,7 +61,7 @@ export default function User({userData, userExist}: IUserPageProps & {userData: 
       <Container>
         <Mangas books={userData?.favorites?.map((favorite: any)=> favorite.book)}/>
       </Container>
-    </>
+    </main>
   </>) :
   null);
 }
