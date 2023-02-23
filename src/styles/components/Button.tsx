@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 
 const Button = styled.input<{area: string}>`
+  cursor: pointer;
   padding: 8px 16px;
   border-radius: 30px;
   border: none;

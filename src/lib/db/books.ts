@@ -60,7 +60,6 @@ export async function getAllBooksByCategory(n: number, category: string) {
   return data;
 }
 
-
 export async function getRandomBooks() {
   const amountData = 10;
   let nBooks= await prisma.book.count();

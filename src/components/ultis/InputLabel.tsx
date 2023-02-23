@@ -1,6 +1,7 @@
 import { forwardRef } from "react";
 import styled from "@emotion/styled";
 import { IInputLabel } from "@/types/components/ultis/IInputLabel";
+import Input from "@/styles/components/Input";
 
 const InputLabelSt = styled.div<{area: string}>`
   display: grid;
@@ -13,21 +14,12 @@ const InputLabelSt = styled.div<{area: string}>`
     font-weight: bold;
     border: none;
   }
-  & > input {
-    font-weight: bold;
-    background-color: var(--tertiary-background);
-    color: #ffffff;
-    padding: 15px;
-    border-radius: 30px;
-    border: none;
-    outline: none;
-  }
 `;
 
 const InputLabel = forwardRef(({label, type="text", placeholder="", area}: IInputLabel, ref: any) => {
   return (<InputLabelSt area={area}>
     <label>{label}</label>
-    <input type={type} placeholder={placeholder} ref={ref}/>
+    <Input type={type} placeholder={placeholder} ref={ref}/>
   </InputLabelSt>);
 });
 

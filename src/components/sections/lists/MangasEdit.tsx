@@ -4,7 +4,7 @@ import { MdOutlineManageSearch } from "react-icons/md";
 import { BiTrash } from "react-icons/bi";
 import { useRef, useState } from 'react';
 import Manga from "./Manga";
-import { BookUser } from "@/lib/db/books";
+import { IBookUserCategories } from "@/types/data/Books";
 
 const MangaEditSt = styled.div`
   & > ul {
@@ -49,7 +49,7 @@ const MangaEditSt = styled.div`
 `;
 
 export default function MangaEdit() {
-  const [ searchContent,  setSearchContent ] = useState<BookUser[] | false>(false);
+  const [ searchContent,  setSearchContent ] = useState<IBookUserCategories[] | false>(false);
   const searchInput = useRef<HTMLInputElement>(null); 
   const router = useRouter();
 
@@ -64,15 +64,16 @@ export default function MangaEdit() {
         });
         const dataResearch = await resultResearch.json();
         console.log(dataResearch)
-        setSearchContent(dataResearch.research as BookUser[]);
+        setSearchContent(dataResearch.research as IBookUserCategories[]);
       }}/>
       <input ref={searchInput} type="text" name="" id="" placeholder='pesquisar por nome'/>
     </div>
     <ul>
-      {searchContent ? searchContent.map((book: BookUser) => <Manga
+      {searchContent ? searchContent.map((book: IBookUserCategories) => <Manga
         key={book.id+book.title}
         id={book.id as number}
         title={book.title} 
+        category={book.categorie.name}
         images={book.imagepaths}
       >
         <BiTrash onClick={async ()=> {

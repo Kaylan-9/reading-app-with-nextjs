@@ -23,7 +23,7 @@ const ListSelectedImages = styled.ul`
     min-height: 20vh;
     min-width: 16vh !important; 
     grid-area: imageselectionbutton;
-    background-color: #292929;
+    background-color: rgb(var(--secondary-background));
     border-radius: 1.25vh;
     object-fit: cover;
     vertical-align: bottom;

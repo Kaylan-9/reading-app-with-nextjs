@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 const TextArea = styled.textarea<{area: string}>`
   width: 100%;
   padding: 15px;
-  background-color: #292929;
+  background-color: rgb(var(--secondary-background));
   color: #ffffff;
   border-radius: 10px;
   border: none;

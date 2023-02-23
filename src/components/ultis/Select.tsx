@@ -1,3 +1,4 @@
+import Input from "@/styles/components/Input";
 import styled from "@emotion/styled";
 import { forwardRef, useState, useEffect } from "react";
 import { IoIosArrowForward } from 'react-icons/io';
@@ -7,7 +8,7 @@ const SelectSt = styled.div`
   border: none;
   grid-area: bookcategoryselect;
   text-align: center;
-  background-color: var(--tertiary-background);
+  background-color: rgb(var(--secondary-background));
   color: var(--secondary-foreground);
   font-weight: bold;
   border-radius: 30px;
@@ -22,7 +23,7 @@ const SelectSt = styled.div`
     margin-top: 10px;
     position: absolute;
     z-index: 6;
-    background-color: #292929;
+    background-color: rgb(var(--secondary-background));
     border-radius: 15px;
     .option {
       padding: 15px 35px;
@@ -37,16 +38,8 @@ const SelectSt = styled.div`
 `;
 
 const Select = forwardRef<HTMLInputElement>(({}, ref) => {
-  interface IStateOption {
-    id: null | string | number;
-    name: string
-  }
-
   const [viewContent, setViewContent] = useState<boolean>(false);
-  const [option, setOption] = useState<IStateOption>({
-    id: null,
-    name: ''
-  });
+  const [option, setOption] = useState<null | string>(null);
   const [categories, setCategories] = useState<{id: number, name: string}[]>([]);
 
   useEffect(() => {
@@ -61,22 +54,22 @@ const Select = forwardRef<HTMLInputElement>(({}, ref) => {
 
   return (<SelectSt className="category">
     <div id="select-button" onClick={() => setViewContent(oldViewContent => !oldViewContent)}>
-      <span>{option.id===null ? `categoria` : `${option.name}`}</span>
+      <span>{option===null ? `categoria` : `${option}`}</span>
       <IoIosArrowForward/>
     </div>
-    <input type="text" ref={ref} defaultValue={option?.id as string}/>
+    <input type="text" ref={ref} defaultValue={option as string}/>
     {viewContent ?
-      <div className="optionlist">{categories?.map((category: {id: number, name: string}) => 
-        <div key={category.id} className="option" onClick={()=> [
-          setOption({
-            id: category.id,
-            name: category.name
-          }),
-          setViewContent(false)
-        ]}>
-          {category.name}
-        </div>
-      )}</div> :
+      <div className="optionlist">
+        {categories?.map((category: {id: number, name: string}) => 
+          <div key={category.id} className="option" onClick={()=> [
+            setOption(category.name),
+            setViewContent(false)
+          ]}>
+            {category.name}
+          </div>
+        )}
+        <Input type="text" placeholder={`escrever nova categoria`} onChange={(e: any) => setOption(e.target.value)}/>
+      </div> :
       null
     }
   </SelectSt>);

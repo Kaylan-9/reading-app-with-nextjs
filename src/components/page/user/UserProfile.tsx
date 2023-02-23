@@ -50,17 +50,14 @@ function UserProfile({userData, selection, options}: IUserProfileProps) {
     </figure>
     <ul className={`options-menu`}>
       {options.map((option, indice) => {
-        return (
+        return (((
           option?.user && typeof idUser==='string' && typeof session?.user?.id==='string' &&
           session.user.id==idUser.replace(/@/, '')
-        ) || (option?.user===undefined) ?(<li key={option.name+indice}>
-          <button 
-            className={selection.condi===indice ? css`background-color: rgb(22 22 22) !important;` : ''}
-            onClick={() => {              
-              selection.func(indice);
-              if(typeof option.onClick==='function') option.onClick();
-            }}
-          >
+        ) || (option?.user===undefined)) && selection.condi!==indice) ?(<li key={option.name+indice}>
+          <button onClick={() => {              
+            selection.func(indice);
+            if(typeof option.onClick==='function') option.onClick();
+          }}>
             {option.name}
           </button>
         </li>) : null;

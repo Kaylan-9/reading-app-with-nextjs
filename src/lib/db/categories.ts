@@ -8,6 +8,15 @@ export async function createCategory(name: string) {
   }))
 }
 
+export async function categoryNotExistCreate(category: string) {
+  const data= await  prisma.categories.findFirst({
+    where: {
+      name: category
+    }
+  });
+  return data===null ? await createCategory(category) : data;
+}
+
 export async function getAllCategory() {
   return (await prisma.categories.findMany());
 }

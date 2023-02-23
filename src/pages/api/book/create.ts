@@ -3,7 +3,8 @@ import { createBook as createBookInDB } from "@/lib/db/books";
 import { FormidableError, parseForm } from "@/lib/parse-form";
 import { createReadStream } from "fs";
 import type { NextApiRequest, NextApiResponse } from "next";
-import IBook, { IBookCreateInput, IBookCreateInputDB } from "@/types/data/Books";
+import { IBookCreateInput, IBookCreateInputDB } from "@/types/data/Books";
+import { categoryNotExistCreate } from "@/lib/db/categories";
 
 export const config = {
   api: {
@@ -24,7 +25,7 @@ export default async function createBook(
         title: fields.bookname as string,
         path: fields.bookpath as string,
         description: fields.bookdescription as string,
-        idCategory: Number(fields.bookidcategory),
+        idCategory: 0,
         idUser: fields.bookiduser as string,
         imagepaths: [],
       };
@@ -39,6 +40,9 @@ export default async function createBook(
       });
 
       try{
+        const category= await categoryNotExistCreate(fields.bookcategory as string);
+        newBook.idCategory= category.id;
+
         await createBookInDB(newBook as IBookCreateInputDB);
         filesdata.map(({filepath, newFilename: filename}: filesdataType) => {
           const filenametype = filename.split('.');

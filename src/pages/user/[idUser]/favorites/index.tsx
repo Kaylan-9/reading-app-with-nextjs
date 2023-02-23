@@ -1,6 +1,5 @@
 import Header from '@/components/sections/header/Header';
 import Mangas from '@/components/sections/lists/Mangas';
-import Container from '@/components/ultis/Container';
 import { ModalContext } from '@/contexts/ModalContext';
 import { getUserFavoriteBooks } from '@/lib/db/users';
 import { GetServerSideProps } from 'next';
@@ -58,9 +57,7 @@ export default function User({userData, userExist}: IUserPageProps & {userData: 
           }},
         ]}
       />
-      <Container>
-        <Mangas books={userData?.favorites?.map((favorite: any)=> favorite.book)}/>
-      </Container>
+      <Mangas books={userData?.favorites?.map((favorite: any)=> favorite.book)}/>
     </main>
   </>) :
   null);

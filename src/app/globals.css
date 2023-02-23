@@ -3,7 +3,7 @@
 :root {
   --background: 32, 32, 34;
   --secondary-background: 22, 22, 22;
-  --tertiary-background: #1d1d1d;
+  --tertiary-background: #191919;
   --foreground: 220, 220, 220;
   --secondary-foreground: #727272;
   --font-one: 'Roboto', sans-serif;
@@ -34,7 +34,7 @@ body > div {
   grid-template-rows: min-content auto min-content !important;
   grid-template-areas: 'pageh' 'm' 'pagef' !important;
   color: rgb(var(--foreground));
-  background: rgb(var(--background));
+  background: var(--tertiary-background);
 }
 
 body > div > header {grid-area: pageh;}

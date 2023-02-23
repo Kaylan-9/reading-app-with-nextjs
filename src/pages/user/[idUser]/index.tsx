@@ -1,8 +1,7 @@
-import ContainerBookAdd from '@/components/sections/ContainerAdd';
+import ContainerBookAdd from '@/components/sections/FormsAdd';
 import Header from '@/components/sections/header/Header';
 import Mangas from '@/components/sections/lists/Mangas';
 import MangaEdit from '@/components/sections/lists/MangasEdit';
-import Container from '@/components/ultis/Container';
 import { ModalContext } from '@/contexts/ModalContext';
 import { getUserBooks } from '@/lib/db/users';
 import { GetServerSideProps } from 'next';
@@ -53,19 +52,17 @@ export default function User({userData, userExist}: IUserPageProps) {
           func: (indice) => setOptionPicker(indice)
         }} 
         options={[
-          {name:'mangas', user: true},
+          {name:'princípal'},
           {name:'favoritos', onClick: () => router.push(`${router.query.idUser}/favorites`)},
           {name:'adicionar', user: true},
           {name:'remover', user: true},
         ]}
       />
-      <Container>
-        {(optionPicker===0 || !session?.user) ? <Mangas books={userData.book}/> : null}
-        {status==='authenticated' ? [
-          (optionPicker===2) ? <ContainerBookAdd/> : null,
-          (optionPicker===3) ? <MangaEdit/> : null
-        ] : null}
-      </Container>
+      {status==='authenticated' ? [
+        (optionPicker===2) ? <ContainerBookAdd/> : null,
+        (optionPicker===3) ? <MangaEdit/> : null
+      ] : null}
+      <Mangas books={userData.book}/>
     </main>
   </>) :
   null);
