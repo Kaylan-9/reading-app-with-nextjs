@@ -5,8 +5,9 @@ import Link from "next/link";
 import { IManga } from "@/types/components/IManga";
 import CategoryButton from "@/styles/components/CategoryButton";
 import { useRouter } from "next/router";
+import { motion } from 'framer-motion';
 
-const MangaSt = styled.article`
+const MangaSt = styled(motion.article)`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -74,7 +75,11 @@ export default function Manga({id, title, category, images, children} : IManga) 
   const router= useRouter();
 
   return <li>
-    <MangaSt>
+    <MangaSt
+      initial={{ opacity: 0.1 }}
+      transition={{ duration: 8, times: [0, 0.2, 1] }}
+      whileInView={{ opacity: 1 }}
+    >
       <h3 className="title">{title}</h3>
       <ul className="options">{children}</ul>
       <Link href={`/manga/@${id}`}>
