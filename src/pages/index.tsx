@@ -13,19 +13,19 @@ import { getAllCategory } from "@/lib/db/categories";
 
 export const getStaticProps: GetServerSideProps = async () => {
   const books = await getRandomBooks();
-  const categories = await getAllCategory();
+  // const categories = await getAllCategory();
   return {
     props: {
       books,
-      categories
+      categories: []
     }
   }
 };
 
 export default ({categories, books}: IHomePageProps) => {
-  const [ searchContent,  setSearchContent ] = useState<IBookUserCategories[] | false>(false);
-  const searchInput = useRef<HTMLInputElement>(null);
-  const categorySearchPicker = useRef<HTMLInputElement>(null);
+  // const [ searchContent,  setSearchContent ] = useState<IBookUserCategories[] | false>(false);
+  // const searchInput = useRef<HTMLInputElement>(null);
+  // const categorySearchPicker = useRef<HTMLInputElement>(null);
 
   return (<>
     <Head>
@@ -54,7 +54,7 @@ export default ({categories, books}: IHomePageProps) => {
       <Categories data={categories}/>
     </Header>
     <main>
-      <Mangas title='Mangás' link={`/page/0`} linkname={`ver todos`} books={(!searchContent ? books : searchContent)}/>
+      <Mangas title='Mangás' link={`/page/0`} linkname={`ver todos`} books={books}/>
     </main>
   </>)
 };

@@ -44,7 +44,7 @@ export async function getAllBooksByCategory(n: number, category: string) {
   const data = await prisma.book.findMany({
     take: 10,
     skip: n*10,
-    cursor: {id: n+2},
+    cursor: {id: n},
     where: {
       categorie: {
         name: category
@@ -62,33 +62,41 @@ export async function getAllBooksByCategory(n: number, category: string) {
 
 export async function getRandomBooks() {
   const amountData = 10;
-  let nBooks= await prisma.book.count();
-  let 
-    randomIDs: number[] = [],
-    ignoreIDs: number[] = []
-  ;
-  let data: IBookUserCategories[] = [];
-  while(randomIDs.length<amountData) {
-    const randomID= Math.round(Math.random()*nBooks);
-    if(!randomIDs.includes(randomID) && !ignoreIDs.includes(randomID)) {
-      const newData = await prisma.book.findUnique({
-        where: {id: randomID},
-        include: {
-          imagepaths: true,
-          categorie: true,
-          user: true
-        },
-      });
 
-      if(newData!==null) {
-        data.push(newData as IBookUserCategories)
-        randomIDs.push(randomID);
-      } else {
-        ignoreIDs.push(randomID)
-        nBooks++;
+  let nBooks: number = await prisma.book.count(),
+      randomIDs: number[] = [],
+      ignoreIDs: number[] = [],
+      data: IBookUserCategories[] = [];
+
+  if(nBooks>=amountData) {
+    while(randomIDs.length<amountData) {
+      const randomID= Math.round(Math.random()*nBooks);
+      if(!randomIDs.includes(randomID) && !ignoreIDs.includes(randomID)) {
+        const newData = await prisma.book.findUnique({
+          where: {id: randomID},
+          include: {
+            imagepaths: true,
+            categorie: true,
+            user: true
+          },
+        });
+
+        if(newData!==null) {
+          data.push(newData as IBookUserCategories)
+          randomIDs.push(randomID);
+        } else {
+          ignoreIDs.push(randomID)
+          nBooks++;
+        }
       }
     }
-  }
+  } else data = await prisma.book.findMany({
+    include: {
+      imagepaths: true,
+      categorie: true,
+      user: true 
+    }
+  }) as IBookUserCategories[];
   return data;
 }
 
