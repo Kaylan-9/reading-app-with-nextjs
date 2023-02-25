@@ -77,7 +77,7 @@ export default function Manga({id, title, category, images, children} : IManga) 
   return <li>
     <MangaSt
       initial={{ opacity: 0.1 }}
-      transition={{ duration: 8, times: [0, 0.2, 1] }}
+      transition={{delay: .25}}
       whileInView={{ opacity: 1 }}
     >
       <h3 className="title">{title}</h3>
@@ -85,7 +85,11 @@ export default function Manga({id, title, category, images, children} : IManga) 
       <Link href={`/manga/@${id}`}>
         <ul className="image-list">
           {images?.map((img, indice) => {
-            if(indice<3) return <PresentationImg id={`image-${indice}`} key={img.name+img.id} url={`https://storage.cloud.google.com/xyz2-book-page-image-data/${img.name}`}/>
+            if(indice<3) return <PresentationImg 
+              id={`image-${indice}`} 
+              key={img.name+img.id} 
+              url={`https://storage.cloud.google.com/xyz2-book-page-image-data/${img.name}`}
+            />
           })}
         </ul>
       </Link>

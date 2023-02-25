@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import styled from "@emotion/styled";
 import { BsGithub } from "react-icons/bs";
 
@@ -42,14 +43,27 @@ export const StFooter = styled.footer`
 `;
 
 export default function Footer() {
+  const variants= {
+    initial: {y: -50, opacity: 0},
+    whileInView: {y: 0, opacity: 1}
+  }
+
   return (<StFooter id={`about`}>
-    <div className={`presentation`}>
+    <motion.div 
+      className={`presentation`} 
+      variants={variants} 
+      initial={`initial`} 
+      whileInView={`whileInView`}
+      transition={{
+        delay: .25
+      }}
+    >
       <p><strong>Seja bem vindo ao aplicativo de leitura </strong> um meio confortável e reponsivo aos seus usuários.</p>
       <p>Por meio desta página <strong> WEB </strong> ou  <strong> APP </strong> 🦄🌈 é possível ler histórias em quadrinhos, entretanto, aquelas que estão em domínio publico. Sinta-se a vontade para testar o sistema, e em caso de problemas entre em contanto.</p>  
       <a href="https://github.com/Kaylan-9">
         <span>DEV. Kaylan</span>
         <BsGithub/>
       </a>
-    </div>
+    </motion.div>
   </StFooter>)
 }
