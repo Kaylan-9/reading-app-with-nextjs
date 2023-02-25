@@ -23,9 +23,9 @@ export const getStaticProps: GetServerSideProps = async () => {
 };
 
 export default ({categories, books}: IHomePageProps) => {
-  // const [ searchContent,  setSearchContent ] = useState<IBookUserCategories[] | false>(false);
-  // const searchInput = useRef<HTMLInputElement>(null);
-  // const categorySearchPicker = useRef<HTMLInputElement>(null);
+  const [ searchContent,  setSearchContent ] = useState<IBookUserCategories[] | false>(false);
+  const searchInput = useRef<HTMLInputElement>(null);
+  const categorySearchPicker = useRef<HTMLInputElement>(null);
 
   return (<>
     <Head>

@@ -58,11 +58,8 @@ export default function User({userData, userExist}: IUserPageProps) {
           {name:'remover', user: true},
         ]}
       />
-      {status==='authenticated' ? [
-        (optionPicker===2) ? <ContainerBookAdd/> : null,
-        (optionPicker===3) ? <MangaEdit/> : null
-      ] : null}
-      <Mangas books={userData.book}/>
+      {status==='authenticated' ? [(optionPicker===2) ? <ContainerBookAdd/> : null,] : null}
+      <MangaEdit books={userData.book} _delete={optionPicker===3}/>
     </main>
   </>) :
   null);
