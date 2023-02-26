@@ -10,6 +10,7 @@ export const config = {
 export default async function changemark(req: NextApiRequest, res: NextApiResponse) {
   if(req.method==='POST') {
     const { isfavorite, userId, bookId } = req.body;
+    console.log(isfavorite, userId, bookId)
     try {
       if(isfavorite) {
         return res.status(200).send(await unsetFavorite(userId, bookId));

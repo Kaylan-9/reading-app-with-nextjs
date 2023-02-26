@@ -2,11 +2,16 @@ import { IPropsMangaViewer } from "@/types/contexts/MangaViewerContext/component
 import { IMangaViewerReducerAction } from "@/types/contexts/MangaViewerContext/reducers/MangaViewerReducerAction";
 import { IMangaViewerReducerState } from "@/types/contexts/MangaViewerContext/reducers/MangaViewerReducerState";
 import { IoHeart, IoHeartOutline } from 'react-icons/io5';
+import { HiViewGrid } from 'react-icons/hi';
+import { AiFillRead } from 'react-icons/ai';
 import styled from "@emotion/styled";
-import { createContext, ReactNode, Reducer, useEffect, useReducer, useState } from "react";
+import { createContext, ReactNode, Reducer, useCallback, useEffect, useReducer, useState } from "react";
 import { IoIosCloseCircle } from "react-icons/io";
 import { IBookUserCategories } from "@/types/data/Books";
 import { useSession } from "next-auth/react"
+import { useRouter } from "next/router";
+import CategoryButton from "@/styles/components/CategoryButton";
+import { css } from "@emotion/css";
 
 const initialValueMangaViewerReducer: IMangaViewerReducerState = {
   id: null
@@ -30,6 +35,8 @@ const initialValueMangaViewer = {
 
 export const MangaViewer= styled.div`
   z-index: 6;
+  overflow-y: scroll;
+  overflow-x: hidden;
   min-height: 100vh;
   width: 100vw;
   display: grid;
@@ -38,27 +45,33 @@ export const MangaViewer= styled.div`
   grid-template-areas: 
     'btn-close .'
     'manga-img manga-container'
-    '. .'
+    'manga-pages manga-pages'
   ;
-  row-gap: 2em;
-  column-gap: 5em;
+  row-gap: 3em;
+  column-gap: 3em;
   backdrop-filter: blur(2px); 
   background-color: rgba(0, 0, 0, 0.411);
   filter: blur(0px);
   position: fixed;
-  padding: 5em calc(((100vw - 1920px) / 2) + 4em);
+  top: 0;
+  bottom: 0;
+  padding: 5em calc(((100vw - 1920px) / 2) + 8em);
   > img {
     width: 18.75em;
     border-radius: 1em;
     grid-area: manga-img;
   }
   > .manga-container {
+    display: flex;
+    flex-flow: column wrap;
+    align-items: flex-start;
+    justify-content: flex-start;
     grid-area: manga-container;
+    gap: 2em;
     background-color: rgb(var(--background));
     padding: 2em;
-    border-radius: 1em;
+    border-radius: 2em;
     > .author {
-      margin-bottom: 1em;
       display: flex;
       align-items: center;
       flex-flow: row wrap;
@@ -77,8 +90,7 @@ export const MangaViewer= styled.div`
       flex-flow: row wrap;
       justify-content: center;
       gap: 2.5em;
-      margin-bottom: 25px;
-      padding: 15px 10px;
+      padding: 15px;
       border: 1px solid rgba(255, 255, 255, .25);
       border-radius: 2em;
       > li > button {
@@ -114,13 +126,54 @@ export const MangaViewer= styled.div`
   }
 `;
 
+const viewModes = [
+  css`  
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    > li > img {  
+      width: 50em;
+    }
+  `,
+  css`
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    gap: 1em;
+    > li > img {  
+      flex: auto;
+      height: 25em;
+    }
+  `
+]
+
 export const MangaViewerContext = createContext<IPropsMangaViewer>(initialValueMangaViewer);
 
 export default function MangaViewerProvider({children}: {children: ReactNode}) {
+  const router= useRouter();
   const [mangaViewer, handleMangaViewer] = useReducer<Reducer<IMangaViewerReducerState, IMangaViewerReducerAction>>(mangaViewerReducer, initialValueMangaViewerReducer);
   const [data, setData] = useState<IBookUserCategories | null>(null);
   const [marked, setMarked] = useState<boolean>(false);
+  const [show, setShow] = useState<boolean>(false);
+  const [viewMode, setViewMode] = useState<number>(0);
+
   const {data: session}: {data: any} = useSession();
+  const changeMark= useCallback(async () => {
+    setMarked(oldMarked=> !oldMarked);
+    const params= {
+      method: 'POST',
+      crendentials: 'same-origin',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        isfavorite: marked,
+        userId: session.user.id, 
+        bookId: mangaViewer.id
+      })
+    }
+    await fetch(`/api/favorite/changemark`, params);
+  }, [session, mangaViewer, marked]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -147,7 +200,6 @@ export default function MangaViewerProvider({children}: {children: ReactNode}) {
       }
 
     };
-    console.log(session);
     if(typeof mangaViewer.id==='number') fetchData();
   }, [mangaViewer]);
 
@@ -164,24 +216,28 @@ export default function MangaViewerProvider({children}: {children: ReactNode}) {
 
       <IoIosCloseCircle onClick={() => handleMangaViewer({type: 'id', id: null})}/>
       <div className="manga-container">
-        <div className="author">
-          {data!==null && data.user.image!==null && (<>
-            <img className={`author-img`} src={data.user.image} alt={`foto do autor ou autora`}/>
-            <span className={`author-name`}>{data.user.name}</span>
-          </>)}
-        </div>
         <ul className="btns">
-          <li>
-            <button>
-              {marked ? (<IoHeart/>) : (<IoHeartOutline/>)}
-            </button>
-          </li>
+          <li><button onClick={changeMark}>{marked ? (<IoHeart/>) : (<IoHeartOutline/>)}</button></li>
+          <li><button onClick={() => setShow(oldShow=> !oldShow)}><AiFillRead/></button></li>
+          {show ? (<li><button onClick={() => setViewMode(oldViewMode =>
+              viewModes.length-1==oldViewMode ? 0 : oldViewMode+1
+          )}><HiViewGrid/></button></li>) : null}
         </ul>
+        <div className="author">
+          {data!==null && data.user.image!==null ? (<img className={`author-img`} src={data.user.image} alt={`foto do autor ou autora`}/>): null}
+          <span className={`author-name`}>{data?.user.name}</span>
+        </div>
         <div className="body-text">
-          <h3 className="title">Descrição <strong>de {data?.title}</strong></h3>
+          <h3 className="title">Descrição {viewMode} <strong>de {data?.title}</strong></h3>
           <p className="text">{data!==null && data.description}</p>
         </div>
+        <CategoryButton onClick={() => router.push(`/page/category/${data?.categorie.name}/0`)}>{data?.categorie.name}</CategoryButton>
       </div>
+      {show ? (<ul className={viewModes[viewMode]} style={{gridArea: 'manga-pages'}}>
+        {data?.imagepaths.map((img, indice)=> (<li key={img.name}>
+          <img src={`https://storage.cloud.google.com/xyz2-book-page-image-data/${img.name}`} alt={`página nº ${indice+1}`} />
+        </li>))}
+      </ul>) : null}
     </MangaViewer>) : null}
   </MangaViewerContext.Provider>);
 };

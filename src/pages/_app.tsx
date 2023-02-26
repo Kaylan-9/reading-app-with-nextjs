@@ -41,7 +41,6 @@ export default function MyApp({ Component, pageProps: {session, ...pageProps}}: 
   const [ enoughPosition, setEnoughPosition ] = useState<boolean>(true);
   const handleScroll = useCallback(() => {
     setEnoughPosition((document.body.getClientRects()[0].y*-1)>(screenHeight/3));
-    console.log((screenHeight/2)>(document.body.getClientRects()[0].y*-1))
   }, [screenHeight, setScreenHeight]);
 
   useEffect(() => {setScreenHeight(document.body.clientHeight);}, []);
