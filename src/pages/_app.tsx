@@ -1,4 +1,5 @@
 import Footer from '@/components/Footer';
+import MangaViewerProvider from '@/contexts/MangaViewerContext';
 import ModalProvider from '@/contexts/ModalContext';
 import { IMyAppProps } from '@/types/pages/IMyAppProps';
 import styled from '@emotion/styled';
@@ -52,8 +53,10 @@ export default function MyApp({ Component, pageProps: {session, ...pageProps}}: 
 
   return (<ModalProvider>
     <SessionProvider session={session}>
-      <Component {...pageProps}/>
-      <Footer/>
+      <MangaViewerProvider>
+        <Component {...pageProps}/>
+        <Footer/>
+      </MangaViewerProvider>
     </SessionProvider>
     {enoughPosition ? <ButtonBackToTop/> : null}
   </ModalProvider>);

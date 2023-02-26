@@ -1,10 +1,14 @@
-export async function isFavorite(userId: string, bookId: number): Promise<boolean> {
+export async function isFavorite(userId: string, bookId: number): Promise<{
+  marked: boolean
+}> {
   const where = {
     userId,
     bookId
   }
   const data = await prisma?.favorite.findFirst({where});
-  return (data ?? false)!==false;
+  return {
+    marked: ((data ?? false)!==false)
+  };
 }
 
 

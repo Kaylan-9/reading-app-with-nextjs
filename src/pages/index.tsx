@@ -13,11 +13,11 @@ import { getAllCategory } from "@/lib/db/categories";
 
 export const getStaticProps: GetServerSideProps = async () => {
   const books = await getRandomBooks();
-  // const categories = await getAllCategory();
+  const categories = await getAllCategory();
   return {
     props: {
       books,
-      categories: []
+      categories
     }
   }
 };

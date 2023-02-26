@@ -3,7 +3,7 @@ import { IPropsModal } from "@/types/contexts/ModalContext/components/IPropsModa
 import { IModal } from "@/types/contexts/ModalContext/IModal";
 import { IModalReducerAction } from "@/types/contexts/ModalContext/reducers/IModalReducerAction";
 import { IModalReducerState } from "@/types/contexts/ModalContext/reducers/IModalReducerState";
-import { TModalReducer } from "@/types/contexts/ModalContext/reducers/TModalReducer";
+import { Reducer } from "@/types/contexts/Reducer";
 import { createContext, ReactNode, useReducer } from "react";
 
 const initialValueModalReducer: IModalReducerState = {
@@ -42,7 +42,7 @@ const initialValueModal = {
 
 export const ModalContext = createContext<IPropsModal>(initialValueModal);
 export default function ModalProvider({children}: {children: ReactNode}) {
-  const [modal, handleModal] = useReducer<TModalReducer<IModalReducerState, IModalReducerAction>>(modalReducer, initialValueModalReducer);
+  const [modal, handleModal] = useReducer<Reducer<IModalReducerState, IModalReducerAction>>(modalReducer, initialValueModalReducer);
 
   return (<ModalContext.Provider value={{modal, handleModal}}>
     {children}

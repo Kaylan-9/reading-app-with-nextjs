@@ -1,1 +1,0 @@
-export type TModalReducer<State, Action> = (state: State, action: Action) => State;

@@ -5,6 +5,7 @@ export default styled.div`
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
+  margin-bottom: 5rem;
   padding: 0 150px;
   > .btn-add-book {
     padding: 15px;
