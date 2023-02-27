@@ -5,9 +5,10 @@ import Mangas from '@/components/sections/lists/Mangas';
 import Head from 'next/head';
 import Pagination from "@/components/sections/header/Pagination";
 import { IHomePageProps } from "@/types/pages/IHomePageProps";
-import { getAllCategory } from "@/lib/db/categories";
+import { getAllCategory, getCategory } from "@/lib/db/categories";
+import { ICategory } from "@/types/data/Category";
 
-export async function getStaticPaths() {
+async function getPaths() {
   type TPath = {
     params: {
       currentCategory: string;
@@ -29,45 +30,60 @@ export async function getStaticPaths() {
       });
     }
   }));
+  return paths;
+}
 
+export async function getStaticPaths() {
   return {
-    paths,
-    fallback: false,
+    paths: await getPaths(),
+    fallback: 'blocking',
   }
 };
 
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getStaticProps: any = async (context: any) => {
+  const redirect= {
+    redirect: {
+      destination: '/'
+    }
+  };
   const { params } = context;
-  const currentCategory= Number(typeof params?.currentCategory==='string' ? params?.currentCategory : 0);
-  const currentPage = Number(params?.currentPage ?? 0);
-  const books= await getAllBooksByCategory(currentPage, currentCategory);
-  const nOfPages= await countPages(currentCategory);
+  if(params.currentCategory!==undefined && params.currentPage!==undefined && /[0-1]*/gi.test(params.currentPage) && /[0-1]*/gi.test(params.currentCategory)) {
+    const currentCategory=  Number(params.currentCategory);
+    const currentPage = Number(params.currentPage);
+    const paths= await getPaths();
+    let pathExists= false;
+    paths.map(({params})=> {
+      pathExists= (Number(params.currentCategory)===currentCategory && Number(params.currentPage)===currentPage);
+    });
+    const category=  await getCategory(currentCategory);
 
-  return {
-    props: {
-      currentCategory,
-      currentPage,
-      books,
-      nOfPages
-    }, 
-    revalidate: 20
+    if(pathExists) {
+      const books= await getAllBooksByCategory(currentPage, currentCategory);
+      const nOfPages= await countPages(currentCategory);
+      return {
+        props: {
+          currentCategory,
+          currentPage,
+          category,
+          books,
+          nOfPages
+        }, 
+        revalidate: 20
+      }
+    }
+    return redirect;
   }
+  return redirect;
 }
 
-export default ({currentCategory, currentPage, nOfPages, books}: IHomePageProps & {
+export default ({currentCategory, currentPage, nOfPages, category, books}: IHomePageProps & {
   currentPage: number;
   currentCategory: number;
+  category: ICategory;
 }) => {
-
   return (<>
-    <Head>
-      <title>Reading App - {currentCategory}</title>
-    </Head>
-    <Header>
-      <Pagination baseURL={`/page/category/${currentCategory}`} current={currentPage} nOfPages={nOfPages}/>
-    </Header>
-    <main>
-      <Mangas title={`Mangás de ${currentCategory}`} books={books}/>
-    </main>
+    <Head><title>Reading App - {category?.name} </title></Head>
+    <Header><Pagination baseURL={`/page/category/${currentCategory}`} current={currentPage} nOfPages={nOfPages}/></Header>
+    <main><Mangas title={`Mangás de ${category?.name}`} books={books}/></main>
   </>)
 };

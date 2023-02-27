@@ -19,7 +19,7 @@ const MangaSt = styled(motion.article)`
     font-family: var(--font-one);
   }
   > .img-list {
-    /* width: 193px; */
+    cursor: pointer;
     min-height: 200px;
     background-color: transparent;
     border: none;

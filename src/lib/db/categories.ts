@@ -20,3 +20,7 @@ export async function categoryNotExistCreate(category: string) {
 export async function getAllCategory() {
   return (await prisma.categories.findMany());
 }
+
+export async function getCategory(id: number) {
+  return (await prisma.categories.findUnique({where: {id}}));
+}
