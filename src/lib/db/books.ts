@@ -40,15 +40,24 @@ export async function getAllBooks(n?: number) {
   return data;
 }
 
-export async function getAllBooksByCategory(n: number, category: string) {
-  const data = await prisma.book.findMany({
+export async function getAllBooksByCategory(n: number, idCategory: number) {
+  const count= await prisma.book.count({where: {idCategory}});
+  const data= count>=10 ? await prisma.book.findMany({
+    where: {
+      idCategory: idCategory
+    },
+    include: {
+      imagepaths: true,
+      categorie: true,
+      user: true
+    },
+    orderBy: {id: 'asc'},
     take: 10,
     skip: n*10,
     cursor: {id: n},
+  }) : prisma.book.findMany({
     where: {
-      categorie: {
-        name: category
-      }
+      idCategory: idCategory
     },
     include: {
       imagepaths: true,
@@ -57,6 +66,7 @@ export async function getAllBooksByCategory(n: number, category: string) {
     },
     orderBy: {id: 'asc'}
   });
+  console.log(data);
   return data;
 }
 
@@ -101,19 +111,10 @@ export async function getRandomBooks() {
 }
 
 
-export async function countPages(category?: string) {
+export async function countPages(idCategory?: number) {
   let nBooks: number;
-  if(typeof category==='string') {
-    nBooks= await prisma.book.count({
-      where: {
-        categorie: {
-          name: category
-        }
-      }
-    });
-  } else {
-    nBooks= await prisma.book.count();
-  }
+  if(typeof idCategory==='number') nBooks= await prisma.book.count({where: {idCategory}});
+  else nBooks= await prisma.book.count();
   return Math.floor(nBooks/10);
 }
 

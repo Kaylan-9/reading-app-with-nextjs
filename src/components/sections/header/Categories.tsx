@@ -24,8 +24,8 @@ export function Categories ({data}: ICategoriesProps) {
   return (
     <StCategories variants={variants} initial={`initial`} whileInView={`whileInView`}>
       {data?.map((profile) => {
-        let { name } = profile;
-        const link = `/page/category/${name}/0`;
+        let { id, name } = profile;
+        const link = `/page/category/${id}/0`;
         return (<CategoryButton onClick={() => router.push(link)}>{name}</CategoryButton>);
       })}
     </StCategories>

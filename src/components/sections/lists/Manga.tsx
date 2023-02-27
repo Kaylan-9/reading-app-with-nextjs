@@ -19,7 +19,7 @@ const MangaSt = styled(motion.article)`
     font-family: var(--font-one);
   }
   > .img-list {
-    width: 193px;
+    /* width: 193px; */
     min-height: 200px;
     background-color: transparent;
     border: none;
@@ -28,19 +28,19 @@ const MangaSt = styled(motion.article)`
     align-items: center;
     #image-0 {
       transform: translateX(0px) scale(1) !important;
-      position: relative;
+      position: absolute;
       transition: transform 300ms;
       z-index: 2 !important;
     }
     #image-1 {
       transform: translate(32.5px, 6px) scale(.95) !important;
-      position: relative;
+      position: absolute;
       transition: transform 1s;
       z-index: 1 !important;
     }
     #image-2 {
       transform: translate(65px, 10px) scale(.9) !important;
-      position: relative;
+      position: absolute;
       transition: transform 500ms;
       z-index: 0 !important;
     }
@@ -72,7 +72,7 @@ const MangaSt = styled(motion.article)`
   }
 `;
 
-export default function Manga({id, title, category, images, children} : IManga) {
+export default function Manga({id, title, idCategory, category, images, children} : IManga) {
   const router= useRouter();
   const { handleMangaViewer } = useContext(MangaViewerContext);
 
@@ -93,7 +93,7 @@ export default function Manga({id, title, category, images, children} : IManga) 
           />
         })}
       </ul>
-      <CategoryButton onClick={() => router.push(`/page/category/${category}/0`)} className="category">{category}</CategoryButton>
+      <CategoryButton onClick={() => router.push(`/page/category/${idCategory}/0`)} className="category">{category}</CategoryButton>
     </MangaSt>
   </li>;
 }

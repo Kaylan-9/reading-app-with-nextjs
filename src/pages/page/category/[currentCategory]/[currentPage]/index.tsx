@@ -6,8 +6,6 @@ import Head from 'next/head';
 import Pagination from "@/components/sections/header/Pagination";
 import { IHomePageProps } from "@/types/pages/IHomePageProps";
 import { getAllCategory } from "@/lib/db/categories";
-import { IBookUserCategories } from "@/types/data/Books";
-
 
 export async function getStaticPaths() {
   type TPath = {
@@ -19,34 +17,32 @@ export async function getStaticPaths() {
 
   let paths: TPath[] = [];
   const categories= await getAllCategory();
-  categories.map(async category => {
-    const nOfPages = await countPages(category.name);
+
+  await Promise.all(categories.map(async category => {    
+    const nOfPages = await countPages(category.id);
     for(let i=0;i<=nOfPages;i++) {
       paths.push({
         params: {
-          currentCategory: category.name, 
+          currentCategory: String(category.id), 
           currentPage: String(i)
         }
       });
     }
-  });
+  }));
 
   return {
     paths,
-    fallback: true,
+    fallback: false,
   }
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const { params } = context;
-  const currentCategory = params?.currentCategory;
-  let currentPage = Number(params?.currentPage ?? 0);
-  let nOfPages = 0;
-  let books: IBookUserCategories[] | any = []; 
-  if(typeof currentCategory==='string') {
-    books= await getAllBooksByCategory(currentPage, currentCategory);
-    nOfPages= await countPages(currentCategory);
-  }
+  const currentCategory= Number(typeof params?.currentCategory==='string' ? params?.currentCategory : 0);
+  const currentPage = Number(params?.currentPage ?? 0);
+  const books= await getAllBooksByCategory(currentPage, currentCategory);
+  const nOfPages= await countPages(currentCategory);
+
   return {
     props: {
       currentCategory,
@@ -60,7 +56,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
 export default ({currentCategory, currentPage, nOfPages, books}: IHomePageProps & {
   currentPage: number;
-  currentCategory: string;
+  currentCategory: number;
 }) => {
 
   return (<>

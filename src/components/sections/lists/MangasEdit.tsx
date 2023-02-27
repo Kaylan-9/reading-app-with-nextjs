@@ -37,6 +37,7 @@ export default function MangaEdit({books, _delete}: IMangaEdit) {
         key={book.id+book.title}
         id={book.id as number}
         title={book.title} 
+        idCategory={book.categorie.id}
         category={book.categorie.name}
         images={book.imagepaths}
       >

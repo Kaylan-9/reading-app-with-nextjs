@@ -77,7 +77,8 @@ export default function Mangas({title, link, linkname, books}: IMangas) {
         <Manga
           key={book.id+book.title}
           id={book.id as number}
-          title={book.title} 
+          title={book.title}
+          idCategory={book.categorie.id} 
           category={book.categorie.name}
           images={book.imagepaths}
         >
