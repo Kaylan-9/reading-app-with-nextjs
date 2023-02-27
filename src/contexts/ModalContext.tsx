@@ -1,19 +1,22 @@
-import { Modals } from "@/components/sections/Modals";
+import { Modal, ModalsSt } from "@/components/sections/Modals";
 import { IPropsModal } from "@/types/contexts/ModalContext/components/IPropsModal";
 import { IModal } from "@/types/contexts/ModalContext/IModal";
 import { IModalReducerAction } from "@/types/contexts/ModalContext/reducers/IModalReducerAction";
 import { IModalReducerState } from "@/types/contexts/ModalContext/reducers/IModalReducerState";
+import { TModal } from "@/types/contexts/ModalContext/TModal";
 import { Reducer } from "@/types/contexts/Reducer";
+import { css } from "@emotion/css";
 import { createContext, ReactNode, useReducer } from "react";
+import { GrClose } from "react-icons/gr";
 
 const initialValueModalReducer: IModalReducerState = {
   modals: []
 };
 
 export function modalReducer(state: IModalReducerState, action: IModalReducerAction): IModalReducerState {
-  console.log(action);
   const { type } = action;
   const { modals } = state;
+  console.log(type);
   if(type==='reset')
     return initialValueModalReducer;
   else if(type==='add') {
@@ -32,9 +35,10 @@ export function modalReducer(state: IModalReducerState, action: IModalReducerAct
   } else if(type==='remove') {
     const { id } = action;
     return (id!==undefined ? {modals: modals.filter((modal: IModal) => modal.id!==id)} : state);
-  } else 
-    return state;
+  }
+  return state;
 };
+
 const initialValueModal = {
   modal: initialValueModalReducer,
   handleModal: modalReducer
@@ -46,6 +50,21 @@ export default function ModalProvider({children}: {children: ReactNode}) {
 
   return (<ModalContext.Provider value={{modal, handleModal}}>
     {children}
-    <Modals modals={modal.modals}/>
+    <ModalsSt>
+      {modal.modals.map((modal: TModal, indice: number) => {
+        const { id, message } = modal;
+        const key = String(message ?? 'modal').replace(/s/g, '')+id;
+        return (<li key={key}>
+          <Modal 
+            id={id}
+            message={message} 
+            btnIcon={<GrClose/>}
+            onClick={() => {
+              handleModal({type: 'remove', id: Number(id)});
+            }}
+          />
+        </li>);
+      })}
+    </ModalsSt>
   </ModalContext.Provider>);
 };

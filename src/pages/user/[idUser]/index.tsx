@@ -14,31 +14,28 @@ import UserProfile from '@/components/page/user/UserProfile';
 
 export const getServerSideProps: GetServerSideProps = async ({req, res, query}) => {
   let { idUser } = query;  
-  const userExist = typeof idUser==='string';
   const userData = typeof idUser==='string' ? (await getUserBooks(idUser.replace(/@/, ''))) : null;
   return ({
     props: {
-      userExist,
       userData
     }
   });
 };
 
-export default function User({userData, userExist}: IUserPageProps) {
+export default function User({userData}: IUserPageProps) {
   const router = useRouter();
   const [optionPicker, setOptionPicker] = useState<number>(0);
   const {handleModal} = useContext(ModalContext);
   const { data: session, status } = useSession();
 
   useEffect(() => {
-    if(!userExist) {
+    if(userData===null) {
       handleModal({type: 'add', newModal: {message: '💣 usuário não existe!'}});
       router.push('/');
     }
-    console.log(userData)
-  }, [session]);
+  }, []);
 
-  return (userExist && userData!==null ? (
+  return (userData!==null ? (
   <>
     <Head>
       {<title>{userData?.name}</title>}

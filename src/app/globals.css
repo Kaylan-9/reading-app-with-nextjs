@@ -6,6 +6,8 @@
   --tertiary-background: #191919;
   --foreground: 220, 220, 220;
   --secondary-foreground: #727272;
+  --box-shadow:0px 0px 50px 1px rgba(0, 0, 0, 0.25);
+  --box-shadow-two:0px 0px 25px 1px rgba(0, 0, 0, 0.15);
   --font-one: 'Roboto', sans-serif;
   --max-width: 1600px;
 }

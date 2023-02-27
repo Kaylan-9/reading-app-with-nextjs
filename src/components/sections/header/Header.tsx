@@ -39,7 +39,7 @@ const StHeader = styled.header`
     'categories categories categories categories categories categories'
   ;
   column-gap: 25px;
-  box-shadow: 0px 0px 50px 1px rgba(0, 0, 0, 0.25);
+  box-shadow: var(--box-shadow);
   @media(max-width: 1100px) {
     grid-template-columns: auto !important;
     grid-template-rows: 0 60px auto auto !important;

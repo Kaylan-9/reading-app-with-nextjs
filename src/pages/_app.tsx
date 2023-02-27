@@ -5,7 +5,7 @@ import { IMyAppProps } from '@/types/pages/IMyAppProps';
 import styled from '@emotion/styled';
 import { GetServerSideProps } from 'next';
 import { getCsrfToken, getProviders, SessionProvider } from 'next-auth/react';
-import { useCallback, useState, useEffect } from 'react';
+import { useCallback, useState, useEffect, useContext } from 'react';
 import { IoIosArrowUp } from 'react-icons/io';
 import '../app/globals.css';
 
@@ -24,6 +24,7 @@ export const StButtonBackToTop = styled.button`
   background-color: white;
   bottom: 50px;
   right: 50px;
+  z-index: 1002;
 `;
 
 export function ButtonBackToTop() {

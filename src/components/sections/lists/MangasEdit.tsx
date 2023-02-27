@@ -1,37 +1,13 @@
-import styled from "@emotion/styled";
 import { useRouter } from "next/router";
-import { MdOutlineManageSearch } from "react-icons/md";
 import { BiTrash } from "react-icons/bi";
-import { useRef, useState } from 'react';
 import Manga from "./Manga";
 import { IBookUserCategories } from "@/types/data/Books";
 import { IMangaEdit } from "@/types/components/IMangaEdit";
-
-const MangaEditSt = styled.div`
-  padding: 0 150px;
-  > ul {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(183px, 1fr));
-    row-gap: 65px;
-    column-gap: 50px;
-    width: 100%;
-    > li {
-      cursor: pointer;
-    }  
-    @media(max-width:700px) {
-      display: flex;
-      justify-content: space-between !important;
-      padding: 75px 10px;
-      gap: 50px;
-      flex-direction: column !important;
-    }
-  }
-  
-`;
+import MangaList from "@/styles/components/MangaList";
 
 export default function MangaEdit({books, _delete}: IMangaEdit) {
   const router = useRouter();
-  return (<MangaEditSt>
+  return (<MangaList>
     <ul>
       {books.map((book: IBookUserCategories) => <Manga
         key={book.id+book.title}
@@ -55,5 +31,5 @@ export default function MangaEdit({books, _delete}: IMangaEdit) {
         }
       </Manga>)}
     </ul>
-  </MangaEditSt>);
+  </MangaList>);
 }

@@ -1,11 +1,8 @@
-import { IModalReducerState as ModalsProps, ModalContext, TModal } from '../../contexts/ModalContext';
 import styled from '@emotion/styled';
-import { useContext } from 'react';
-import { GrClose } from 'react-icons/gr';
 import { IModalProps } from '@/types/components/IModalProps';
 
-const ModalsSt = styled.ul`
-  position: absolute;
+export const ModalsSt = styled.ul`
+  position: fixed;
   z-index: 1001;
   bottom: 50px;
   right: 50px;
@@ -14,9 +11,10 @@ const ModalsSt = styled.ul`
   row-gap: 10px;
 `;
 
-const ModalSt = styled.div`
+export const ModalSt = styled.div`
   align-items: center;
-  background-color: rgb(var(--secondary-background));
+  background-color: rgb(var(--background));
+  box-shadow: var(--box-shadow-two);
   border-radius: 25px;
   min-width: 700px;
   display: flex;
@@ -51,7 +49,7 @@ const ModalSt = styled.div`
   }
 `;
 
-const Modal = ({message, onClick, btnIcon}: IModalProps) => {
+export const Modal = ({message, onClick, btnIcon}: IModalProps) => {
   return (<ModalSt>
     <p className='modal-message'>{message}</p>
     <button className='modal-button' onClick={onClick}> 
@@ -59,25 +57,3 @@ const Modal = ({message, onClick, btnIcon}: IModalProps) => {
     </button>
   </ModalSt>);
 };
-
-export function Modals({modals}: ModalsProps) {
-  const { handleModal } = useContext(ModalContext);
-  return (
-    <ModalsSt>
-      {modals.map((modal: TModal, indice: number) => {
-        const {id, message} = modal;
-        const key = String(message ?? 'modal').replace(/s/g, '')+id;
-        return (<li key={key}>
-          <Modal 
-            id={id}
-            message={message} 
-            btnIcon={<GrClose/>}
-            onClick={() => {
-              handleModal({type: 'remove', id});
-            }}
-          />
-        </li>);
-      })}
-    </ModalsSt>
-  );
-}
