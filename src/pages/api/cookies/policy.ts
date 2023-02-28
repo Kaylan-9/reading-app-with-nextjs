@@ -11,7 +11,7 @@ export default async function(req: NextApiRequest, res: NextApiRequest | any) {
   if(req.method==='POST') {
     let { cookies } = req.body;
     cookies= JSON.stringify(cookies);
-    res.setHeader('Set-Cookie', cookie.serialize('cookiepolicy', cookies, {
+    res.setHeader('Set-Cookie', cookie.serialize('policy', cookies, {
       httpOnly: true,
       secure: true,
       maxAge: 60 * 60,

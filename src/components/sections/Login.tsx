@@ -4,6 +4,7 @@ import styled from "@emotion/styled";
 import { FcGoogle } from 'react-icons/fc';
 import { signIn } from "next-auth/react";
 import { ModalContext } from "@/contexts/ModalContext";
+import requestParameters from "@/ultis/requestParameters";
 
 const LoginSt = styled.div`
   max-width: 100vw;
@@ -64,10 +65,7 @@ export default function Login({setActiveLogin}: {setActiveLogin: (state: boolean
 
   useEffect(() => {
     const getData = async () => {
-      const request = await fetch('/api/providers', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'}
-      });
+      const request = await fetch('/api/providers', requestParameters.json);
       const responseData = await request.json();
       setProviders(responseData?.providers); 
     }
@@ -86,8 +84,7 @@ export default function Login({setActiveLogin}: {setActiveLogin: (state: boolean
         const email = input_usernameoremail.current.value;
         console.log(password, email, name);
         const createNewUser= await fetch('/api/user/', {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
+         ...requestParameters.json,
           body: JSON.stringify({
             name,
             email,

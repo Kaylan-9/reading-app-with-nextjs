@@ -1,4 +1,5 @@
 import Input from "@/styles/components/Input";
+import requestParameters from "@/ultis/requestParameters";
 import styled from "@emotion/styled";
 import { forwardRef, useState, useEffect } from "react";
 import { IoIosArrowForward } from 'react-icons/io';
@@ -45,8 +46,8 @@ const Select = forwardRef<HTMLInputElement>(({}, ref) => {
   useEffect(() => {
     (async () => {
       const data = await fetch('/api/category', {
-        method: 'GET',
-        headers: {'Content-Type' : 'application/json'},
+        ...requestParameters.json,
+        method: 'GET'
       });
       setCategories(await data.json());
     })();

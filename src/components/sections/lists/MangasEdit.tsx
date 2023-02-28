@@ -4,6 +4,7 @@ import Manga from "./Manga";
 import { IBookUserCategories } from "@/types/data/Books";
 import { IMangaEdit } from "@/types/components/IMangaEdit";
 import MangaList from "@/styles/components/MangaList";
+import requestParameters from "@/ultis/requestParameters";
 
 export default function MangaEdit({books, _delete}: IMangaEdit) {
   const router = useRouter();
@@ -21,8 +22,8 @@ export default function MangaEdit({books, _delete}: IMangaEdit) {
           <BiTrash onClick={async ()=> {
             const dataToDoDelete = JSON.stringify({id: book.id as number, path: book.path});
             await fetch('/api/book/delete', {
+              ...requestParameters.json,
               method: 'DELETE',
-              headers: {'Content-Type' : 'application/json'},
               body: dataToDoDelete
             });
             router.push('/');

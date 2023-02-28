@@ -12,6 +12,7 @@ import { useSession } from "next-auth/react"
 import { useRouter } from "next/router";
 import CategoryButton from "@/styles/components/CategoryButton";
 import { css } from "@emotion/css";
+import requestParameters from "@/ultis/requestParameters";
 
 const initialValueMangaViewerReducer: IMangaViewerReducerState = {
   id: null
@@ -160,41 +161,34 @@ export default function MangaViewerProvider({children}: {children: ReactNode}) {
   const {data: session}: {data: any} = useSession();
   const changeMark= useCallback(async () => {
     setMarked(oldMarked=> !oldMarked);
-    const params= {
-      method: 'POST',
-      crendentials: 'same-origin',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+    await fetch(`/api/favorite/changemark`, {
+      ...requestParameters.json,
       body: JSON.stringify({
         isfavorite: marked,
         userId: session.user.id, 
         bookId: mangaViewer.id
       })
-    }
-    await fetch(`/api/favorite/changemark`, params);
+    });
   }, [session, mangaViewer, marked]);
 
   useEffect(() => {
     const fetchData = async () => {
-      let params = {
-        method: `POST`,
-        crendentials: `same-origin`,
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({id: mangaViewer.id})
-      };
-
       {
-        const request= await fetch(`/api/book/data`, params);
+        const request= await fetch(`/api/book/data`, {
+          ...requestParameters.json,
+          body: JSON.stringify({id: mangaViewer.id})
+        });
         const response: any = await request.json();
         setData(response.book);
       }
-      {
-        params.body = JSON.stringify({
-          bookID: mangaViewer.id,
-          customerID: session.id
-        });  
-        const request= await fetch(`/api/favorite/isfavorite`, params);
+      {  
+        const request= await fetch(`/api/favorite/isfavorite`, {
+          ...requestParameters.json,
+          body: JSON.stringify({
+            bookID: mangaViewer.id,
+            customerID: session.id
+          })
+        });
         const response: any = await request.json();
         setMarked(response.data.marked);
       }

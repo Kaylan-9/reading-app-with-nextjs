@@ -1,7 +1,10 @@
 import Footer from '@/components/Footer';
 import MangaViewerProvider from '@/contexts/MangaViewerContext';
 import ModalProvider from '@/contexts/ModalContext';
+import { TModal } from '@/types/contexts/ModalContext/TModal';
 import { IMyAppProps } from '@/types/pages/IMyAppProps';
+import requestParameters from '@/ultis/requestParameters';
+import { css } from '@emotion/css';
 import styled from '@emotion/styled';
 import { GetServerSideProps } from 'next';
 import { getCsrfToken, getProviders, SessionProvider } from 'next-auth/react';
@@ -44,7 +47,7 @@ export default function MyApp({ Component, pageProps: {session, ...pageProps}}: 
     setEnoughPosition((document.body.getClientRects()[0].y*-1)>(screenHeight/3));
   }, [screenHeight, setScreenHeight]);
 
-  useEffect(() => {setScreenHeight(document.body.clientHeight);}, []);
+  useEffect(() => {setScreenHeight(document.body.clientHeight)}, []);
   useEffect(() => {
     setEnoughPosition((document.body.getClientRects()[0].y*-1)>(screenHeight/3));
     document.body.removeEventListener('wheel', handleScroll);

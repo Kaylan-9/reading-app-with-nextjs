@@ -34,7 +34,7 @@ export default function FormsAdd() {
     }
     validFiles.forEach((file) => formData.append("bookimages", file));
     const responseData = await fetch('/api/book/create', {
-      method: 'POST',
+      method: 'POST', 
       body: formData
     });
     console.log(responseData);

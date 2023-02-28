@@ -25,7 +25,7 @@ export default function User({userData}: IUserPageProps) {
   const router = useRouter();
   const [optionPicker, setOptionPicker] = useState<number>(0);
   const {handleModal} = useContext(ModalContext);
-  const { data: session, status } = useSession();
+  const { status } = useSession();
 
   useEffect(() => {
     if(userData===null) {
