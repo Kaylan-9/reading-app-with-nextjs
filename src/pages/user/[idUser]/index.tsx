@@ -1,6 +1,5 @@
 import ContainerBookAdd from '@/components/sections/FormsAdd';
 import Header from '@/components/sections/header/Header';
-import Mangas from '@/components/sections/lists/Mangas';
 import MangaEdit from '@/components/sections/lists/MangasEdit';
 import { ModalContext } from '@/contexts/ModalContext';
 import { getUserBooks } from '@/lib/db/users';
@@ -30,7 +29,7 @@ export default function User({userData}: IUserPageProps) {
 
   useEffect(() => {
     if(userData===null) {
-      handleModal({type: 'add', newModal: {message: '💣 usuário não existe!'}});
+      handleModal({type: 'add', newModal: {message: 'usuário não existe!'}});
       router.push('/');
     }
   }, []);
