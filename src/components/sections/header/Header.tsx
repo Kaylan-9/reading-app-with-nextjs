@@ -7,6 +7,7 @@ import ProfileAccess from "./ProfileAccess";
 import { useSession } from "next-auth/react";
 import { IHeaderProps } from "@/types/components/IHeaderProps";
 import { NavItem } from "./NavItem";
+import useAcceptedTerms from "@/ultis/useAcceptedTerms";
 
 const Items = styled.ul`
   display: flex;
@@ -113,6 +114,7 @@ const StHeader = styled.header`
 export default function Header({children}: IHeaderProps) {
   const {data: session, status} = useSession();
   const [ activeLogin, setActiveLogin  ] = useState<boolean>(false);
+  const acceptedTerms= useAcceptedTerms({});
 
   return (<>
     {(activeLogin ? (<Login setActiveLogin={setActiveLogin}/>) : null)}
@@ -128,12 +130,14 @@ export default function Header({children}: IHeaderProps) {
       </Link>
       <Items>
         <NavItem name='home' href=""/>
-        { status==='authenticated' ? 
-          (<ProfileAccess imgurl={session.user?.image ?? ''}/>) : 
-          (<NavItem name='login' onClick={() => {
-            setActiveLogin(true);
-          }}/>)
-        }
+        {acceptedTerms ?
+          status==='authenticated' ? 
+            (<ProfileAccess imgurl={session.user?.image ?? ''}/>) : 
+            (<NavItem name='login' onClick={() => {
+              setActiveLogin(true);
+            }}/>)
+          :
+        null}
         <NavItem name='about' href="#about"/>
       </Items>
       {children}

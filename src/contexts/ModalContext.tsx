@@ -8,7 +8,8 @@ import { Reducer } from "@/types/contexts/Reducer";
 import requestParameters from "@/ultis/requestParameters";
 import { css } from "@emotion/css";
 import { createContext, ReactNode, useEffect, useReducer, useState } from "react";
-import { GrClose } from "react-icons/gr";
+import { GrAggregate, GrClose } from "react-icons/gr";
+import useAcceptedTerms from "@/ultis/useAcceptedTerms";
 
 const initialValueModalReducer: IModalReducerState = {
   modals: []
@@ -49,18 +50,13 @@ export const ModalContext = createContext<IPropsModal>(initialValueModal);
 
 export default function ModalProvider({children}: {children: ReactNode}) {
   const [modal, handleModal] = useReducer<Reducer<IModalReducerState, IModalReducerAction>>(modalReducer, initialValueModalReducer);
-  const [ acceptedTerms, setAcceptedTerms ] = useState<boolean>(true);
-  
-  useEffect(()=> {
-    (async () => {
-      const acceptedTermsReq= await fetch(`/api/cookies/acceptedterms`, requestParameters.json);
-      const acceptedTermsRes: {acceptedterms: boolean}= await acceptedTermsReq.json();
-      setAcceptedTerms(acceptedTermsRes.acceptedterms);
-    })();
-  }, []);
+  const acceptedTerms= useAcceptedTerms({});
+  const [ agreement, setAgreement ]= useState<boolean>(true);
   
   useEffect(() => {
-    if(!acceptedTerms) {
+    setAgreement(acceptedTerms);
+    console.log(agreement)
+    if(!agreement) {
       handleModal({
         type: 'add', 
         newModal: {
@@ -90,7 +86,7 @@ export default function ModalProvider({children}: {children: ReactNode}) {
                   body: JSON.stringify({cookies: true})
                 });
                 const response= await request.json();
-                setAcceptedTerms(response.success);
+                setAgreement(response.success);
                 handleModal({type: 'remove', id: 'terms'});
               }}>
                 Aceitar
@@ -100,7 +96,7 @@ export default function ModalProvider({children}: {children: ReactNode}) {
         }
       })
     }
-  }, [acceptedTerms])
+  }, [agreement, acceptedTerms])
 
   return (<ModalContext.Provider value={{modal, handleModal}}>
     {children}
