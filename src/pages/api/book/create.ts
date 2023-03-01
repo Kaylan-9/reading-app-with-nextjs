@@ -1,10 +1,11 @@
-import * as gcs from "../../../lib/gcs";
+// import * as gcs from "../../../lib/gcs";
 import { createBook as createBookInDB } from "@/lib/db/books";
 import { FormidableError, parseForm } from "@/lib/parse-form";
-import { createReadStream } from "fs";
+// import { createReadStream } from "fs";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { IBookCreateInput, IBookCreateInputDB } from "@/types/data/Books";
 import { categoryNotExistCreate } from "@/lib/db/categories";
+import { doUpload } from "@/lib/imgs/upload";
 
 export const config = {
   api: {
@@ -29,6 +30,7 @@ export default async function createBook(
         idUser: fields.bookiduser as string,
         imagepaths: [],
       };
+      
       filesdata.map(({newFilename: filename}: filesdataType) => {
         const filenametype = filename.split('.');
         const _filename = filenametype[0];
@@ -47,11 +49,13 @@ export default async function createBook(
         filesdata.map(({filepath, newFilename: filename}: filesdataType) => {
           const filenametype = filename.split('.');
           const _filename = filenametype[0];
-          const filetype = filenametype[1];
-          createReadStream(filepath)
-            .pipe(gcs.createWriteStream(_filename, filetype))
-            .on("finish", () => console.log("File Upload Complete"))
-            .on("error", (err) => console.error(err.message));      
+          doUpload(filepath, `mangas-${newBook.title}-${_filename}`);
+          // ? código antes utilizado para fazer upload das imagens para o Google Cloud Storage ?
+          // const filetype = filenametype[1];
+          // createReadStream(filepath)
+          //   .pipe(gcs.createWriteStream(_filename, filetype))
+          //   .on("finish", () => console.log("File Upload Complete"))
+          //   .on("error", (err) => console.error(err.message));      
         });
       } catch(error) {
         console.log(error)
