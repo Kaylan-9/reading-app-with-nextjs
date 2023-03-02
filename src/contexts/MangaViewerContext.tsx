@@ -13,6 +13,9 @@ import { useRouter } from "next/router";
 import CategoryButton from "@/styles/components/CategoryButton";
 import { css } from "@emotion/css";
 import requestParameters from "@/ultis/requestParameters";
+import { CloudinaryImage } from "@cloudinary/url-gen/assets/CloudinaryImage";
+import { AdvancedImage } from '@cloudinary/react';
+import { Image } from "@/types/data/Images";
 
 const initialValueMangaViewerReducer: IMangaViewerReducerState = {
   id: null
@@ -157,6 +160,7 @@ export default function MangaViewerProvider({children}: {children: ReactNode}) {
   const [marked, setMarked] = useState<boolean>(false);
   const [show, setShow] = useState<boolean>(false);
   const [viewMode, setViewMode] = useState<number>(0);
+  const [cldImgs, setCldImgs] = useState<any>([]);
 
   const {data: session}: {data: any} = useSession();
   const changeMark= useCallback(async () => {
@@ -179,6 +183,10 @@ export default function MangaViewerProvider({children}: {children: ReactNode}) {
           body: JSON.stringify({id: mangaViewer.id})
         });
         const response: any = await request.json();
+        setCldImgs(response.book?.imagepaths.map((image: Image) => {
+          const myImage= new CloudinaryImage(`mangas-${response.book.title}-${image.name}`, {cloudName: 'dxfae0yk7'});
+          return myImage;
+        }));
         setData(response.book);
       }
       {  
@@ -200,9 +208,8 @@ export default function MangaViewerProvider({children}: {children: ReactNode}) {
   return (<MangaViewerContext.Provider value={{mangaViewer, handleMangaViewer}}>
     {children}
     {mangaViewer.id!==null ? (<MangaViewer>
-      {data!==null ? (
-        <img
-          src={`https://storage.cloud.google.com/xyz2-book-page-image-data/${data.imagepaths[0].name}`} 
+      {data!==null && cldImgs[0]!==undefined ? (<AdvancedImage
+          cldImg={cldImgs[0]}
           alt={`capa do mangá`}
         />) : 
         null
@@ -227,10 +234,10 @@ export default function MangaViewerProvider({children}: {children: ReactNode}) {
         </div>
         <CategoryButton onClick={() => router.push(`/page/category/${data?.categorie.id}/0`)}>{data?.categorie.name}</CategoryButton>
       </div>
-      {show ? (<ul className={viewModes[viewMode]} style={{gridArea: 'manga-pages'}}>
-        {data?.imagepaths.map((img, indice)=> (<li key={img.name}>
-          <img src={`https://storage.cloud.google.com/xyz2-book-page-image-data/${img.name}`} alt={`página nº ${indice+1}`} />
-        </li>))}
+      {show && cldImgs[0]!==null ? (<ul className={viewModes[viewMode]} style={{gridArea: 'manga-pages'}}>
+        {data?.imagepaths.map((img, indice)=> <li key={img.name}>
+          <AdvancedImage cldImg={cldImgs[indice]} alt={`página nº ${indice+1}`} />
+        </li>)}
       </ul>) : null}
     </MangaViewer>) : null}
   </MangaViewerContext.Provider>);

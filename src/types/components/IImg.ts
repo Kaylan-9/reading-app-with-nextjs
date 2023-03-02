@@ -1,4 +1,5 @@
 export interface IImg {
   id: string;
-  url: string;
+  title: string;
+  name: string;
 }

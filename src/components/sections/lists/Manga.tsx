@@ -89,7 +89,8 @@ export default function Manga({id, title, idCategory, category, images, children
           if(indice<3) return <PresentationImg 
             id={`image-${indice}`} 
             key={img.name+img.id} 
-            url={`https://storage.cloud.google.com/xyz2-book-page-image-data/${img.name}`}
+            title={title}
+            name={img.name}
           />
         })}
       </ul>
