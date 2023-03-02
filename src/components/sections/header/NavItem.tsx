@@ -11,17 +11,24 @@ const NavItemSt = styled.li`
     border: none;
     padding:0px;
     color: white;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1.5em;
+    > svg {
+      font-size: 1.6em; 
+    }
   }
 `;
 
-export function NavItem({name, href=false, onClick}: TNavItem) {
+export function NavItem({name, href=false, icon, onClick}: TNavItem) {
   const router = useRouter();
   return (router.asPath!==`/${href}` ? (<NavItemSt>
     <button onClick={href || onClick===undefined ? 
       () => router.push(`/${href}`, undefined, { shallow: true }) :
       onClick
     }>
-      {name}
+      {name} {icon}
     </button>
   </NavItemSt>) : null);
 };

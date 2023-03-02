@@ -8,6 +8,7 @@ import { useSession } from "next-auth/react";
 import { IHeaderProps } from "@/types/components/IHeaderProps";
 import { NavItem } from "./NavItem";
 import useAcceptedTerms from "@/ultis/useAcceptedTerms";
+import { BiInfoCircle } from "react-icons/bi";
 
 const Items = styled.ul`
   display: flex;
@@ -138,7 +139,7 @@ export default function Header({children}: IHeaderProps) {
             }}/>)
           :
         null}
-        <NavItem name='about' href="#about"/>
+        <NavItem icon={<BiInfoCircle/>} href="information"/>
       </Items>
       {children}
     </StHeader>
