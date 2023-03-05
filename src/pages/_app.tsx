@@ -1,4 +1,4 @@
-import Footer from '@/components/Footer';
+import Footer from '@/components/sections/Footer';
 import CookiePolicyProvider from '@/contexts/CookiePolicyContext';
 import MangaViewerProvider from '@/contexts/MangaViewerContext';
 import ModalProvider from '@/contexts/ModalContext';

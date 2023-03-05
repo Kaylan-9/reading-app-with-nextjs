@@ -1,7 +1,7 @@
 import { countPages, getAllBooks, getAllBooksByCategory } from "@/lib/db/books";
 import { GetStaticProps } from "next"
 import Header from '@/components/sections/header/Header';
-import Mangas from '@/components/sections/lists/Mangas';
+import Mangas from '@/components/sections/Mangas';
 import Head from 'next/head';
 import Pagination from "@/components/sections/header/Pagination";
 import { IHomePageProps } from "@/types/pages/IHomePageProps";

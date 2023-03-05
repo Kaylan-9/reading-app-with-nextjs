@@ -1,5 +1,5 @@
 import Header from '@/components/sections/header/Header';
-import Mangas from '@/components/sections/lists/Mangas';
+import Mangas from '@/components/sections/Mangas';
 import { ModalContext } from '@/contexts/ModalContext';
 import { getUserFavoriteBooks } from '@/lib/db/users';
 import { GetServerSideProps } from 'next';
@@ -8,7 +8,7 @@ import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 import { useContext, useEffect, useState } from 'react';
 import { IUserPageProps } from '@/types/pages/user/IUserPageProps';
-import UserProfile from '@/components/page/user/UserProfile';
+import UserProfile from '@/components/sections/UserProfile';
 
 export const  getServerSideProps: GetServerSideProps = async ({req, res, query}) => {
   let { idUser } = query;  

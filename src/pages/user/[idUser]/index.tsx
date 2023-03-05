@@ -1,6 +1,6 @@
 import ContainerBookAdd from '@/components/sections/FormsAdd';
 import Header from '@/components/sections/header/Header';
-import MangaEdit from '@/components/sections/lists/MangasEdit';
+import MangaEdit from '@/components/sections/MangasEdit';
 import { ModalContext } from '@/contexts/ModalContext';
 import { getUserBooks } from '@/lib/db/users';
 import { GetServerSideProps } from 'next';
@@ -9,7 +9,7 @@ import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 import { useContext, useEffect, useState } from 'react';
 import { IUserPageProps } from '@/types/pages/user/IUserPageProps';
-import UserProfile from '@/components/page/user/UserProfile';
+import UserProfile from '@/components/sections/UserProfile';
 
 export const getServerSideProps: GetServerSideProps = async ({req, res, query}) => {
   let { idUser } = query;  

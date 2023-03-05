@@ -3,10 +3,11 @@
 :root {
   --background: 32, 32, 34;
   --secondary-background: 22, 22, 22;
-  --tertiary-background: #191919;
+  --tertiary-background: #111111;
+  --quartiary-background: #0f0f0f;
   --foreground: 220, 220, 220;
   --secondary-foreground: #727272;
-  --box-shadow:0px 0px 50px 1px rgba(0, 0, 0, 0.25);
+  --box-shadow:0px 0px 1px .5px rgba(255, 255, 255, .5);
   --box-shadow-two:0px 0px 25px 1px rgba(0, 0, 0, 0.15);
   --font-one: 'Roboto', sans-serif;
   --max-width: 1600px;

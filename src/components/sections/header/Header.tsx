@@ -13,7 +13,7 @@ const Items = styled.ul`
   display: flex;
   gap: 25px;
   align-items: center;
-  margin: 0 auto;
+  justify-content: space-around !important;
   grid-area: headeritems;
   @media(max-width:700px) {
     flex-wrap: wrap;
@@ -29,29 +29,12 @@ const Items = styled.ul`
 
 const StHeader = styled.header`
   align-items: center;
-  padding: 0 150px;
-  display: grid;
-  grid-template-columns: repeat(2, min-content) repeat(2, auto) max-content min-content !important;
-  grid-template-rows: 100px auto !important;
-  grid-template-areas: 
-    'adv adv adv adv adv adv'
-    'logotipo headeritems . . allpagesbtn search'
-    'pagination pagination pagination pagination pagination pagination'
-    'categories categories categories categories categories categories'
-  ;
+  justify-content: center;
+  padding: 1.5em 150px;
+  display: flex;
+  flex-flow: column wrap;
   column-gap: 25px;
-  box-shadow: var(--box-shadow);
   @media(max-width: 1100px) {
-    grid-template-columns: auto !important;
-    grid-template-rows: 0 60px auto auto !important;
-    grid-template-areas: 
-      'adv'
-      'logotipo'
-      'headeritems'
-      'search'
-      'pagination'
-      'categories'
-    ;
     > .logotipo {
       display: flex;
       justify-content: center;
@@ -62,6 +45,7 @@ const StHeader = styled.header`
   }
   > .logotipo {
     grid-area: logotipo;
+    opacity: 0.45;
   }
   > .adv {
     grid-area: adv;
@@ -119,13 +103,12 @@ export default function Header({children}: IHeaderProps) {
   return (<>
     {(activeLogin ? (<Login setActiveLogin={setActiveLogin}/>) : null)}
     <StHeader>
-      <div className='adv'/>
       <Link className='logotipo' href={`/`}>
         <Image
-          src="/logo.png"
+          src="/logo2.png"
           alt="logo do site" 
-          width={60}
-          height={60}
+          width={65}
+          height={65}
         />
       </Link>
       <Items>

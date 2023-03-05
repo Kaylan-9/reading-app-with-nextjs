@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import Manga from "./Manga";
 import { useRouter } from 'next/router';
-import ProfilePic from '../ProfilePic';
+import ProfilePic from './ProfilePic';
 import IMangas from '@/types/components/IMangas';
 import { IBookUserCategories } from '@/types/data/Books';
 import Link from 'next/link';
