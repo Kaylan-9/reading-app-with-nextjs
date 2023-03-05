@@ -25,17 +25,15 @@ export async function createBook(data: IBookCreateInputDB) {
   }))
 }
 
-export async function getAllBooks(n?: number) {
+export async function getAllBooks(n: number) {
   const data = await prisma.book.findMany({
-    take: 10,
-    skip: (n!==undefined && typeof n==='number') ? n*10 : 0,
-    cursor: {id: (n!==undefined && typeof n==='number') ? n+2 : 2},
     include: {
       imagepaths: true,
       categorie: true,
       user: true
     },
-    orderBy: {id: 'asc'}
+    take: 10,
+    skip: n*10,
   });
   return data;
 }

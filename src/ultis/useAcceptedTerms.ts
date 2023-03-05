@@ -9,7 +9,7 @@ export default function AcceptedTerms({}) {
       const acceptedTermsRes: {acceptedterms: boolean}= await acceptedTermsReq.json();
       setAgreement(acceptedTermsRes.acceptedterms);
     })();
-  }, []);
+  }, [agreement]);
 
   return agreement;
 };

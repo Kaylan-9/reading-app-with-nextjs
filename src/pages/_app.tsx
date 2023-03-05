@@ -1,4 +1,5 @@
 import Footer from '@/components/Footer';
+import CookiePolicyProvider from '@/contexts/CookiePolicyContext';
 import MangaViewerProvider from '@/contexts/MangaViewerContext';
 import ModalProvider from '@/contexts/ModalContext';
 import { TModal } from '@/types/contexts/ModalContext/TModal';
@@ -55,12 +56,14 @@ export default function MyApp({ Component, pageProps: {session, ...pageProps}}: 
   }, [screenHeight, setScreenHeight]);
 
   return (<ModalProvider>
-    <SessionProvider session={session}>
-      <MangaViewerProvider>
-        <Component {...pageProps}/>
-        <Footer/>
-      </MangaViewerProvider>
-    </SessionProvider>
+    <CookiePolicyProvider>
+      <SessionProvider session={session}>
+        <MangaViewerProvider>
+          <Component {...pageProps}/>
+          <Footer/>
+        </MangaViewerProvider>
+      </SessionProvider>
+    </CookiePolicyProvider>
     {enoughPosition ? <ButtonBackToTop/> : null}
   </ModalProvider>);
 }

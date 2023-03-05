@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Link from 'next/link';
 import Image from 'next/image';
 import styled from "@emotion/styled";
@@ -7,8 +7,7 @@ import ProfileAccess from "./ProfileAccess";
 import { useSession } from "next-auth/react";
 import { IHeaderProps } from "@/types/components/IHeaderProps";
 import { NavItem } from "./NavItem";
-import useAcceptedTerms from "@/ultis/useAcceptedTerms";
-import { BiInfoCircle } from "react-icons/bi";
+import { CookiePolicyContext } from "@/contexts/CookiePolicyContext";
 
 const Items = styled.ul`
   display: flex;
@@ -115,7 +114,7 @@ const StHeader = styled.header`
 export default function Header({children}: IHeaderProps) {
   const {data: session, status} = useSession();
   const [ activeLogin, setActiveLogin  ] = useState<boolean>(false);
-  const acceptedTerms= useAcceptedTerms({});
+  let {agreement}= useContext(CookiePolicyContext);
 
   return (<>
     {(activeLogin ? (<Login setActiveLogin={setActiveLogin}/>) : null)}
@@ -131,15 +130,12 @@ export default function Header({children}: IHeaderProps) {
       </Link>
       <Items>
         <NavItem name='home' href=""/>
-        {acceptedTerms ?
-          status==='authenticated' ? 
-            (<ProfileAccess imgurl={session.user?.image ?? ''}/>) : 
-            (<NavItem name='login' onClick={() => {
-              setActiveLogin(true);
-            }}/>)
-          :
-        null}
-        <NavItem icon={<BiInfoCircle/>} href="information"/>
+        {agreement ? (status==='authenticated' ? 
+          (<ProfileAccess imgurl={session.user?.image ?? ''}/>) : 
+          (<NavItem name='login' onClick={() => {
+            setActiveLogin(true);
+          }}/>))
+        : null}
       </Items>
       {children}
     </StHeader>
