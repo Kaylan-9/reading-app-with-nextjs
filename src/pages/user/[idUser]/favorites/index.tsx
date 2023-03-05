@@ -22,22 +22,20 @@ export const  getServerSideProps: GetServerSideProps = async ({req, res, query})
   });
 };
 
-export default function User({userData, userExist}: IUserPageProps & {userData: any}) {
+export default function User({userData}: IUserPageProps & {userData: any}) {
   const router = useRouter();
   const [optionPicker, setOptionPicker] = useState<number>(0);
   const {handleModal} = useContext(ModalContext);
   const { data: session } = useSession();
 
   useEffect(() => {
-    console.log(userData);
-    
-    if(!userExist) {
+    if(userData===null) {
       handleModal({type: 'add', newModal: {message: '💣 usuário não existe!'}});
       router.push('/');
     }
   }, [session]);
 
-  return (userExist && userData!==null ? (
+  return (userData!==null ? (
   <>
     <Head>
       {<title>{userData?.name}</title>}
