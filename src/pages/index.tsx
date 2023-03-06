@@ -1,13 +1,13 @@
 import { getRandomBooks } from "@/lib/db/books";
-import Header from '@/components/sections/header/Header';
-import Mangas from '@/components/sections/Mangas';
-import { useRef, useState, useEffect, useContext } from 'react';
+import Header from '@/components/Header';
+import Mangas from '@/components/Mangas';
+import { useRef, useState, useContext } from 'react';
 import Head from 'next/head';
 import { IHomePageProps } from "@/types/pages/IHomePageProps";
 import { IBookUserCategories } from "@/types/data/Books";
 import { getAllCategory } from "@/lib/db/categories";
 import { ModalContext } from "@/contexts/ModalContext";
-import ReadingAside from "@/components/sections/ReadingAside";
+import ReadingAside from "@/components/ReadingAside";
 
 export const getStaticProps: any = async (ctx: any) => {
   const books = await getRandomBooks();
@@ -51,8 +51,8 @@ export default ({categories, books}: IHomePageProps) => {
         <Select ref={categorySearchPicker}/>
       </div> */}
     </Header>
-    <main>
-      <ReadingAside categories={categories}/>
+    <ReadingAside categories={categories}/>
+    <main id={`page-main`}>
       <Mangas title='Mangás' link={`/page/0`} linkname={`ver todos`} books={books}/>
     </main>
   </>)

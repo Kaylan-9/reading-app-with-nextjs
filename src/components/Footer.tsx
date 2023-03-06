@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { BsGithub } from "react-icons/bs";
 import { BiInfoCircle } from 'react-icons/bi';
-import { NavItem } from "./header/NavItem";
+import { NavItem } from "./NavItem";
 import { css } from "@emotion/css";
 
 export const StFooter = styled.footer`
@@ -10,23 +10,28 @@ export const StFooter = styled.footer`
   justify-content: center;
   gap: 2em;
   box-sizing: border-box;
-  box-shadow: var(--box-shadow);
+  border-top: 1px var(--border-color) solid;
   background-color: var(--quartiary-background);
   margin-top: 300px;
   padding: 50px 150px;
+  grid-area: page-footer;
   > div {
     max-width: 500px;
     min-width: 500px;
     box-sizing: border-box;
-    box-shadow: var(--box-shadow);
     border-radius: 1em;
     padding: 2em;
     > h3 {
+      font-size: 1.25em !important;
       text-align: center;
       text-decoration: underline;
+      color: var(--secondary-foreground);
     }
     > ul {
       margin-top: 2em !important;
+      display: flex;
+      flex-flow: column wrap;
+      align-items: center;
       > li {
         display: flex;
         flex-flow: row wrap;
@@ -37,7 +42,7 @@ export const StFooter = styled.footer`
 `;
 
 export default function Footer() {
-  return (<StFooter>
+  return (<StFooter className={`page-footer`}>
     <div>
       <h3>Links úteis</h3>
       <ul className={css`
@@ -45,7 +50,7 @@ export default function Footer() {
         flex-flow: column wrap;
         gap: 1.5em;
       `}>
-        <NavItem name={`informações`} icon={<BiInfoCircle/>} href="information"/>
+        <NavItem name={`informações`} icon={<BiInfoCircle/>} href="about"/>
       </ul>
     </div>
 

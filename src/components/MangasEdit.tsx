@@ -3,7 +3,7 @@ import { BiTrash } from "react-icons/bi";
 import Manga from "./Manga";
 import { IBookUserCategories } from "@/types/data/Books";
 import { IMangaEdit } from "@/types/components/IMangaEdit";
-import MangaList from "@/styles/components/MangaList";
+import MangaList from "@/styles/MangaList";
 import requestParameters from "@/ultis/requestParameters";
 
 export default function MangaEdit({books, _delete}: IMangaEdit) {

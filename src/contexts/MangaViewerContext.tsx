@@ -10,7 +10,7 @@ import { IoIosCloseCircle } from "react-icons/io";
 import { IBookUserCategories } from "@/types/data/Books";
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/router";
-import CategoryButton from "@/styles/components/CategoryButton";
+import CategoryButton from "@/styles/CategoryButton";
 import { css } from "@emotion/css";
 import requestParameters from "@/ultis/requestParameters";
 import { CloudinaryImage } from "@cloudinary/url-gen/assets/CloudinaryImage";
@@ -51,10 +51,10 @@ export const MangaViewer= styled.div`
     'manga-img manga-container'
     'manga-pages manga-pages'
   ;
-  row-gap: 3em;
-  column-gap: 3em;
+  row-gap: 1em;
+  column-gap: 1em;
   backdrop-filter: blur(2px); 
-  background-color: rgba(0, 0, 0, 0.411);
+  background-color: rgba(0, 0, 0, 0.637);
   filter: blur(0px);
   position: fixed;
   top: 0;
@@ -71,8 +71,8 @@ export const MangaViewer= styled.div`
     align-items: flex-start;
     justify-content: flex-start;
     grid-area: manga-container;
-    gap: 2em;
-    background-color: rgb(var(--background));
+    gap: 1em;
+    background-color: var(--quartiary-background);
     padding: 2em;
     border-radius: 2em;
     > .author {
@@ -94,7 +94,7 @@ export const MangaViewer= styled.div`
       flex-flow: row wrap;
       justify-content: center;
       gap: 2.5em;
-      padding: 15px;
+      padding: .75em !important;
       border: 1px solid rgba(255, 255, 255, .25);
       border-radius: 2em;
       > li > button {

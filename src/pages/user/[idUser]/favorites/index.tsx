@@ -1,5 +1,5 @@
-import Header from '@/components/sections/header/Header';
-import Mangas from '@/components/sections/Mangas';
+import Header from '@/components/Header';
+import Mangas from '@/components/Mangas';
 import { ModalContext } from '@/contexts/ModalContext';
 import { getUserFavoriteBooks } from '@/lib/db/users';
 import { GetServerSideProps } from 'next';
@@ -8,7 +8,8 @@ import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 import { useContext, useEffect, useState } from 'react';
 import { IUserPageProps } from '@/types/pages/user/IUserPageProps';
-import UserProfile from '@/components/sections/UserProfile';
+import UserProfile from '@/components/UserProfile';
+import { css } from '@emotion/css';
 
 export const  getServerSideProps: GetServerSideProps = async ({req, res, query}) => {
   let { idUser } = query;  
@@ -17,7 +18,7 @@ export const  getServerSideProps: GetServerSideProps = async ({req, res, query})
   return ({
     props: {
       userExist,
-      userData
+      userData,
     }
   });
 };
@@ -46,7 +47,7 @@ export default function User({userData}: IUserPageProps & {userData: any}) {
         userData={userData}
         selection={{
           condi: optionPicker,
-          func(indice){ setOptionPicker(indice)}
+          func(indice){setOptionPicker(indice)}
         }} 
         options={[
           {name:'favoritos'},

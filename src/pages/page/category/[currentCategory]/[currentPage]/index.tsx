@@ -1,12 +1,13 @@
 import { countPages, getAllBooks, getAllBooksByCategory } from "@/lib/db/books";
 import { GetStaticProps } from "next"
-import Header from '@/components/sections/header/Header';
-import Mangas from '@/components/sections/Mangas';
+import Header from '@/components/Header';
+import Mangas from '@/components/Mangas';
 import Head from 'next/head';
-import Pagination from "@/components/sections/header/Pagination";
+import Pagination from "@/components/Pagination";
 import { IHomePageProps } from "@/types/pages/IHomePageProps";
 import { getAllCategory, getCategory } from "@/lib/db/categories";
 import { ICategory } from "@/types/data/Category";
+import ReadingAside from "@/components/ReadingAside";
 
 async function getPaths() {
   type TPath = {
@@ -52,19 +53,23 @@ export const getStaticProps: any = async (context: any) => {
     const currentPage = Number(params.currentPage);
     const paths= await getPaths();
     let pathExists= false;
-    paths.map(({params})=> {
+    for(let {params} of paths) {
       pathExists= (Number(params.currentCategory)===currentCategory && Number(params.currentPage)===currentPage);
-    });
+      if(pathExists) break; 
+    };
     const category=  await getCategory(currentCategory);
 
     if(pathExists) {
       const books= await getAllBooksByCategory(currentPage, currentCategory);
       const nOfPages= await countPages(currentCategory);
+      const categories= await getAllCategory();
+
       return {
         props: {
           currentCategory,
           currentPage,
           category,
+          categories,
           books,
           nOfPages
         }, 
@@ -76,14 +81,16 @@ export const getStaticProps: any = async (context: any) => {
   return redirect;
 }
 
-export default ({currentCategory, currentPage, nOfPages, category, books}: IHomePageProps & {
+export default ({currentCategory, currentPage, nOfPages, category, categories, books}: IHomePageProps & {
   currentPage: number;
   currentCategory: number;
   category: ICategory;
+  categories: ICategory[];
 }) => {
   return (<>
     <Head><title>Reading App - {category?.name} </title></Head>
     <Header><Pagination baseURL={`/page/category/${currentCategory}`} current={currentPage} nOfPages={nOfPages}/></Header>
+    <ReadingAside categories={categories} doNotShow={[category?.name ?? '']}/>
     <main><Mangas title={`Mangás de ${category?.name}`} books={books}/></main>
   </>)
 };

@@ -1,9 +1,7 @@
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import PresentationImg from "./PresentationImg";
 import styled from "@emotion/styled";
 import { IManga } from "@/types/components/IManga";
-import CategoryButton from "@/styles/components/CategoryButton";
-import { useRouter } from "next/router";
 import { motion } from 'framer-motion';
 import { MangaViewerContext } from '@/contexts/MangaViewerContext';
 
@@ -72,10 +70,8 @@ const MangaSt = styled(motion.article)`
   }
 `;
 
-export default function Manga({id, title, idCategory, category, images, children} : IManga) {
-  const router= useRouter();
+export default function Manga({id, title, images, children} : IManga) {
   const { handleMangaViewer } = useContext(MangaViewerContext);
-
   return <li>
     <MangaSt
       initial={{ opacity: 0.1 }}
@@ -94,7 +90,6 @@ export default function Manga({id, title, idCategory, category, images, children
           />
         })}
       </ul>
-      <CategoryButton onClick={() => router.push(`/page/category/${idCategory}/0`)} className="category">{category}</CategoryButton>
     </MangaSt>
   </li>;
 }

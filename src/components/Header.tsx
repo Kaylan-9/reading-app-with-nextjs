@@ -1,20 +1,25 @@
 import { useContext, useState } from "react";
 import Link from 'next/link';
-import Image from 'next/image';
+import { ReactSVG } from "react-svg";
+import Logo from "../../public/logo.svg";
 import styled from "@emotion/styled";
-import Login from "../Login";
+import Login from "./Login";
 import ProfileAccess from "./ProfileAccess";
 import { useSession } from "next-auth/react";
 import { IHeaderProps } from "@/types/components/IHeaderProps";
 import { NavItem } from "./NavItem";
 import { CookiePolicyContext } from "@/contexts/CookiePolicyContext";
+import { BiInfoCircle } from "react-icons/bi";
 
 const Items = styled.ul`
   display: flex;
   gap: 25px;
   align-items: center;
-  justify-content: space-around !important;
+  justify-content: flex-start !important;
   grid-area: headeritems;
+  padding: 1em 0 !important;
+  border-bottom: solid 1px var(--border-color);
+  width: 100%;
   @media(max-width:700px) {
     flex-wrap: wrap;
   }
@@ -24,32 +29,33 @@ const Items = styled.ul`
     font-family: var(--font-one);
     font-size: 15px;
     color: white;
-  }
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    > div {
+      > div {
+        mask-image: linear-gradient(0deg, rgba(2,0,36,0.4822303921568627) 12%, rgba(0,212,255,1) 100%);
+        > svg {
+          width: 55px;
+          height: 55px;
+          path {
+            
+          }
+        }
+      }
+    }
+  } 
 `;
 
 const StHeader = styled.header`
   align-items: center;
   justify-content: center;
-  padding: 1.5em 150px;
   display: flex;
   flex-flow: column wrap;
   column-gap: 25px;
-  @media(max-width: 1100px) {
-    > .logotipo {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      transform: translate(0px, 0px) !important;
-      position: static !important;
-    }
-  }
-  > .logotipo {
-    grid-area: logotipo;
-    opacity: 0.45;
-  }
-  > .adv {
-    grid-area: adv;
-  }
+  grid-area: page-header;
+  margin: 0 2.5em;
+  margin-bottom: 2em;
   > .search {
     display: flex;
     justify-content: center;
@@ -102,16 +108,13 @@ export default function Header({children}: IHeaderProps) {
 
   return (<>
     {(activeLogin ? (<Login setActiveLogin={setActiveLogin}/>) : null)}
-    <StHeader>
-      <Link className='logotipo' href={`/`}>
-        <Image
-          src="/logo2.png"
-          alt="logo do site" 
-          width={65}
-          height={65}
-        />
-      </Link>
+    <StHeader id={`page-header`}>
       <Items>
+        <li>
+          <Link className='logotipo' href={`/`}>
+            <ReactSVG src={Logo.src}/>
+          </Link>
+        </li>
         <NavItem name='home' href=""/>
         {agreement ? (status==='authenticated' ? 
           (<ProfileAccess imgurl={session.user?.image ?? ''}/>) : 
@@ -119,6 +122,7 @@ export default function Header({children}: IHeaderProps) {
             setActiveLogin(true);
           }}/>))
         : null}
+        <NavItem name='about' icon={<BiInfoCircle/>} href="about"/>
       </Items>
       {children}
     </StHeader>

@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 export default (styled.div`
   max-width: var(--max-width);
   width: 100%;
-  padding: 25px 100px;
+  padding: 0 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -12,7 +12,7 @@ export default (styled.div`
     padding: 0px;
   }
   > h2 {
-    margin: 100px 0;
+    margin-bottom: 100px;
     text-align: center;
     background: white;
     font-weight: bold;

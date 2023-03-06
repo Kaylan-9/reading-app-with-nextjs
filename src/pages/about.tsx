@@ -1,5 +1,6 @@
-import CookiePolicy from '@/components/sections/CookiePolicy';
-import Header from '@/components/sections/header/Header';
+import CookiePolicy from '@/components/CookiePolicy';
+import Header from '@/components/Header';
+import { StOption, StReadingAside } from '@/components/ReadingAside';
 import { css } from '@emotion/css';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
@@ -32,15 +33,23 @@ export const StPresentation = styled(motion.div)`
 `;
 
 
-export const StAside= styled(motion.aside)`
+export const StAside= styled(StReadingAside)`
+  grid-area: page-aside;
   nav > ul {
     display: flex;
     flex-flow: column wrap;
     gap: 2em;
     > li {
       cursor: pointer;
-      font-size: 1.25em;
-      font-weight: bold;
+      > button {
+        line-break: strict;
+        font-size: 1.25em;
+        display: inline;
+        font-weight: bold;
+        background-color: transparent;
+        border: none;
+        color: white;
+      }
     }
   }
 `;
@@ -59,9 +68,13 @@ export interface IAside {
 export function Aside({ list, setSection, _section }: IAside) {
   return (<StAside>
     <nav><ul>{list.map((name, i) => 
-      <li className={_section===i ? css`
+      <StOption>
+        <button className={_section===i ? css`
         color: var(--secondary-foreground);
-      ` : ``} key={name+i} onClick={()=> setSection(i)}>{name}</li>
+      ` : ``} key={name+i} onClick={()=> setSection(i)}>
+          {name}
+        </button>
+      </StOption>
     )}</ul></nav>
   </StAside>);
 }
@@ -91,14 +104,9 @@ export default () => {
   const [_section, setSection]= useState(0);
   return (<>
     <Head><title>information</title></Head>
-    <Header />
-    <main className={css`
-      display: grid;
-      gap: 1em;
-      grid-template-columns: max-content auto;
-      padding: 5em 150px;
-    `}>
-      <Aside list={['sobre', 'cookie policy']} setSection={setSection} _section={_section}/>
+    <Header/>
+    <Aside list={['sobre', 'cookie policy']} setSection={setSection} _section={_section}/>
+    <main id={`page-main`}>
       {_section===1 && <CookiePolicy variants={variants} css={css`
         max-width: 700px;
         margin: 0 auto;

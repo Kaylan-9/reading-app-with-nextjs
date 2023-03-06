@@ -1,4 +1,4 @@
-import { Modal, ModalsSt } from "@/components/sections/Modals";
+import { Modal, ModalsSt } from "@/components/Modals";
 import { IPropsModal } from "@/types/contexts/ModalContext/components/IPropsModal";
 import { IModal } from "@/types/contexts/ModalContext/IModal";
 import { IModalReducerAction } from "@/types/contexts/ModalContext/reducers/IModalReducerAction";
@@ -7,7 +7,7 @@ import { TModal } from "@/types/contexts/ModalContext/TModal";
 import { Reducer } from "@/types/contexts/Reducer";
 import { createContext, ReactNode, useEffect, useReducer, useState, useContext } from "react";
 import { GrClose } from "react-icons/gr";
-import CookiePolicy from "@/components/sections/CookiePolicy";
+import CookiePolicy from "@/components/CookiePolicy";
 import { CookiePolicyContext } from "./CookiePolicyContext";
 
 const initialValueModalReducer: IModalReducerState = {

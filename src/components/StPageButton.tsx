@@ -4,7 +4,8 @@ export default styled.button`
   cursor: pointer;
   border: none;
   box-shadow: 0px 0px 20px 0px #00000032;
-  background-color: #313131;
+  background-color: var(--quartiary-background);
+  border: solid var(--border-color) 1px;
   color: var(--secondary-foreground);
   font-size: 17px;
   padding: 10px;

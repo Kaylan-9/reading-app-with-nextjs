@@ -5,7 +5,7 @@ import ProfilePic from './ProfilePic';
 import IMangas from '@/types/components/IMangas';
 import { IBookUserCategories } from '@/types/data/Books';
 import Link from 'next/link';
-import MangaList from '@/styles/components/MangaList';
+import MangaList from '@/styles/MangaList';
 
 export const UserProfile = styled.div`
   align-items: center;

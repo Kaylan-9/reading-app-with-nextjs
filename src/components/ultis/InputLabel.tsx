@@ -1,7 +1,7 @@
 import { forwardRef } from "react";
 import styled from "@emotion/styled";
 import { IInputLabel } from "@/types/components/ultis/IInputLabel";
-import Input from "@/styles/components/Input";
+import Input from "@/styles/Input";
 
 const InputLabelSt = styled.div<{area: string}>`
   display: grid;

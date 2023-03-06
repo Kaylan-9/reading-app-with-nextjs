@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 
 export default styled.button`
-  padding: 10px 15px;
+  padding: .75em;
   font-size: 16px;
   border-radius: 30px;
   font-weight: bolder;

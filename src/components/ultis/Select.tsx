@@ -1,4 +1,4 @@
-import Input from "@/styles/components/Input";
+import Input from "@/styles/Input";
 import requestParameters from "@/ultis/requestParameters";
 import styled from "@emotion/styled";
 import { forwardRef, useState, useEffect } from "react";

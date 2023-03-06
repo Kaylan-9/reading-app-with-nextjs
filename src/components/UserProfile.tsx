@@ -1,9 +1,8 @@
 import { IUserProfileProps } from "@/types/pages/user/components/IUserProfileProps";
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
-import React, { FC, FunctionComponent, ReactNode } from "react";
+import React from "react";
 import { useSession } from 'next-auth/react'
-import { css } from "@emotion/css";
 
 const StUserProfile= styled.section`
   display: grid;

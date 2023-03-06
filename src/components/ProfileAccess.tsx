@@ -1,14 +1,14 @@
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
 import { useSession, signOut } from 'next-auth/react';
-import ProfilePic from "../ProfilePic";
+import ProfilePic from "./ProfilePic";
 import { IProfileAccessProps } from "@/types/components/IProfileAccessProps";
+import { StNavItem } from "./NavItem";
 
-const ProfileAccessSt = styled.li`
-  align-items: center;
-  display: flex;
-  flex-direction: row;
+const ProfileAccessSt = styled(StNavItem)`
   gap: 25px;
+  padding-right: .25em;
+  padding-left: .5em;
   & > #btn-logout {
     grid-area: btn-profile;
     color: #ff7a7a !important;
