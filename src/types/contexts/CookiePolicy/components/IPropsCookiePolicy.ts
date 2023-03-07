@@ -1,4 +1,4 @@
 export interface IPropsCookiePolicy {
-  agreement: boolean;
+  agreement: boolean | null;
   setAgreement: (newValue: boolean) => void;
 }

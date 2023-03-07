@@ -55,15 +55,15 @@ export default function MyApp({ Component, pageProps: {session, ...pageProps}}: 
     document.body.addEventListener('wheel', handleScroll);
   }, [screenHeight, setScreenHeight]);
 
-  return (<ModalProvider>
-    <CookiePolicyProvider>
+  return (<CookiePolicyProvider>
+    <ModalProvider>
       <SessionProvider session={session}>
         <MangaViewerProvider>
           <Component {...pageProps}/>
           <Footer/>
         </MangaViewerProvider>
       </SessionProvider>
-    </CookiePolicyProvider>
-    {enoughPosition ? <ButtonBackToTop/> : null}
-  </ModalProvider>);
+      {enoughPosition ? <ButtonBackToTop/> : null}
+    </ModalProvider>
+  </CookiePolicyProvider>);
 }

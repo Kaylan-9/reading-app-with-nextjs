@@ -50,7 +50,7 @@ export default function Footer() {
         flex-flow: column wrap;
         gap: 1.5em;
       `}>
-        <NavItem name={`informações`} icon={<BiInfoCircle/>} href="about"/>
+        <NavItem name={`about`} icon={<BiInfoCircle/>} href="about"/>
       </ul>
     </div>
 

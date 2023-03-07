@@ -5,7 +5,7 @@ import { IModalReducerAction } from "@/types/contexts/ModalContext/reducers/IMod
 import { IModalReducerState } from "@/types/contexts/ModalContext/reducers/IModalReducerState";
 import { TModal } from "@/types/contexts/ModalContext/TModal";
 import { Reducer } from "@/types/contexts/Reducer";
-import { createContext, ReactNode, useEffect, useReducer, useState, useContext } from "react";
+import { createContext, ReactNode, useEffect, useReducer, useState, useContext, useRef } from "react";
 import { GrClose } from "react-icons/gr";
 import CookiePolicy from "@/components/CookiePolicy";
 import { CookiePolicyContext } from "./CookiePolicyContext";
@@ -52,16 +52,16 @@ export const ModalContext = createContext<IPropsModal>(initialValueModal);
 export default function ModalProvider({children}: {children: ReactNode}) {
   const [modal, handleModal] = useReducer<Reducer<IModalReducerState, IModalReducerAction>>(modalReducer, initialValueModalReducer);
   let {agreement}= useContext(CookiePolicyContext);
-  
+
   useEffect(() => {
-    if(!agreement) {
+    if(agreement===false) {
       handleModal({
         type: 'add', 
         newModal: {
           id: 'terms',
           message: (<CookiePolicy/>)
         }
-      })
+      });
     }
   }, [agreement])
 

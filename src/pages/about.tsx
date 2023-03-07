@@ -70,10 +70,10 @@ export function Aside({ list, setSection, _section }: IAside) {
     <nav><ul>{list.map((name, i) => 
       <StOption>
         <button className={_section===i ? css`
-        color: var(--secondary-foreground);
+        color: var(--secondary-foreground) !important;
       ` : ``} key={name+i} onClick={()=> setSection(i)}>
           {name}
-        </button>
+        </button>       
       </StOption>
     )}</ul></nav>
   </StAside>);

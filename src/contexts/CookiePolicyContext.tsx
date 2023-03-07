@@ -10,7 +10,7 @@ const initialValueCookiePolicy = {
 export const CookiePolicyContext = createContext<IPropsCookiePolicy>(initialValueCookiePolicy);
 
 export default function CookiePolicyProvider({children}: {children: ReactNode}) {
-  const [agreement, setAgreement] = useState<boolean>(false);
+  const [agreement, setAgreement] = useState<boolean | null>(null);
 
   useEffect(() => {
     (async () => {
