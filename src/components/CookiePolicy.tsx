@@ -5,7 +5,6 @@ import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import React, { useContext } from 'react';
 
-
 const Styled= styled(motion.div)`
   max-width: 40em;
   display: flex;
@@ -40,9 +39,9 @@ export default function CookiePolicy({css, variants}: ICookiePolicy) {
     className={css}
   >
     <h3>Termos de serviço</h3>
-    <p>Segundo "A Lei Geral de Proteção de Dados Pessoais, Lei nº 13.709/2018" é obrigatório que os usuários tenham conhecimento da finalidade, assim como dos dados armazenados em <strong>sites Web</strong>. </p>
+    <p>Segundo &ldquo;A Lei Geral de Proteção de Dados Pessoais, Lei nº 13.709/2018&ldquo; é obrigatório que os usuários tenham conhecimento da finalidade, assim como dos dados armazenados em <strong>sites Web</strong>. </p>
     <p>Esta página mantém somente dados necessários a aplicação, e que foram disponibilizados, por meio do uso consciente do uso desta mesma. </p>
-    <p>Os dados presentes somente nela dizem respeito a identificação de seus elementos e usuários, faça login, assim como sessões de acesso. Ou seja, ela apresenta dados pessoais de seus usuários, como nome, senha, e-mail, fotos, marcações de favorito, considere-se também as imagens dos "posts" realizados, título, descrição, usuário pertencente e categoria.</p>
+    <p>Os dados presentes somente nela dizem respeito a identificação de seus elementos e usuários, faça login, assim como sessões de acesso. Ou seja, ela apresenta dados pessoais de seus usuários, como nome, senha, e-mail, fotos, marcações de favorito, considere-se também as imagens dos &ldquo;posts&ldquo; realizados, título, descrição, usuário pertencente e categoria.</p>
     {
       !agreement ? (<button onClick={async () => {
         const request= await fetch('/api/cookies/policy', {

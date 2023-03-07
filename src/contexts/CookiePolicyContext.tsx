@@ -14,7 +14,7 @@ export default function CookiePolicyProvider({children}: {children: ReactNode}) 
 
   useEffect(() => {
     (async () => {
-      const agreementReq= await fetch(`/api/cookies/acceptedterms`, requestParameters.json);
+      const agreementReq= await fetch('/api/cookies/acceptedterms', requestParameters.json);
       const agreementRes: {acceptedterms: boolean}= await agreementReq.json();
       setAgreement(agreementRes.acceptedterms);
     })();

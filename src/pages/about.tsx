@@ -68,7 +68,7 @@ export interface IAside {
 export function Aside({ list, setSection, _section }: IAside) {
   return (<StAside>
     <nav><ul>{list.map((name, i) => 
-      <StOption>
+      <StOption key={name+i}>
         <button className={_section===i ? css`
         color: var(--secondary-foreground) !important;
       ` : ``} key={name+i} onClick={()=> setSection(i)}>
@@ -78,6 +78,8 @@ export function Aside({ list, setSection, _section }: IAside) {
     )}</ul></nav>
   </StAside>);
 }
+
+Aside.displayName= 'Aside';
 
 export function Presentation() {
   return (<StPresentation
@@ -100,7 +102,9 @@ export function Presentation() {
   </StPresentation>);
 }
 
-export default () => {
+Presentation.displayName= 'Presentation';
+
+export default function About() {
   const [_section, setSection]= useState(0);
   return (<>
     <Head><title>information</title></Head>

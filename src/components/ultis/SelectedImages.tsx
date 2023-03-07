@@ -63,4 +63,6 @@ const SelectedImages = forwardRef<HTMLInputElement, ISelectedImages>(({setNewIma
   </>);
 });
 
+SelectedImages.displayName= 'SelectedImages';
+
 export default SelectedImages;

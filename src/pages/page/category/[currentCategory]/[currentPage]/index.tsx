@@ -1,5 +1,4 @@
-import { countPages, getAllBooks, getAllBooksByCategory } from "@/lib/db/books";
-import { GetStaticProps } from "next"
+import { countPages, getAllBooksByCategory } from "@/lib/db/books";
 import Header from '@/components/Header';
 import Mangas from '@/components/Mangas';
 import Head from 'next/head';
@@ -41,7 +40,7 @@ export async function getStaticPaths() {
   }
 };
 
-export const getStaticProps: any = async (context: any) => {
+export async function getStaticProps(context: any) {
   const redirect= {
     redirect: {
       destination: '/'
@@ -81,12 +80,12 @@ export const getStaticProps: any = async (context: any) => {
   return redirect;
 }
 
-export default ({currentCategory, currentPage, nOfPages, category, categories, books}: IHomePageProps & {
+export default function Index({currentCategory, currentPage, nOfPages, category, categories, books}: IHomePageProps & {
   currentPage: number;
   currentCategory: number;
   category: ICategory;
   categories: ICategory[];
-}) => {
+}) {
   return (<>
     <Head><title>Reading App - {category?.name} </title></Head>
     <Header><Pagination baseURL={`/page/category/${currentCategory}`} current={currentPage} nOfPages={nOfPages}/></Header>

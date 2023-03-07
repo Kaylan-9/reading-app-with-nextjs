@@ -20,7 +20,7 @@ export const getStaticProps: any = async (ctx: any) => {
   }
 };
 
-export default ({categories, books}: IHomePageProps) => {
+export default function Index({categories, books}: IHomePageProps) {
   const [ searchContent,  setSearchContent ] = useState<IBookUserCategories[] | false>(false);
   const searchInput = useRef<HTMLInputElement>(null);
   const categorySearchPicker = useRef<HTMLInputElement>(null);

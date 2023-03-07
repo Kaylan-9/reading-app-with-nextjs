@@ -1,5 +1,4 @@
 import { countPages, getAllBooks } from "@/lib/db/books";
-import { GetStaticProps } from "next"
 import Header from '@/components/Header';
 import Mangas from '@/components/Mangas';
 import Head from 'next/head';
@@ -22,11 +21,11 @@ export async function getStaticPaths() {
   
   return {
     paths,
-    fallback: true,
+    fallback: 'blocking',
   }
 };
 
-export const getStaticProps: GetStaticProps = async (context) => {
+export async function getStaticProps(context: any) {
   const { params } = context;
   let currentPage = Number(params?.currentPage ?? 0);
   const books = await getAllBooks(currentPage);
@@ -43,8 +42,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   }
 }
 
-export default ({currentPage, nOfPages, books, categories}: IHomePageProps & {currentPage: number, categories: ICategory[]}) => {
-
+export default function Index({currentPage, nOfPages, books, categories}: IHomePageProps & {currentPage: number, categories: ICategory[]}) {
   return (<>
     <Head>
       <title>Reading App</title>
