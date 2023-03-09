@@ -16,7 +16,7 @@ export const authOptions = {
     maxAge: 7 * 24 * 3600,
   },
   pages: {
-    signIn: '/auth/signin',
+    // signIn: '/auth/signin',
   },
   providers: [
     GoogleProvider({
