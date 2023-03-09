@@ -7,7 +7,7 @@ export const config= {
   }
 }
 
-export default async function deleteBook( 
+export default async function dataBook( 
   req: NextApiRequest,
   res: NextApiResponse
 ) {

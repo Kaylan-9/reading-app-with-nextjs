@@ -5,36 +5,33 @@ import { FcGoogle } from 'react-icons/fc';
 import { signIn } from "next-auth/react";
 import { ModalContext } from "@/contexts/ModalContext";
 import requestParameters from "@/ultis/requestParameters";
+import useProviders from "@/ultis/useProviders";
 
 const LoginSt = styled.div`
   max-width: 100vw;
-  min-height: 100vh;
   width: 100%;
+  height: 100vh;
+  max-height: 100vh;
   position: fixed;
   z-index: 1000;
+  backdrop-filter: blur(2px); 
+  background-color: rgba(0, 0, 0, 0.637);
+  filter: blur(0px);
   form {
-    transition: left 1s;
     position: relative;
-    transform: translateX(-100%);
+    border: solid var(--border-color) 1px;
+    border-radius: 2em;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     display: flex;
-    left: 100%;
     flex-direction: column;
     gap: 30px;
     max-width: 450px; 
     width: 100%;
-    background-color: rgb(var(--secondary-background));
+    background-color: var(--quartiary-background);
     padding: 40px 30px !important;
-    min-height: 100vh;
     align-items: center;
-    @keyframes Openlogin {
-      0% {
-        left: calc(100% + 200px);
-      }
-      100% {
-        left: 100%;
-      }
-    } 
-    animation: 1s Openlogin cubic-bezier(0.3, 0.05, 0.795, 0.035);
     div {
       gap: 12px !important;
       input[type=text] {
@@ -56,22 +53,12 @@ const LoginSt = styled.div`
 `;
 
 export default function Login({setActiveLogin}: {setActiveLogin: (state: boolean) => void}) {
+  let providers = useProviders();
   const input_username = useRef<HTMLInputElement>(null);
   const input_usernameoremail = useRef<HTMLInputElement>(null);
   const input_password = useRef<HTMLInputElement>(null);
-  const [providers, setProviders] = useState<any>([]);
   const {handleModal} = useContext(ModalContext);
   const [newUser, setNewUser] = useState<boolean>(false);
-
-  useEffect(() => {
-    const getData = async () => {
-      const request = await fetch('/api/providers', requestParameters.json);
-      const responseData = await request.json();
-      setProviders(responseData?.providers); 
-    }
-    
-    getData();
-  }, []);
 
   const handleLogin = useCallback(async (e: FormEvent<HTMLInputElement>) => {
     e.preventDefault();  
@@ -107,9 +94,13 @@ export default function Login({setActiveLogin}: {setActiveLogin: (state: boolean
   }, [newUser]);
 
   return (<LoginSt onClick={(e: MouseEvent<HTMLDivElement>) => {
-    const {clientX} = e;
-    const leftForm = e.currentTarget.querySelector('form')?.getBoundingClientRect().left ?? false;
-    if(leftForm && clientX<leftForm) setActiveLogin(false);
+    const {clientX}= e;
+    const clientRect= e.currentTarget.querySelector('form')?.getBoundingClientRect();
+    const leftForm = clientRect?.left ?? false;
+    const rightForm = clientRect?.right ?? false;
+    
+    if((leftForm && clientX<leftForm) || (rightForm && clientX>rightForm)) setActiveLogin(false);
+    
   }}>
     <form>
       <h3>Login</h3>  
@@ -130,11 +121,11 @@ export default function Login({setActiveLogin}: {setActiveLogin: (state: boolean
         }
       </button> 
       <strong>ou logar com</strong>
-      {Object.values(providers)?.map(({name, id}: any) => (name==='Google' ?
+      {(providers!==null) ? Object.values(providers)?.map(({name, id}: any) => (name==='Google' ?
         (<button key={name} className='access-btn' onClick={() => signIn(id)}>
           {name==='Google' ? (<FcGoogle/>) : `Sign in with ${name}`}
         </button>)
-      : null))}
+      : null)) : null}
     </form>
   </LoginSt>);
 }

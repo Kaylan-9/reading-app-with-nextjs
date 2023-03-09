@@ -1,8 +1,13 @@
 import { isFavorite } from "@/lib/db/favorite";
-import {  } from "@/lib/db/users";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-export default async function isfavorite( 
+export const config = {
+  api: {
+    bodyParser: true,
+  },
+};
+
+export default async function( 
   req: NextApiRequest,
   res: NextApiResponse
 ) {

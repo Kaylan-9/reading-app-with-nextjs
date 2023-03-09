@@ -1,3 +1,5 @@
+import prisma from './prisma';
+
 export async function isFavorite(userId: string, bookId: number): Promise<{
   marked: boolean
 }> {
