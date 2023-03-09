@@ -121,11 +121,7 @@ export default function Login({setActiveLogin}: {setActiveLogin: (state: boolean
         }
       </button> 
       <strong>ou logar com</strong>
-      {(providers!==null) ? Object.values(providers)?.map(({name, id}: any) => (name==='Google' ?
-        (<button key={name} className='access-btn' onClick={() => signIn(id)}>
-          {name==='Google' ? (<FcGoogle/>) : `Sign in with ${name}`}
-        </button>)
-      : null)) : null}
+      <button className='access-btn' onClick={() => signIn('google')}><FcGoogle/></button>
     </form>
   </LoginSt>);
 }
