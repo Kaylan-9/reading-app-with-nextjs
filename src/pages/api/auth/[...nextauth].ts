@@ -10,9 +10,9 @@ export const authOptions = {
     strategy: 'jwt',
     maxAge: 7 * 24 * 3600,
   },
-  secret: process.env.NEXTAUTH_SECRET,
+  // secret: process.env.NEXTAUTH_SECRET,
   jwt: {
-    secret: process.env.NEXTAUTH_SECRET,
+    // secret: process.env.NEXTAUTH_SECRET,
     maxAge: 7 * 24 * 3600,
   },
   pages: {

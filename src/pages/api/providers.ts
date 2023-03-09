@@ -11,7 +11,6 @@ export default async function providers(req: NextApiRequest, res: NextApiRespons
   if(req.method === 'POST') {
     try {
       const providers = await getProviders();
-      console.log(providers);
       return res.status(200).send({error: null, providers});
     } catch (error) {
       return res.status(500).send({error: 'Internal Server! Error', providers: null});

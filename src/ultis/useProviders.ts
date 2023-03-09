@@ -8,7 +8,6 @@ export default function useProviders() {
     (async () => {
       const requestProviders= await fetch(`/api/providers`, requestParameters.json);
       const responseProviders= await requestProviders.json();
-      console.log(responseProviders);
       setProviders(responseProviders.providers);
     })();
   }, []);
