@@ -10,18 +10,17 @@ export const authOptions = {
     strategy: 'jwt',
     maxAge: 7 * 24 * 3600,
   },
-  secret: process.env.NEXTAUTH_SECRET,
   jwt: {
     secret: process.env.NEXTAUTH_SECRET,
     maxAge: 7 * 24 * 3600,
   },
   pages: {
-    signIn: '/auth/signin',
   },
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+      authorization: 'https://accounts.google.com/o/oauth2/v2/auth' as string
     }),
     CredentialsProvider({
       name: 'Credentials',
