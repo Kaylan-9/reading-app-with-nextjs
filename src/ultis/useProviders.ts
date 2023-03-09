@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import requestParameters from './requestParameters';
 
 export default function useProviders() {
@@ -9,6 +9,7 @@ export default function useProviders() {
       const requestProviders= await fetch(`/api/providers`, requestParameters.json);
       const responseProviders= await requestProviders.json();
       setProviders(responseProviders.providers);
+      console.log(responseProviders.providers);
     })();
   }, []);
 

@@ -57,7 +57,7 @@ export default function MyApp({ Component, pageProps: {session, ...pageProps}}: 
 
   return (<CookiePolicyProvider>
     <ModalProvider>
-      <SessionProvider session={session} basePath={`/api/auth`}>
+      <SessionProvider session={session}>
         <MangaViewerProvider>
           <Component {...pageProps}/>
           <Footer/>

@@ -18,3 +18,4 @@ KEY-BOOKCLOUD.json
 *.tsbuildinfo
 next-env.d.ts
 /public/teste.png
+.vscode
