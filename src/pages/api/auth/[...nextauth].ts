@@ -7,9 +7,12 @@ import { account } from "../../../lib/db/users";
 
 export const authOptions = {
   session: {
+    strategy: 'jwt',
     maxAge: 7 * 24 * 3600,
   },
   secret: process.env.NEXTAUTH_SECRET,
+  pages: {
+  },
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
@@ -35,7 +38,7 @@ export const authOptions = {
   adapter: PrismaAdapter(prisma),
   callbacks: {
     async session({ session, user, token }: any) {
-      session.accessToken = token?.accessToken;
+      session.accessToken = token.accessToken;
       if (session?.user && token) session.user.id = token.sub;
       if (session?.user && !token) session.user.id = user.id;
       return session;
@@ -45,7 +48,6 @@ export const authOptions = {
       if (account) token.accessToken = account.access_token;
       return token;
     },
-    
   },
 }
 
