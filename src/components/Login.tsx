@@ -121,7 +121,9 @@ export default function Login({setActiveLogin}: {setActiveLogin: (state: boolean
         }
       </button> 
       <strong>ou logar com</strong>
-      <button className='access-btn' onClick={() => signIn('google')}><FcGoogle/></button>
+      <button className='access-btn' onClick={() => { 
+        signIn();
+      }}>Outros</button>
     </form>
   </LoginSt>);
 }

@@ -7,20 +7,13 @@ import { account } from "../../../lib/db/users";
 
 export const authOptions = {
   session: {
-    strategy: 'jwt',
     maxAge: 7 * 24 * 3600,
   },
-  jwt: {
-    secret: process.env.NEXTAUTH_SECRET,
-    maxAge: 7 * 24 * 3600,
-  },
-  pages: {
-  },
+  secret: process.env.NEXTAUTH_SECRET,
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-      authorization: 'https://accounts.google.com/o/oauth2/v2/auth' as string
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string
     }),
     CredentialsProvider({
       name: 'Credentials',
@@ -42,7 +35,7 @@ export const authOptions = {
   adapter: PrismaAdapter(prisma),
   callbacks: {
     async session({ session, user, token }: any) {
-      session.accessToken = token.accessToken;
+      session.accessToken = token?.accessToken;
       if (session?.user && token) session.user.id = token.sub;
       if (session?.user && !token) session.user.id = user.id;
       return session;
