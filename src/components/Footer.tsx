@@ -10,10 +10,11 @@ export const StFooter = styled.footer`
   justify-content: center;
   gap: 2em;
   box-sizing: border-box;
-  border-top: 1px var(--border-color) solid;
+  border: 1px var(--border-color) solid;
+  border-radius: 1em;
   background-color: var(--quartiary-background);
-  margin-top: 300px;
-  padding: 50px 150px;
+  margin: 20em 1.5em 1.5em 1.5em;
+  padding: 2em;
   grid-area: page-footer;
   > div {
     max-width: 500px;

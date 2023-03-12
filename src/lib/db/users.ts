@@ -1,4 +1,5 @@
-import { IUser } from "@/types/data/Users";
+import { IUser, IUserBookCategoriesPublic } from "@/types/data/Users";
+import { Book } from "@prisma/client";
 import prisma from "./prisma";
 
 export async function getAllUsers() {
@@ -49,6 +50,67 @@ export async function getUserBooks(id: string) {
       }      
     }
   }));
+}
+
+export async function getRandomUsersBooks() {
+  const nUsers= await prisma.user.count();
+  let 
+    data: IUserBookCategoriesPublic[]= [],
+    count= 0,
+    booksCount= 0;
+  while(data.length<3 || count<8) {
+    const newItem= (await prisma.user.findMany({
+      include: {
+        book: {
+          include: {
+            imagepaths: {
+              take: 3,
+              skip: 0  
+            },
+            categorie: true
+          },
+          take: 3,
+          skip: 0    
+        }     
+      },
+      take: 1,
+      skip: Math.floor(Math.random() * nUsers)
+    }))[0] as any;
+    if(!data.some((item: IUserBookCategoriesPublic) => item.id===newItem.id)){
+      data.push(newItem as any);
+    }
+    count++;
+  }
+  count= 0;
+  data.map(userData=> userData.book.map(_=> {
+    booksCount++;
+  }));
+  while(data.length<3 && booksCount!=10 && count<(data.length-1)) {
+    const 
+      userID= data[count].id,
+      bookIDs= data[count].book.map(book=> book.id);
+    const newItem= (await prisma.book.findFirst({
+      where: {
+        id: { notIn: bookIDs },
+        user: {
+          id: userID
+        }
+      },
+      include: {
+        imagepaths: {
+          take: 3,
+          skip: 0  
+        },
+        categorie: true
+      },
+    }));
+    if(newItem!==null) {
+      data[count].book= [...data[count].book, newItem] as any;
+      booksCount++;
+      if(count<(data.length-1)) count++;
+    }
+  }
+  return data;
 }
 
 export async function getUserFavoriteBooks(id: string) {

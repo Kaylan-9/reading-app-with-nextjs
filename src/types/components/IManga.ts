@@ -6,5 +6,5 @@ export interface IManga {
   idCategory: number;
   category: string;
   images: any[];
-  children: ReactNode;
+  children?: ReactNode;
 }

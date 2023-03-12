@@ -1,4 +1,5 @@
 import CategoryButton from '@/styles/CategoryButton';
+import Column from '@/styles/Column';
 import { ICategory } from '@/types/data/Category';
 import styled from '@emotion/styled'
 import { motion } from 'framer-motion';
@@ -12,39 +13,33 @@ export interface IReadingAside {
 
 export interface IOption {
   name: string;
+  color?: string;
   onClick: () => void;
 };
 
 export const StReadingAside= styled(motion.aside)`
-  grid-area: page-aside;
-  margin-right: 2.5em;
   > nav {
-    padding: 2em;
     background-color: var(--quartiary-background);
     border: 1px var(--border-color) solid;
     border-radius: 1em;
-    > ul {
-      display: flex;
-      flex-flow: column wrap;
-      gap: 1em;
-    }
   }
 `;
 
-export const StOption= styled(motion.li)`
-  min-width: 200px;
+export const StOption= styled(motion.li)<{color?: string}>`
   > button {
+    padding: 0px;
     cursor: pointer;
     width: 100%;
     border-radius: initial;
     border-bottom: transparent;
     background-color: transparent;
+    color: ${({color}) => color};
     box-shadow: none;
   }
 `;
 
-export function Option({name, onClick}: IOption) {
-  return (<StOption>
+export function Option({name, color, onClick}: IOption) {
+  return (<StOption color={color}>
     <CategoryButton onClick={onClick}>{name}</CategoryButton>
   </StOption>);
 };
@@ -53,7 +48,8 @@ export default function ReadingAside({categories, doNotShow}: IReadingAside) {
   const router= useRouter();
   return (<StReadingAside id={`reading-aside`}>
     <nav>
-      <ul>
+      <Column>
+        <Option color={`rgb(var(--foreground))`} name={'todos'} onClick={() => {router.push(`/page/0`);}}/>
         {categories.map(({id, name}: {id: number, name: string}) => {
           const show= doNotShow?.reduce((acc, val) => {
             if(val===name) acc=0;
@@ -64,7 +60,7 @@ export default function ReadingAside({categories, doNotShow}: IReadingAside) {
             router.push(`/page/category/${id}/0`);
           }}/>) : null;
         })}
-      </ul>
+      </Column>
     </nav>
   </StReadingAside>)
 };

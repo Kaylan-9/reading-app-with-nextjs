@@ -8,10 +8,10 @@ import requestParameters from "@/ultis/requestParameters";
 import useProviders from "@/ultis/useProviders";
 
 const LoginSt = styled.div`
-  max-width: 100vw;
-  width: 100%;
+  width: 100vw;
   height: 100vh;
-  max-height: 100vh;
+  top: 0%;
+  left: 0%;
   position: fixed;
   z-index: 1000;
   backdrop-filter: blur(2px); 
