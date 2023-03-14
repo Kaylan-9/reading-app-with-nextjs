@@ -55,7 +55,7 @@ export default function Index({categories}: {categories: ICategory[]}) {
       <ReadingAside categories={categories}/>
     </NavMain>
     <main id={`page-main`}>
-      <UserMangaLists data={[]}/>
+      <UserMangaLists data={usersPosts}/>
     </main>
   </>)
 };
