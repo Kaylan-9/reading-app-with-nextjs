@@ -10,6 +10,7 @@ import { useSession } from 'next-auth/react';
 import { useContext, useEffect, useState } from 'react';
 import { IUserPageProps } from '@/types/pages/user/IUserPageProps';
 import UserProfile from '@/components/UserProfile';
+import { NavMain } from '@/styles/NavMain';
 
 export const getServerSideProps: GetServerSideProps = async ({req, res, query}) => {
   let { idUser } = query;  
@@ -39,7 +40,9 @@ export default function User({userData}: IUserPageProps) {
     <Head>
       {<title>{userData?.name}</title>}
     </Head>
-    <Header/>
+    <NavMain>
+      <Header/>
+    </NavMain>
     <main>
       <UserProfile 
         userData={userData}

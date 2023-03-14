@@ -5,11 +5,10 @@ import { IBookUserCategories } from "@/types/data/Books";
 import { getAllCategory } from "@/lib/db/categories";
 import { ModalContext } from "@/contexts/ModalContext";
 import ReadingAside from "@/components/ReadingAside";
-import Column from "@/styles/Column";
-import styled from "@emotion/styled";
 import UserMangaLists from '@/components/Users';
 import useUsersPosts from '@/ultis/useUsersPosts';
 import { ICategory } from '@/types/data/Category';
+import { NavMain } from '@/styles/NavMain';
 
 export const getStaticProps: any = async () => {
   const categories = await getAllCategory();
@@ -19,12 +18,6 @@ export const getStaticProps: any = async () => {
     }
   }
 };
-
-export const NavMain= styled(Column.withComponent('nav'))`
-  grid-area: page-nav;
-  margin: 1.5em 1.5em 0 0 !important;
-  padding: 0 !important;
-`;
 
 export default function Index({categories}: {categories: ICategory[]}) {
   const [ searchContent,  setSearchContent ] = useState<IBookUserCategories[] | false>(false);
@@ -62,7 +55,7 @@ export default function Index({categories}: {categories: ICategory[]}) {
       <ReadingAside categories={categories}/>
     </NavMain>
     <main id={`page-main`}>
-      <UserMangaLists data={usersPosts}/>
+      <UserMangaLists data={[]}/>
     </main>
   </>)
 };

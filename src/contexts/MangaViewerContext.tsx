@@ -232,7 +232,7 @@ export default function MangaViewerProvider({children}: {children: ReactNode}) {
           <h3 className="title">Descrição <strong>de {data?.title}</strong></h3>
           <p className="text">{data!==null && data.description}</p>
         </div>
-        <CategoryButton onClick={() => router.push(`/page/category/${data?.categorie.id}/0`)}>{data?.categorie.name}</CategoryButton>
+        <CategoryButton onClick={() => router.push(`/page/0/${data?.categorie.id}`)}>{data?.categorie.name}</CategoryButton>
       </div>
       {show && cldImgs[0]!==null ? (<ul className={viewModes[viewMode]} style={{gridArea: 'manga-pages'}}>
         {data?.imagepaths.map((img, indice)=> <li key={img.name}>

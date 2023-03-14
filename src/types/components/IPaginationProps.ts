@@ -1,5 +1,5 @@
 export interface IPaginationProps {
-  baseURL: string;
+  baseURL: (position: number) => string ;
   nOfPages: number; 
   current: number;
 };

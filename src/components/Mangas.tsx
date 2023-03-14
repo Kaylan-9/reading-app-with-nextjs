@@ -87,7 +87,7 @@ const MangaSt= styled(motion.article)`
 export const MangasSt= styled(motion.div)`
   max-width: var(--max-width);
   width: 100%;
-  padding: 0 100px;
+  padding: 1.5em 100px;
   display: flex;
   flex-direction: column;
   align-items: center;

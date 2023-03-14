@@ -57,7 +57,6 @@ export const UserMangaListsSt= styled(Column.withComponent('div'))`
 `;
 
 export function UserMangaList({userData}: IUserMangaListProps) {
-  const router = useRouter();
   return (<UserMangaListSt>
     <ProfilePic imgurl={userData.image ?? ''} width='6em' min_height='6em'/>
     <ul>
@@ -77,7 +76,6 @@ export function UserMangaList({userData}: IUserMangaListProps) {
 
 
 export default function UserMangaLists({data}: IUserMangaListsProps) {
-  const router = useRouter();
   return (<UserMangaListsSt>
     <h2 className='title'>Autores de Mangás</h2>
     <ul>

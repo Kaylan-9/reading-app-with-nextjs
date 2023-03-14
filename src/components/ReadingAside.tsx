@@ -57,7 +57,7 @@ export default function ReadingAside({categories, doNotShow}: IReadingAside) {
             return acc;
           }, 0);
           return show!==0 ? (<Option key={(name+id)} name={name} onClick={() => {
-            router.push(`/page/category/${id}/0`);
+            router.push(`/page/0/${id}`);
           }}/>) : null;
         })}
       </Column>

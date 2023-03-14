@@ -6,8 +6,7 @@ import Pagination from "@/components/Pagination";
 import { IPaginationPageProps } from "@/types/pages/IPaginationPageProps";
 import ReadingAside from "@/components/ReadingAside";
 import { getAllCategory } from "@/lib/db/categories";
-import { ICategory } from "@/types/data/Category";
-
+import { NavMain } from "@/styles/NavMain";
 
 export async function getStaticPaths() {
   const nOfPages = await countPages();
@@ -45,13 +44,14 @@ export async function getStaticProps(context: any) {
 export default function Index({currentPage, nOfPages, books, categories}: IPaginationPageProps) {
   return (<>
     <Head>
-      <title>Reading App</title>
+      <title>🐲 Todos Mangás</title>
     </Head>
-    <ReadingAside categories={categories}/>
-    <Header>
-      <Pagination baseURL={`/page`} current={currentPage} nOfPages={nOfPages}/>
-    </Header>
+    <NavMain>
+      <Header/>  
+      <ReadingAside categories={categories}/>
+    </NavMain>
     <main>
+      <Pagination baseURL={(position)=> `/page/${position}`} current={currentPage} nOfPages={nOfPages}/>
       <Mangas title='Mangás' books={books}/>
     </main>
   </>)

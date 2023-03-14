@@ -52,7 +52,6 @@ export async function getAllBooksByCategory(n: number, idCategory: number) {
     orderBy: {id: 'asc'},
     take: 10,
     skip: n*10,
-    cursor: {id: n},
   }) : prisma.book.findMany({
     where: {
       idCategory: idCategory
@@ -64,7 +63,7 @@ export async function getAllBooksByCategory(n: number, idCategory: number) {
     },
     orderBy: {id: 'asc'}
   });
-  console.log(data);
+  console.log(data)
   return data;
 }
 

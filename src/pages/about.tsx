@@ -1,6 +1,8 @@
 import CookiePolicy from '@/components/CookiePolicy';
 import Header from '@/components/Header';
 import { StOption, StReadingAside } from '@/components/ReadingAside';
+import Column from '@/styles/Column';
+import { NavMain } from '@/styles/NavMain';
 import { css } from '@emotion/css';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
@@ -11,10 +13,10 @@ import { BsGithub } from 'react-icons/bs';
 export const StPresentation = styled(motion.div)`
   max-width: 700px;
   margin: 0 auto;
+  padding: 1.5em;
   > h2 {
     font-family: var(--font-one);
     text-align: center;
-    margin-bottom: 1em;
   }
   > p {
     font-family: var(--font-one);
@@ -48,7 +50,7 @@ export const StAside= styled(StReadingAside)`
         font-weight: bold;
         background-color: transparent;
         border: none;
-        color: white;
+        color: var(--secondary-foreground);
       }
     }
   }
@@ -67,15 +69,17 @@ export interface IAside {
 
 export function Aside({ list, setSection, _section }: IAside) {
   return (<StAside>
-    <nav><ul>{list.map((name, i) => 
-      <StOption key={name+i}>
-        <button className={_section===i ? css`
-        color: var(--secondary-foreground) !important;
-      ` : ``} key={name+i} onClick={()=> setSection(i)}>
-          {name}
-        </button>       
-      </StOption>
-    )}</ul></nav>
+    <nav>
+      <Column>{list.map((name, i) => 
+        <StOption key={name+i}>
+          <button className={_section===i ? css`
+            color: white !important;
+        ` : ``} key={name+i} onClick={()=> setSection(i)}>
+            {name}
+          </button>       
+        </StOption>
+      )}</Column>
+    </nav>
   </StAside>);
 }
 
@@ -108,15 +112,18 @@ export default function About() {
   const [_section, setSection]= useState(0);
   return (<>
     <Head><title>information</title></Head>
-    <Header/>
-    <Aside list={['sobre', 'cookie policy']} setSection={setSection} _section={_section}/>
+    <NavMain>
+      <Header/>
+      <Aside list={['sobre', 'cookie policy']} setSection={setSection} _section={_section}/>
+    </NavMain>
     <main id={`page-main`}>
       {_section===1 && <CookiePolicy variants={variants} css={css`
         max-width: 700px;
         margin: 0 auto;
-        padding: 0;
+        padding: 1.5em;
         > h3 {
           font-size: 30px !important;
+          margin: 3em 0;
           text-align: center;
         }
         > p {

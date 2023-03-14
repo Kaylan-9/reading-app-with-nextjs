@@ -7,7 +7,7 @@ import StPageButton from "./StPageButton";
 const StPagination = styled.nav`
   width: 100%;
   grid-area: pagination;
-  padding: 25px 0;
+  padding: 4.5em 0;
   & > ul {
     display: flex;
     align-items: center;
@@ -26,13 +26,13 @@ export default function Pagination({baseURL, nOfPages, current} : IPaginationPro
   const router = useRouter();
   if(nOfPages===1) {
     let linkList: string[]= [];
-    for(let i=0;i<=nOfPages;i++) linkList.push(`${baseURL}/${i}`);
+    for(let i=0;i<=nOfPages;i++) linkList.push(baseURL(i));
     return (<StPagination>
       <ul>
         {current!==0 ?
           <li>
             <StPageButton onClick={() => {
-              router.push(`${baseURL}/0`);
+              router.push(baseURL(0));
             }}>
               <IoIosArrowBack/>
               <IoIosArrowBack/>
@@ -52,7 +52,7 @@ export default function Pagination({baseURL, nOfPages, current} : IPaginationPro
         })}
         {current!==nOfPages ? <li>
           <StPageButton onClick={() => {
-            router.push(`${baseURL}/${nOfPages}`);
+            router.push(baseURL(nOfPages));
           }}>
             <IoIosArrowForward/>
             <IoIosArrowForward/>
