@@ -1,22 +1,20 @@
 import Header from '@/components/Header';
 import { useRef, useState, useContext } from 'react';
 import Head from 'next/head';
-import { IHomePageProps } from "@/types/pages/IHomePageProps";
 import { IBookUserCategories } from "@/types/data/Books";
 import { getAllCategory } from "@/lib/db/categories";
 import { ModalContext } from "@/contexts/ModalContext";
 import ReadingAside from "@/components/ReadingAside";
 import Column from "@/styles/Column";
 import styled from "@emotion/styled";
-import { getRandomUsersBooks } from '@/lib/db/users';
 import UserMangaLists from '@/components/Users';
+import useUsersPosts from '@/ultis/useUsersPosts';
+import { ICategory } from '@/types/data/Category';
 
-export const getStaticProps: any = async (ctx: any) => {
-  const users = await getRandomUsersBooks();
+export const getStaticProps: any = async () => {
   const categories = await getAllCategory();
   return {
     props: {
-      users,
       categories,
     }
   }
@@ -28,11 +26,12 @@ export const NavMain= styled(Column.withComponent('nav'))`
   padding: 0 !important;
 `;
 
-export default function Index({categories, users}: IHomePageProps) {
+export default function Index({categories}: {categories: ICategory[]}) {
   const [ searchContent,  setSearchContent ] = useState<IBookUserCategories[] | false>(false);
   const searchInput = useRef<HTMLInputElement>(null);
   const categorySearchPicker = useRef<HTMLInputElement>(null);
   const { handleModal } = useContext(ModalContext);
+  const { usersPosts } = useUsersPosts();
 
   return (<>
     <Head>
@@ -63,7 +62,7 @@ export default function Index({categories, users}: IHomePageProps) {
       <ReadingAside categories={categories}/>
     </NavMain>
     <main id={`page-main`}>
-      <UserMangaLists data={users}/>
+      <UserMangaLists data={usersPosts}/>
     </main>
   </>)
 };

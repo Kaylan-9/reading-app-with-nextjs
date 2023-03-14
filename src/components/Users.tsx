@@ -82,7 +82,7 @@ export default function UserMangaLists({data}: IUserMangaListsProps) {
     <h2 className='title'>Autores de Mangás</h2>
     <ul>
       {data.map((userData: IUserBookCategoriesPublic) => 
-        <UserMangaList userData={userData}/>
+        <UserMangaList key={userData.id+'users'} userData={userData}/>
       )}
     </ul>
   </UserMangaListsSt>)

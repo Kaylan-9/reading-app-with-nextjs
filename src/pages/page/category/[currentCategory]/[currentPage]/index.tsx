@@ -3,7 +3,7 @@ import Header from '@/components/Header';
 import Mangas from '@/components/Mangas';
 import Head from 'next/head';
 import Pagination from "@/components/Pagination";
-import { IHomePageProps } from "@/types/pages/IHomePageProps";
+import { IPaginationPageProps } from "@/types/pages/IPaginationPageProps";
 import { getAllCategory, getCategory } from "@/lib/db/categories";
 import { ICategory } from "@/types/data/Category";
 import ReadingAside from "@/components/ReadingAside";
@@ -80,7 +80,7 @@ export async function getStaticProps(context: any) {
   return redirect;
 }
 
-export default function Index({currentCategory, currentPage, nOfPages, category, categories, books}: IHomePageProps & {
+export default function Index({currentCategory, currentPage, nOfPages, category, categories, books}: IPaginationPageProps & {
   currentPage: number;
   currentCategory: number;
   category: ICategory;

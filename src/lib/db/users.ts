@@ -112,7 +112,6 @@ export async function getRandomUsersBooks() {
     }));
     if(newItem!==null) {
       data[currentUser].book= [...data[currentUser]?.book, newItem] as any;
-      console.log(newItem);
       bookIDs.push(newItem.id);
       booksCount++;
       currentUser= currentUser<data.length-1 ? currentUser+1 : 0;
