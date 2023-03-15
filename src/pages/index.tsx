@@ -1,4 +1,4 @@
-import Header from '@/components/Header';
+import Header from '../components/Header';
 import { useRef, useState, useContext } from 'react';
 import Head from 'next/head';
 import { IBookUserCategories } from "@/types/data/Books";
@@ -6,9 +6,10 @@ import { getAllCategory } from "@/lib/db/categories";
 import { ModalContext } from "@/contexts/ModalContext";
 import ReadingAside from "@/components/ReadingAside";
 import UserMangaLists from '@/components/Users';
-import useUsersPosts from '@/ultis/useUsersPosts';
+import useMangas from '@/ultis/useMangas';
 import { ICategory } from '@/types/data/Category';
 import { NavMain } from '@/styles/NavMain';
+import Mangas from '@/components/Mangas';
 
 export const getStaticProps: any = async () => {
   const categories = await getAllCategory();
@@ -24,7 +25,7 @@ export default function Index({categories}: {categories: ICategory[]}) {
   const searchInput = useRef<HTMLInputElement>(null);
   const categorySearchPicker = useRef<HTMLInputElement>(null);
   const { handleModal } = useContext(ModalContext);
-  const { usersPosts } = useUsersPosts();
+  const { mangas } = useMangas();
 
   return (<>
     <Head>
@@ -55,7 +56,7 @@ export default function Index({categories}: {categories: ICategory[]}) {
       <ReadingAside categories={categories}/>
     </NavMain>
     <main id={`page-main`}>
-      <UserMangaLists data={usersPosts}/>
+      <Mangas title='Mangás' books={mangas}/>
     </main>
   </>)
 };

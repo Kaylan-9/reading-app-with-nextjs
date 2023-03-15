@@ -1,4 +1,4 @@
-import { IBookCreateInputDB, IBookUser, IBookUserCategories } from "@/types/data/Books";
+import { IBookCreateInputDB, IBookUserCategories } from "@/types/data/Books";
 import { ImagesCreateManyBookInput } from "@/types/data/Images";
 import prisma from "./prisma";
 
@@ -92,7 +92,7 @@ export async function getRandomBooks() {
           data.push(newData as IBookUserCategories)
           randomIDs.push(randomID);
         } else {
-          ignoreIDs.push(randomID)
+          ignoreIDs.push(randomID);
           nBooks++;
         }
       }
@@ -104,6 +104,44 @@ export async function getRandomBooks() {
       user: true 
     }
   }) as IBookUserCategories[];
+  return data;
+}
+
+export async function getRandomBook(iDsIgnore: number[]) {
+  const attempsLimit= 6;
+  let iDs= (await Promise.all(await prisma.book.findMany({
+    select: { id: true},
+    take: 45
+  })))?.map(book=> book.id);
+  
+  iDs= iDs.filter((id: number)=> 
+    !iDsIgnore.some((iDIgnore: number)=> id===iDIgnore)
+  );
+
+  let attemps= 0;
+  let ignoreIDs: number[] = [];
+  let data: IBookUserCategories | null = null;
+
+  while(data===null && attemps<attempsLimit) {
+    const randomID= Math.round(Math.random()*iDs.length);
+    if(!iDsIgnore.some((id: number)=> iDs[randomID]===id) && iDs.some((id: number)=> iDs[randomID]===id)) {
+      const newData = await prisma.book.findFirst({
+        where: {
+          id: iDs[randomID]
+        },
+        include: {
+          imagepaths: true,
+          categorie: true,
+          user: true
+        },
+      });
+
+      if(newData!==null) data= newData as IBookUserCategories
+      else ignoreIDs.push(randomID);
+      attemps++;
+    }
+  }
+
   return data;
 }
 
