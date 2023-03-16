@@ -7,6 +7,7 @@ import { IPaginationPageProps } from "@/types/pages/IPaginationPageProps";
 import ReadingAside from "@/components/ReadingAside";
 import { getAllCategory } from "@/lib/db/categories";
 import { NavMain } from "@/styles/NavMain";
+import AdsByGoogle from "@/components/AdsByGoogle";
 
 export async function getStaticPaths() {
   const nOfPages = await countPages();

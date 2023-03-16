@@ -9,6 +9,7 @@ import { ICategory } from "@/types/data/Category";
 import ReadingAside from "@/components/ReadingAside";
 import { NavMain } from "@/styles/NavMain";
 import { useEffect } from "react";
+import AdsByGoogle from "@/components/AdsByGoogle";
 
 async function getPaths() {
   type TPath = {
