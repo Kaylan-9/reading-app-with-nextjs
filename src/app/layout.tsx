@@ -10,6 +10,7 @@ export default function RootLayout({children}: IRootLayout) {
     <html lang="en">
       <head/>
       <body>{children}</body>
+      <script>(adsbygoogle= window.adsbygoogle || []).push({});</script>
     </html>
   )
 }

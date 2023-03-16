@@ -2,13 +2,11 @@ import Footer from '@/components/Footer';
 import CookiePolicyProvider from '@/contexts/CookiePolicyContext';
 import MangaViewerProvider from '@/contexts/MangaViewerContext';
 import ModalProvider from '@/contexts/ModalContext';
-import { TModal } from '@/types/contexts/ModalContext/TModal';
 import { IMyAppProps } from '@/types/pages/IMyAppProps';
-import requestParameters from '@/ultis/requestParameters';
-import { css } from '@emotion/css';
 import styled from '@emotion/styled';
 import { GetServerSideProps } from 'next';
 import { getCsrfToken, getProviders, SessionProvider } from 'next-auth/react';
+import Script from 'next/script';
 import { useCallback, useState, useEffect, useContext } from 'react';
 import { IoIosArrowUp } from 'react-icons/io';
 import '../app/globals.css';
@@ -55,15 +53,25 @@ export default function MyApp({ Component, pageProps: {session, ...pageProps}}: 
     document.body.addEventListener('wheel', handleScroll);
   }, [screenHeight, setScreenHeight]);
 
-  return (<CookiePolicyProvider>
-    <ModalProvider>
-      <SessionProvider session={session}>
-        <MangaViewerProvider>
-          <Component {...pageProps}/>
-          <Footer/>
-        </MangaViewerProvider>
-      </SessionProvider>
-      {enoughPosition ? <ButtonBackToTop/> : null}
-    </ModalProvider>
-  </CookiePolicyProvider>);
+  return (<>
+    <Script async
+      crossOrigin={`anonymous`}
+      id={`Adsense-id`}
+      data-ad-client={`ca-pub-8472335099605606`}
+      strategy={`afterInteractive`}
+      src={'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'}
+    />
+
+    <CookiePolicyProvider>
+      <ModalProvider>
+        <SessionProvider session={session}>
+          <MangaViewerProvider>
+            <Component {...pageProps}/>
+            <Footer/>
+          </MangaViewerProvider>
+        </SessionProvider>
+        {enoughPosition ? <ButtonBackToTop/> : null}
+      </ModalProvider>
+    </CookiePolicyProvider>
+  </>);
 }

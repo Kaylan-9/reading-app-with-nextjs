@@ -10,6 +10,7 @@ import useMangas from '@/ultis/useMangas';
 import { ICategory } from '@/types/data/Category';
 import { NavMain } from '@/styles/NavMain';
 import Mangas from '@/components/Mangas';
+import AdsByGoogle from '@/components/AdsByGoogle';
 
 export const getStaticProps: any = async () => {
   const categories = await getAllCategory();
@@ -56,6 +57,7 @@ export default function Index({categories}: {categories: ICategory[]}) {
       <ReadingAside categories={categories}/>
     </NavMain>
     <main id={`page-main`}>
+      <AdsByGoogle/>
       <Mangas title='Mangás' books={mangas}/>
     </main>
   </>)

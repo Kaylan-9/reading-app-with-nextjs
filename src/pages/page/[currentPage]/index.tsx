@@ -52,6 +52,7 @@ export default function Index({currentPage, nOfPages, books, categories}: IPagin
     </NavMain>
     <main>
       <Pagination baseURL={(position)=> `/page/${position}`} current={currentPage} nOfPages={nOfPages}/>
+      <AdsByGoogle/>
       <Mangas title='Mangás' books={books}/>
     </main>
   </>)

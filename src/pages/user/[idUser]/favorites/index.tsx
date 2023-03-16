@@ -11,6 +11,7 @@ import { IUserPageProps } from '@/types/pages/user/IUserPageProps';
 import UserProfile from '@/components/UserProfile';
 import { css } from '@emotion/css';
 import { NavMain } from '@/styles/NavMain';
+import AdsByGoogle from '@/components/AdsByGoogle';
 
 export const  getServerSideProps: GetServerSideProps = async ({req, res, query}) => {
   let { idUser } = query;  
@@ -46,6 +47,7 @@ export default function User({userData}: IUserPageProps & {userData: any}) {
       <Header/>
     </NavMain>
     <main>
+      <AdsByGoogle/>
       <UserProfile 
         userData={userData}
         selection={{

@@ -98,6 +98,7 @@ export default function Index({currentCategory, currentPage, nOfPages, category,
     
     <main>
       <Pagination baseURL={(position) => `/page/${position}/${currentCategory}`} current={currentPage} nOfPages={nOfPages}/>
+      <AdsByGoogle/>
       <Mangas title={`Mangás de ${category?.name}`} books={books}/>
     </main>
   </>)
