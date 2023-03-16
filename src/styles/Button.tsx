@@ -1,16 +1,7 @@
 import styled from "@emotion/styled";
+import { motion } from "framer-motion";
 
-const Button = styled.input<{area?: string}>`
-  cursor: pointer;
-  padding: 8px 16px;
-  border-radius: 30px;
-  border: none;
-  background-color: var(--tertiary-background);
-  color: white;
-  font-weight: bold;
-  font-family: var(--font-one);
-  font-size: 15px;
+export default styled(motion.input)<{area?: string}>`
   grid-area: ${({area}) => area};
 `;
 
-export default Button;

@@ -6,8 +6,8 @@ import { motion } from 'framer-motion';
 import React, { useContext } from 'react';
 
 const Styled= styled(motion.div)`
-  max-width: 40em;
   display: flex;
+  align-items: flex-start;
   flex-flow: column wrap;
   gap: 1em;
   padding: 2em 0;

@@ -17,7 +17,7 @@ const initialValueModalReducer: IModalReducerState = {
 export function modalReducer(state: IModalReducerState, action: IModalReducerAction): IModalReducerState {
   const { type } = action;
   const { modals } = state;
-  console.log(type);
+
   if(type==='reset')
     return initialValueModalReducer;
   else if(type==='add') {

@@ -91,6 +91,18 @@ input {
   font-size: 15px;
 }
 
+button {
+  cursor: pointer;
+  border-radius: 30px;
+  border: none;
+  padding: .75em;
+  color: white;
+  font-weight: bold;
+  font-family: var(--font-one);
+  font-size: 16px;
+  background-color: var(--quartiary-background);
+}
+
 .github-profile {
   display: flex;
   align-items: center;
