@@ -14,7 +14,6 @@ import { morePopular as _morePopular } from '@/lib/db/books';
 export const getStaticProps: any = async () => {
   const categories= await getAllCategory();
   const morePopular= await _morePopular();
-  console.log(morePopular)
   return {
     props: {
       categories,

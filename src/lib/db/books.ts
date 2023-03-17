@@ -151,18 +151,12 @@ export const morePopular= async () => {
     include: {
       imagepaths: true,
       categorie: true,
-      favorites: {
-        include: {
-          user: {
-            include: {
-              _count: true 
-            }
-          }
-        }
-      }        
+      favorites: true
     },
     orderBy: {
-
+      favorites: { 
+        _count: 'desc'
+      }        
     },
     take: 10
   });
