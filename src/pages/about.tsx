@@ -1,4 +1,3 @@
-import AdsByGoogle from '@/components/AdsByGoogle';
 import CookiePolicy from '@/components/CookiePolicy';
 import Header from '@/components/Header';
 import { StOption, StReadingAside } from '@/components/ReadingAside';
@@ -118,8 +117,6 @@ export default function About() {
       <Aside list={['sobre', 'cookie policy']} setSection={setSection} _section={_section}/>
     </NavMain>
     <main id={`page-main`}>
-      <AdsByGoogle/>
-
       {_section===1 && <CookiePolicy variants={variants} css={css`
         max-width: 700px;
         margin: 0 auto;

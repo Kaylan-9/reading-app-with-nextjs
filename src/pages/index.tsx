@@ -5,23 +5,25 @@ import { IBookUserCategories } from "@/types/data/Books";
 import { getAllCategory } from "@/lib/db/categories";
 import { ModalContext } from "@/contexts/ModalContext";
 import ReadingAside from "@/components/ReadingAside";
-import UserMangaLists from '@/components/Users';
 import useMangas from '@/ultis/useMangas';
 import { ICategory } from '@/types/data/Category';
 import { NavMain } from '@/styles/NavMain';
 import Mangas from '@/components/Mangas';
-import AdsByGoogle from '@/components/AdsByGoogle';
+import { morePopular as _morePopular } from '@/lib/db/books';
 
 export const getStaticProps: any = async () => {
-  const categories = await getAllCategory();
+  const categories= await getAllCategory();
+  const morePopular= await _morePopular();
+  console.log(morePopular)
   return {
     props: {
       categories,
+      morePopular
     }
   }
 };
 
-export default function Index({categories}: {categories: ICategory[]}) {
+export default function Index({categories, morePopular}: {morePopular: IBookUserCategories[], categories: ICategory[]}) {
   const [ searchContent,  setSearchContent ] = useState<IBookUserCategories[] | false>(false);
   const searchInput = useRef<HTMLInputElement>(null);
   const categorySearchPicker = useRef<HTMLInputElement>(null);
@@ -57,7 +59,7 @@ export default function Index({categories}: {categories: ICategory[]}) {
       <ReadingAside categories={categories}/>
     </NavMain>
     <main id={`page-main`}>
-      <AdsByGoogle/>
+      <Mangas title='Mais populares' books={morePopular}/>
       <Mangas title='Mangás' books={mangas}/>
     </main>
   </>)

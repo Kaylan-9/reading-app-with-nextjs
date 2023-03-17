@@ -1,5 +1,6 @@
 import { IBookCreateInputDB, IBookUserCategories } from "@/types/data/Books";
 import { ImagesCreateManyBookInput } from "@/types/data/Images";
+import { NextRequest, NextResponse } from "next/server";
 import prisma from "./prisma";
 
 export async function deleteBook(id: number) {
@@ -142,6 +143,29 @@ export async function getRandomBook(iDsIgnore: number[]) {
     }
   }
 
+  return data;
+}
+
+export const morePopular= async () => {
+  const data= await prisma.book.findMany({
+    include: {
+      imagepaths: true,
+      categorie: true,
+      favorites: {
+        include: {
+          user: {
+            include: {
+              _count: true 
+            }
+          }
+        }
+      }        
+    },
+    orderBy: {
+
+    },
+    take: 10
+  });
   return data;
 }
 

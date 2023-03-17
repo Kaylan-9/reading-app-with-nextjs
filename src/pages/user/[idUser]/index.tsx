@@ -11,7 +11,6 @@ import { useContext, useEffect, useState } from 'react';
 import { IUserPageProps } from '@/types/pages/user/IUserPageProps';
 import UserProfile from '@/components/UserProfile';
 import { NavMain } from '@/styles/NavMain';
-import AdsByGoogle from '@/components/AdsByGoogle';
 
 export const getServerSideProps: GetServerSideProps = async ({req, res, query}) => {
   let { idUser } = query;  
@@ -45,7 +44,6 @@ export default function User({userData}: IUserPageProps) {
       <Header/>
     </NavMain>
     <main>
-      <AdsByGoogle/>
       <UserProfile 
         userData={userData}
         selection={{

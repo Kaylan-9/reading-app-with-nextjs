@@ -8,8 +8,6 @@ import { getAllCategory, getCategory } from "@/lib/db/categories";
 import { ICategory } from "@/types/data/Category";
 import ReadingAside from "@/components/ReadingAside";
 import { NavMain } from "@/styles/NavMain";
-import { useEffect } from "react";
-import AdsByGoogle from "@/components/AdsByGoogle";
 
 async function getPaths() {
   type TPath = {
@@ -99,7 +97,6 @@ export default function Index({currentCategory, currentPage, nOfPages, category,
     
     <main>
       <Pagination baseURL={(position) => `/page/${position}/${currentCategory}`} current={currentPage} nOfPages={nOfPages}/>
-      <AdsByGoogle/>
       <Mangas title={`Mangás de ${category?.name}`} books={books}/>
     </main>
   </>)

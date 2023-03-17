@@ -47,7 +47,6 @@ export default function User({userData}: IUserPageProps & {userData: any}) {
       <Header/>
     </NavMain>
     <main>
-      <AdsByGoogle/>
       <UserProfile 
         userData={userData}
         selection={{
