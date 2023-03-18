@@ -13,8 +13,8 @@ export default async function(
 ) {
   if (req.method === 'POST') {
     try {
-      const { bookID, customerID } = req.body;
-      const data= await isFavorite(customerID, bookID);
+      const { bookID, userID } = req.body;
+      const data= await isFavorite(userID, bookID);
       return res.status(200).json({data, message: 'Success'})
     } catch(error) {
       console.log(error);

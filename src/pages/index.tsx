@@ -59,7 +59,7 @@ export default function Index({categories, morePopular}: {morePopular: IBookUser
     </NavMain>
     <main id={`page-main`}>
       <Mangas title='Mais populares' books={morePopular}/>
-      <Mangas title='Mangás' books={mangas}/>
+      <Mangas title='Outros' books={mangas}/>
     </main>
   </>)
 };

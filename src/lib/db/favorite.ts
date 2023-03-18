@@ -8,8 +8,11 @@ export async function isFavorite(userId: string, bookId: number): Promise<{
     bookId
   }
   const data = await prisma?.favorite.findFirst({where});
+  console.log(data);
+  console.log(userId);
+  
   return {
-    marked: ((data ?? false)!==false)
+    marked: (data?.userId ?? false)===userId
   };
 }
 

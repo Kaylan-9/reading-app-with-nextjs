@@ -151,7 +151,7 @@ export const morePopular= async () => {
     include: {
       imagepaths: true,
       categorie: true,
-      favorites: true
+      user: true
     },
     orderBy: {
       favorites: { 

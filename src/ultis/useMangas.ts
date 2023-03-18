@@ -4,7 +4,7 @@ import { useEffect, useState, useCallback } from 'react';
 import requestParameters from './requestParameters';
 
 export default function useMangas() {
-  const mangaLimit= 10;
+  const mangaLimit= 5;
   const [mangas, setMangas]= useState<IBookUserCategories[]>([]);
   const [pullContent, setPullContent]= useState(true);
   const [iDsMangas, setIDsMangas]= useState<number[]>([]);

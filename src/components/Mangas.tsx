@@ -23,12 +23,13 @@ const MangaSt= styled(motion.article)`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  row-gap: 10px;
+  row-gap: 5px;
   max-width: 200px;
   min-width: 192px;
   > .title {
-    font-size: 18px !important;
+    font-size: 16px !important;
     font-family: var(--font-one);
+    margin: 0 !important;
   }
   > .img-list {
     cursor: pointer;
@@ -87,7 +88,7 @@ const MangaSt= styled(motion.article)`
 export const MangasSt= styled(motion.div)`
   max-width: var(--max-width);
   width: 100%;
-  padding: 1.5em 100px;
+  padding: 0 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -96,7 +97,7 @@ export const MangasSt= styled(motion.div)`
     padding: 0px;
   }
   > h2 {
-    margin-bottom: 100px;
+    margin-bottom: 75px;
     text-align: center;
     background: white;
     font-weight: bold;
@@ -119,8 +120,8 @@ export const MangasSt= styled(motion.div)`
     margin: 5em 0;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    row-gap: 65px;
-    column-gap: 50px;
+    row-gap: 35px;
+    column-gap: 45px;
     width: 100%;
     padding: 0 50px;
     > li {
@@ -133,11 +134,7 @@ export const MangasSt= styled(motion.div)`
 export function Manga({id, title, images, children} : IManga) {
   const { handleMangaViewer } = useContext(MangaViewerContext);
   return <li>
-    <MangaSt
-      initial={{ opacity: 0.1 }}
-      transition={{delay: .25}}
-      whileInView={{ opacity: 1 }}
-    >
+    <MangaSt>
       <h3 className="title">{title}</h3>
       <ul className="options">{children}</ul>
       <ul className="img-list" onClick={() => handleMangaViewer({type: 'id', id})}>
