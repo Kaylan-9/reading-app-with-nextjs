@@ -5,7 +5,7 @@ import { FcGoogle } from 'react-icons/fc';
 import { signIn } from "next-auth/react";
 import { ModalContext } from "@/contexts/ModalContext";
 import requestParameters from "@/ultis/requestParameters";
-import useProviders from "@/ultis/useProviders";
+import useProviders from "@/hooks/useProviders";
 
 const LoginSt = styled.div`
   width: 100vw;

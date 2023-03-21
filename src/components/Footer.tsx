@@ -3,18 +3,17 @@ import { BsGithub } from "react-icons/bs";
 import { BiInfoCircle } from 'react-icons/bi';
 import { NavItem } from "./NavItem";
 import { css } from "@emotion/css";
+import { motion, useTransform, useViewportScroll } from "framer-motion";
 
-export const StFooter = styled.footer`
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: center;
+export const StFooter = styled(motion.footer)`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 2em;
   box-sizing: border-box;
-  border: 1px var(--border-color) solid;
-  border-radius: 1em;
-  background-color: var(--quartiary-background);
-  margin: 20em 1.5em 1.5em 1.5em;
-  padding: 2em;
+  border-radius: 2em 2em 0 0;
+  background-color: rgb(var(--background));
+  margin-top: 20em;
+  padding: .5em;
   grid-area: page-footer;
   > div {
     max-width: 500px;
@@ -25,7 +24,6 @@ export const StFooter = styled.footer`
     > h3 {
       font-size: 1.25em !important;
       text-align: center;
-      text-decoration: underline;
       color: var(--secondary-foreground);
     }
     > ul {
@@ -43,7 +41,12 @@ export const StFooter = styled.footer`
 `;
 
 export default function Footer() {
-  return (<StFooter className={`page-footer`}>
+  const { scrollYProgress } = useViewportScroll()
+  const scale = useTransform(scrollYProgress, [0, 1], [0, 1]);
+
+  return (<StFooter className={`page-footer`} style={{
+    scale
+  }}>
     <div>
       <h3>Links úteis</h3>
       <ul className={css`
@@ -60,9 +63,7 @@ export default function Footer() {
       <ul>
         <li>
           <a className={`github-profile`} target={`_blank`} href={`https://github.com/Kaylan-9`}>
-            <span>
-              <strong>Kaylan</strong>
-            </span>
+            <span><strong>Kaylan</strong></span>
             <BsGithub/>
           </a>
         </li>

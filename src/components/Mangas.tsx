@@ -86,18 +86,19 @@ const MangaSt= styled(motion.article)`
 `;
 
 export const MangasSt= styled(motion.div)`
-  max-width: var(--max-width);
   width: 100%;
-  padding: 0 100px;
+  padding: 1.5em 1em;
+  padding-top: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 0 auto;
+  background-color: rgb(var(--background));
+  border-radius: 1em;
   @media(max-width:700px) {
     padding: 0px;
   }
   > h2 {
-    margin-bottom: 75px;
+    margin: 2em 0;
     text-align: center;
     background: white;
     font-weight: bold;
@@ -119,7 +120,7 @@ export const MangasSt= styled(motion.div)`
   > ul {
     margin: 5em 0;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     row-gap: 35px;
     column-gap: 45px;
     width: 100%;

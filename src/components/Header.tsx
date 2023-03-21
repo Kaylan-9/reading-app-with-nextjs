@@ -4,28 +4,34 @@ import styled from "@emotion/styled";
 import Login from "./Login";
 import texture from '../../public/escamas.jpg';
 import ProfileAccess from "./ProfileAccess";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { IHeaderProps } from "@/types/components/IHeaderProps";
 import { NavItem, NavItemLi } from "./NavItem";
 import { CookiePolicyContext } from "@/contexts/CookiePolicyContext";
-import { BiInfoCircle } from "react-icons/bi";
 import Image from "next/image";
 import Column from "@/styles/Column";
+import { css } from "@emotion/css";
+import { HiLockClosed } from "react-icons/hi";
 
 const Items = styled(Column)`
+  flex-direction: row !important;
+  align-items: center;
+  justify-content: center;
   grid-area: headeritems;
-  background-color: var(--quartiary-background);
-  border: 1px var(--border-color) solid;
-  border-radius: 1em;
-  width: 18rem;
+  column-gap: 1.5em;
+  padding: 0!important;
 `;
 
 const StHeader = styled(Column.withComponent('header'))`
+  flex-direction: row !important;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
   margin: 0!important;
-  padding: 0!important;
-  row-gap: .75em !important;
+  padding: 1em 1em !important;
+  margin-bottom: 2em !important;
+  column-gap: 1.5em !important;
+  grid-area: page-header;
+  background-color: rgb(var(--background));
   > .search {
     display: flex;
     justify-content: center;
@@ -80,7 +86,7 @@ export default function Header({children}: IHeaderProps) {
     {(activeLogin ? (<Login setActiveLogin={setActiveLogin}/>) : null)}
     <StHeader id={`page-header`}>
       <Link className='logotipo' href={`/`}>
-        <Image style={{clipPath: `url(#svgMask)`}} id={`logo`} alt={`logo do site`} src={texture} width={60} height={60}/>
+        <Image style={{clipPath: `url(#svgMask)`}} id={`logo`} alt={`logo do site`} src={texture} width={45} height={45}/>
         <svg className="mask">
           <clipPath id="svgMask" clipPathUnits="objectBoundingBox">
             <path
@@ -91,15 +97,22 @@ export default function Header({children}: IHeaderProps) {
         </svg>
       </Link>
 
-      {(agreement && status==='authenticated' ? 
-        (<ProfileAccess imgurl={session.user?.image ?? ''}/>) : 
-        (<NavItem name='login' onClick={() => setActiveLogin(true)}/>)
-      )}
-
       <Items>
+        {(agreement && status==='authenticated' ? 
+          (<ProfileAccess imgurl={session.user?.image ?? ''}/>) : 
+          (<NavItemLi name='login' onClick={() => setActiveLogin(true)}/>)
+        )}
         <NavItemLi name='home' href=""/>
-        <NavItemLi name='about' icon={<BiInfoCircle/>} href="about"/>
       </Items>
+      {status==='authenticated' ? 
+        (<NavItem 
+          name='log out' 
+          onClick={signOut} 
+          icon={<HiLockClosed/>} 
+          css={css`color: #ff7a7a !important;`}
+        />) :
+        null
+      }
       {children}
     </StHeader>
   </>);

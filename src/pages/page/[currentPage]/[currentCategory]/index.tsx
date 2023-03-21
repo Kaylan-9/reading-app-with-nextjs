@@ -7,7 +7,7 @@ import { IPaginationPageProps } from "@/types/pages/IPaginationPageProps";
 import { getAllCategory, getCategory } from "@/lib/db/categories";
 import { ICategory } from "@/types/data/Category";
 import ReadingAside from "@/components/ReadingAside";
-import { NavMain } from "@/styles/NavMain";
+import Main from "@/components/Main";
 
 async function getPaths() {
   type TPath = {
@@ -87,17 +87,13 @@ export default function Index({currentCategory, currentPage, nOfPages, category,
   category: ICategory;
   categories: ICategory[];
 }) {
-
   return (<>
-    <Head><title>🐲 Categoria de Mangá: {category?.name} </title></Head>
-    <NavMain>
-      <Header/>
-      <ReadingAside categories={categories} doNotShow={[category?.name ?? '']}/>
-    </NavMain>
-    
-    <main>
+    <Head><title>🐲 Categoria de Mangá: {category?.name}</title></Head>
+    <Header/>
+    <ReadingAside categories={categories} doNotShow={[category?.name ?? '']}/>
+    <Main>
       <Pagination baseURL={(position) => `/page/${position}/${currentCategory}`} current={currentPage} nOfPages={nOfPages}/>
       <Mangas title={`Mangás de ${category?.name}`} books={books}/>
-    </main>
+    </Main>
   </>)
 };

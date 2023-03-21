@@ -18,11 +18,14 @@ export interface IOption {
 };
 
 export const StReadingAside= styled(motion.aside)`
+  grid-area: page-reading-aside;
   > nav {
-    background-color: var(--quartiary-background);
-    border: 1px var(--border-color) solid;
+    background-color: rgb(var(--background));
     border-radius: 1em;
+    padding: 1em;
+    width: 15em;
   }
+  margin-right: 1em;
 `;
 
 export const StOption= styled(motion.li)<{color?: string}>`

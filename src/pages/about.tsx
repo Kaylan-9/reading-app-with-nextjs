@@ -1,8 +1,8 @@
 import CookiePolicy from '@/components/CookiePolicy';
 import Header from '@/components/Header';
+import Main from '@/components/Main';
 import { StOption, StReadingAside } from '@/components/ReadingAside';
 import Column from '@/styles/Column';
-import { NavMain } from '@/styles/NavMain';
 import { css } from '@emotion/css';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
@@ -112,11 +112,9 @@ export default function About() {
   const [_section, setSection]= useState(0);
   return (<>
     <Head><title>information</title></Head>
-    <NavMain>
-      <Header/>
-      <Aside list={['sobre', 'cookie policy']} setSection={setSection} _section={_section}/>
-    </NavMain>
-    <main id={`page-main`}>
+    <Header/>
+    <Aside list={['sobre', 'cookie policy']} setSection={setSection} _section={_section}/>
+    <Main>
       {_section===1 && <CookiePolicy variants={variants} css={css`
         max-width: 700px;
         margin: 0 auto;
@@ -136,7 +134,7 @@ export default function About() {
         }
       `}/>}
       {_section===0 && <Presentation/>}
-    </main>
+    </Main>
   </>);
 };
 

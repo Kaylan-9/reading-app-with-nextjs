@@ -108,20 +108,20 @@ export async function getRandomBooks() {
   return data;
 }
 
-export async function getRandomBook(iDsIgnore: number[]) {
+export const getRandomBook= async (iDsIgnore: number[]) => {
   const attempsLimit= 6;
   let iDs= (await Promise.all(await prisma.book.findMany({
     select: { id: true},
     take: 45
   })))?.map(book=> book.id);
+  console.log('teste');
   
   iDs= iDs.filter((id: number)=> 
     !iDsIgnore.some((iDIgnore: number)=> id===iDIgnore)
   );
 
   let attemps= 0;
-  let ignoreIDs: number[] = [];
-  let data: IBookUserCategories | null = null;
+  let data: null | IBookUserCategories= null;
 
   while(data===null && attemps<attempsLimit) {
     const randomID= Math.round(Math.random()*iDs.length);
@@ -138,10 +138,12 @@ export async function getRandomBook(iDsIgnore: number[]) {
       });
 
       if(newData!==null) data= newData as IBookUserCategories
-      else ignoreIDs.push(randomID);
-      attemps++;
+      else iDsIgnore.push(randomID);
     }
+    attemps++;
   }
+
+  console.log('teste');
 
   return data;
 }

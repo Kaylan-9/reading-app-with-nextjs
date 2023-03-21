@@ -1,20 +1,6 @@
-import { TNavItem } from "@/types/components/TNavItem";
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
-
-export const StNavItem = styled.li`  
-  > button {
-    padding: 0;
-    background-color: transparent;
-    border: none;
-    border-radius: 0;
-    width: 100%;
-    display: flex;
-    flex-flow: flex wrap;
-    justify-content: center;
-    align-items: center;
-  }
-`;
+import { ReactNode } from "react";
 
 export const StNavButton= styled.button`
   cursor: pointer;
@@ -25,21 +11,28 @@ export const StNavButton= styled.button`
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 1.5em;
-
-  padding: 1.5em;
-  background-color: var(--quartiary-background);
-  border: 1px var(--border-color) solid;
+  gap: 1em;
+  padding: 1em;
+  background-color: rgb(var(--secondary-background));
+  justify-content: center;
+  border: none;
   border-radius: 1em;
-
   > svg {
-    font-size: 1.6em; 
+    font-size: 1.2em; 
   }
 `;
 
-export function NavItem({name, href=false, icon, onClick}: TNavItem) {
+type TNavItem = {
+  name?: string,
+  icon?: ReactNode,
+  href?: string | false,
+  onClick?: () => void,
+  css?: string,
+};
+
+export function NavItem({name, href=false, icon, onClick, css}: TNavItem) {
   const router = useRouter();
-  return (router.asPath!==`/${href}` ? (<StNavButton onClick={href || onClick===undefined ? 
+  return (router.asPath!==`/${href}` ? (<StNavButton className={css} onClick={href || onClick===undefined ? 
     () => router.push(`/${href}`, undefined, { shallow: true }) :
     onClick
   }>
@@ -47,14 +40,14 @@ export function NavItem({name, href=false, icon, onClick}: TNavItem) {
   </StNavButton>) : null);
 };
 
-export function NavItemLi({name, href=false, icon, onClick}: TNavItem) {
+export function NavItemLi({name, href=false, icon, onClick, css}: TNavItem) {
   const router= useRouter();
-  return (router.asPath!==`/${href}` ? (<StNavItem>
-    <StNavButton onClick={href || onClick===undefined ? 
+  return (router.asPath!==`/${href}` ? (<li>
+    <StNavButton className={css} onClick={href || onClick===undefined ? 
       () => router.push(`/${href}`, undefined, { shallow: true }) :
       onClick
     }>
       {name} {icon}
     </StNavButton>
-  </StNavItem>) : null);
+  </li>) : null);
 };

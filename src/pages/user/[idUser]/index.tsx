@@ -10,7 +10,8 @@ import { useSession } from 'next-auth/react';
 import { useContext, useEffect, useState } from 'react';
 import { IUserPageProps } from '@/types/pages/user/IUserPageProps';
 import UserProfile from '@/components/UserProfile';
-import { NavMain } from '@/styles/NavMain';
+import Main from '@/components/Main';
+
 
 export const getServerSideProps: GetServerSideProps = async ({req, res, query}) => {
   let { idUser } = query;  
@@ -37,13 +38,9 @@ export default function User({userData}: IUserPageProps) {
 
   return (userData!==null ? (
   <>
-    <Head>
-      {<title>{userData?.name}</title>}
-    </Head>
-    <NavMain>
-      <Header/>
-    </NavMain>
-    <main>
+    <Head><title>{userData?.name}</title></Head>
+    <Header/>
+    <Main>
       <UserProfile 
         userData={userData}
         selection={{
@@ -59,7 +56,7 @@ export default function User({userData}: IUserPageProps) {
       />
       {status==='authenticated' ? [(optionPicker===2) ? <ContainerBookAdd/> : null,] : null}
       <MangaEdit books={userData.book} _delete={optionPicker===3}/>
-    </main>
+    </Main>
   </>) :
   null);
 }

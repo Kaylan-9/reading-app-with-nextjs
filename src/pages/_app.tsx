@@ -54,14 +54,7 @@ export default function MyApp({ Component, pageProps: {session, ...pageProps}}: 
   }, [screenHeight, setScreenHeight]);
 
   return (<>
-    <Script async
-      crossOrigin={`anonymous`}
-      id={`Adsense-id`}
-      data-ad-client={`ca-pub-8472335099605606`}
-      strategy={`afterInteractive`}
-      src={'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'}
-    />
-
+    <Script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8472335099605606" crossOrigin="anonymous"/>
     <CookiePolicyProvider>
       <ModalProvider>
         <SessionProvider session={session}>

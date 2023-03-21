@@ -1,8 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
 
 :root {
-  --background: 32, 32, 34;
-  --secondary-background: 22, 22, 22;
+  --background: 20, 20, 20;
+  --secondary-background: 42, 42, 44;
   --tertiary-background: #191919;
   --quartiary-background: #0f0f0f;
   --foreground: 220, 220, 220;
@@ -42,10 +42,11 @@ body > div {
   min-height: 100vh;
   width: 100%;
   display: grid;
-  grid-template-rows: auto min-content !important;
+  grid-template-rows: min-content auto min-content !important;
   grid-template-columns: auto min-content !important;
   grid-template-areas: 
-    'page-main page-nav'  
+    'page-header page-header'
+    'page-main page-reading-aside'  
     'page-footer page-footer' 
   !important;
   color: rgb(var(--foreground));
@@ -79,7 +80,7 @@ a {
 
 h2 {
   font-size: 30px !important;
-  margin: 3em 0;
+  margin: 0;
 }
 
 h3 {

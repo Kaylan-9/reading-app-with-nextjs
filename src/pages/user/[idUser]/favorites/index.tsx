@@ -9,9 +9,7 @@ import { useSession } from 'next-auth/react';
 import { useContext, useEffect, useState } from 'react';
 import { IUserPageProps } from '@/types/pages/user/IUserPageProps';
 import UserProfile from '@/components/UserProfile';
-import { css } from '@emotion/css';
-import { NavMain } from '@/styles/NavMain';
-import AdsByGoogle from '@/components/AdsByGoogle';
+import Main from '@/components/Main';
 
 export const  getServerSideProps: GetServerSideProps = async ({req, res, query}) => {
   let { idUser } = query;  
@@ -40,13 +38,9 @@ export default function User({userData}: IUserPageProps & {userData: any}) {
 
   return (userData!==null ? (
   <>
-    <Head>
-      {<title>{userData?.name}</title>}
-    </Head>
-    <NavMain>
-      <Header/>
-    </NavMain>
-    <main>
+    <Head><title>{userData?.name}</title></Head>
+    <Header/>
+    <Main>
       <UserProfile 
         userData={userData}
         selection={{
@@ -61,7 +55,7 @@ export default function User({userData}: IUserPageProps & {userData: any}) {
         ]}
       />
       <Mangas books={userData?.favorites?.map((favorite: any)=> favorite.book)}/>
-    </main>
+    </Main>
   </>) :
   null);
 }
