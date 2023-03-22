@@ -1,4 +1,5 @@
 import Footer from '@/components/Footer';
+import CategoriesProvider from '@/contexts/CategoriesContext';
 import CookiePolicyProvider from '@/contexts/CookiePolicyContext';
 import MangaViewerProvider from '@/contexts/MangaViewerContext';
 import ModalProvider from '@/contexts/ModalContext';
@@ -7,7 +8,7 @@ import styled from '@emotion/styled';
 import { GetServerSideProps } from 'next';
 import { getCsrfToken, getProviders, SessionProvider } from 'next-auth/react';
 import Script from 'next/script';
-import { useCallback, useState, useEffect, useContext } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import { IoIosArrowUp } from 'react-icons/io';
 import '../app/globals.css';
 
@@ -18,12 +19,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 }
 
 export const StButtonBackToTop = styled.button`
-  padding: 10px;
-  border-radius: 100%;
-  background-color: var(--foreground-primary);
+  padding: 1em;
+  border-radius: 1em;
+  color: rgb(var(--foreground-primary));
   position: fixed;
   border: none;
-  background-color: white;
+  background-color: #8b33ff;
   bottom: 50px;
   right: 50px;
   z-index: 1002;
@@ -58,10 +59,12 @@ export default function MyApp({ Component, pageProps: {session, ...pageProps}}: 
     <CookiePolicyProvider>
       <ModalProvider>
         <SessionProvider session={session}>
-          <MangaViewerProvider>
-            <Component {...pageProps}/>
-            <Footer/>
-          </MangaViewerProvider>
+          <CategoriesProvider>
+            <MangaViewerProvider>
+              <Component {...pageProps}/>
+              <Footer/>
+            </MangaViewerProvider>
+          </CategoriesProvider>
         </SessionProvider>
         {enoughPosition ? <ButtonBackToTop/> : null}
       </ModalProvider>

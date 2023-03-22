@@ -5,7 +5,7 @@ import { IModalReducerAction } from "@/types/contexts/ModalContext/reducers/IMod
 import { IModalReducerState } from "@/types/contexts/ModalContext/reducers/IModalReducerState";
 import { TModal } from "@/types/contexts/ModalContext/TModal";
 import { Reducer } from "@/types/contexts/Reducer";
-import { createContext, ReactNode, useEffect, useReducer, useState, useContext, useRef } from "react";
+import { createContext, ReactNode, useEffect, useReducer, useContext } from "react";
 import { GrClose } from "react-icons/gr";
 import CookiePolicy from "@/components/CookiePolicy";
 import { CookiePolicyContext } from "./CookiePolicyContext";

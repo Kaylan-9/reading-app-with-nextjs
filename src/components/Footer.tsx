@@ -1,9 +1,9 @@
 import styled from "@emotion/styled";
 import { BsGithub } from "react-icons/bs";
-import { BiInfoCircle } from 'react-icons/bi';
 import { NavItem } from "./NavItem";
 import { css } from "@emotion/css";
 import { motion, useTransform, useViewportScroll } from "framer-motion";
+import { FaInfoCircle } from "react-icons/fa";
 
 export const StFooter = styled(motion.footer)`
   display: grid;
@@ -54,7 +54,8 @@ export default function Footer() {
         flex-flow: column wrap;
         gap: 1.5em;
       `}>
-        <NavItem name={`about`} icon={<BiInfoCircle/>} href="about"/>
+        <NavItem name={`about`} icon={<FaInfoCircle/>} href="about"/>
+        
       </ul>
     </div>
 

@@ -8,6 +8,7 @@ import { ICategory } from '@/types/data/Category';
 import Mangas from '@/components/Mangas';
 import { morePopular as _morePopular } from '@/lib/db/books';
 import Main from '@/components/Main';
+import { css } from '@emotion/css';
 
 export const getStaticProps: any = async () => {
   const categories= await getAllCategory();
@@ -25,8 +26,8 @@ export default function Index({categories, morePopular}: {morePopular: IBookUser
   return (<>
     <Head><title>Reading App</title></Head>
     <Header/>
-    <ReadingAside categories={categories}/>
     <Main>
+      <ReadingAside categories={categories}/>
       <Mangas title='Mais populares' books={morePopular}/>
       <Mangas title='Outros' books={mangas}/>
     </Main>

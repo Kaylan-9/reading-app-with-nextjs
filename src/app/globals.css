@@ -2,7 +2,7 @@
 
 :root {
   --background: 20, 20, 20;
-  --secondary-background: 42, 42, 44;
+  --secondary-background: 30, 30, 30;
   --tertiary-background: #191919;
   --quartiary-background: #0f0f0f;
   --foreground: 220, 220, 220;
@@ -45,9 +45,9 @@ body > div {
   grid-template-rows: min-content auto min-content !important;
   grid-template-columns: auto min-content !important;
   grid-template-areas: 
-    'page-header page-header'
-    'page-main page-reading-aside'  
-    'page-footer page-footer' 
+    'page-header'
+    'page-main'  
+    'page-footer' 
   !important;
   color: rgb(var(--foreground));
   background-color: transparent !important;
@@ -79,13 +79,22 @@ a {
 }
 
 h2 {
-  font-size: 30px !important;
-  margin: 0;
+  font-size: 25px !important;
+  margin: 0 0 4rem 0;
+  font-family: var(--font-one);
 }
 
 h3 {
   font-size: 18px !important;
   margin-bottom: .5em;
+  font-family: var(--font-one);
+}
+
+p {
+  line-height: 1.25em;
+  font-size: 1.1em !important;
+  text-align: justify;
+  font-family: var(--font-one);
 }
 
 input {

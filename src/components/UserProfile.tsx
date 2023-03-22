@@ -8,7 +8,9 @@ const StUserProfile= styled.section`
   display: grid;
   grid-template-columns: max-content auto;
   gap: 5rem;
-  padding: 114px 150px 50px 150px;
+  padding: 1em;
+  border-radius: 1em;
+  background-color: rgb(var(--background)) !important;
   figure {
     display: flex;
     align-items: center;

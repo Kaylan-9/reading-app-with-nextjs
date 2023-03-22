@@ -12,7 +12,7 @@ import { IManga } from '@/types/components/IManga';
 export const UserProfile = styled.div`
   align-items: center;
   display: flex;
-  justify-content: space-between;
+  gap: 1em;
   min-width: 192px;
   & > label {
     color: var(--secondary-foreground);
@@ -23,9 +23,10 @@ const MangaSt= styled(motion.article)`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  row-gap: 5px;
-  max-width: 200px;
-  min-width: 192px;
+  row-gap: 1em;
+  background-color: rgb(var(--secondary-background)) !important;
+  padding: 1em 1.5em;
+  border-radius: 1em;
   > .title {
     font-size: 16px !important;
     font-family: var(--font-one);
@@ -86,19 +87,16 @@ const MangaSt= styled(motion.article)`
 `;
 
 export const MangasSt= styled(motion.div)`
-  width: 100%;
-  padding: 1.5em 1em;
-  padding-top: 0;
+  padding: 2.5em;
   display: flex;
   flex-direction: column;
   align-items: center;
   background-color: rgb(var(--background));
   border-radius: 1em;
-  @media(max-width:700px) {
-    padding: 0px;
-  }
+  width: 100%;
+  max-width: 1600px;
+  box-sizing: border-box;
   > h2 {
-    margin: 2em 0;
     text-align: center;
     background: white;
     font-weight: bold;
@@ -120,9 +118,9 @@ export const MangasSt= styled(motion.div)`
   > ul {
     margin: 5em 0;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    row-gap: 35px;
-    column-gap: 45px;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    row-gap: 3rem;
+    column-gap: 1vw;
     width: 100%;
     padding: 0 50px;
     > li {
@@ -137,7 +135,6 @@ export function Manga({id, title, images, children} : IManga) {
   return <li>
     <MangaSt>
       <h3 className="title">{title}</h3>
-      <ul className="options">{children}</ul>
       <ul className="img-list" onClick={() => handleMangaViewer({type: 'id', id})}>
         {images?.map((img, indice) => {
           if(indice<3) return <PresentationImg 
@@ -148,6 +145,7 @@ export function Manga({id, title, images, children} : IManga) {
           />
         })}
       </ul>
+      <ul className="options">{children}</ul>
     </MangaSt>
   </li>;
 }
@@ -170,9 +168,7 @@ export default function Mangas({title, books}: IMangas) {
             (<li>
               <UserProfile onClick={() => router.push(`/user/@${book.user.id}`)}>
                 <ProfilePic imgurl={book?.user?.image ?? ''} width='30px' min_height='30px'/>
-                <label>
-                  <strong>por</strong> {book?.user?.name}
-                </label>
+                <label> {book?.user?.name} </label>
               </UserProfile>
             </li>) :
             null

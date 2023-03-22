@@ -1,10 +1,11 @@
+import { CategoriesContext } from '@/contexts/CategoriesContext';
 import CategoryButton from '@/styles/CategoryButton';
-import Column from '@/styles/Column';
 import { ICategory } from '@/types/data/Category';
+import { css } from '@emotion/css';
 import styled from '@emotion/styled'
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';
-import React from 'react'
+import React, { useContext } from 'react'
 
 export interface IReadingAside {
   categories: ICategory[]
@@ -17,41 +18,47 @@ export interface IOption {
   onClick: () => void;
 };
 
-export const StReadingAside= styled(motion.aside)`
-  grid-area: page-reading-aside;
-  > nav {
-    background-color: rgb(var(--background));
-    border-radius: 1em;
-    padding: 1em;
-    width: 15em;
+export const StNav= styled(motion.nav)`
+  background-color: rgb(var(--background));
+  border-radius: 1em;
+  width: 100%;
+  max-width: 1600px;
+  padding: 2em 3em !important;
+  margin: 0 auto;
+  > h2 {
+    margin-bottom: 2em;
   }
-  margin-right: 1em;
+  > ul {
+    display: flex;
+    flex-flow: row wrap;
+    gap: 1em;
+  }
 `;
 
-export const StOption= styled(motion.li)<{color?: string}>`
-  > button {
-    padding: 0px;
-    cursor: pointer;
-    width: 100%;
-    border-radius: initial;
-    border-bottom: transparent;
-    background-color: transparent;
-    color: ${({color}) => color};
-    box-shadow: none;
-  }
+const CategoryBtn= styled(CategoryButton)<{color?: string}>`
+  color: ${({color}) => color};
+  background-color: rgb(var(--secondary-background)) !important;
+  box-shadow: none !important;
+  border-radius: 1em;
+  padding: 1em;
 `;
 
 export function Option({name, color, onClick}: IOption) {
-  return (<StOption color={color}>
-    <CategoryButton onClick={onClick}>{name}</CategoryButton>
-  </StOption>);
+  return (<li>
+    <CategoryBtn color={color} onClick={onClick}>{name}</CategoryBtn>
+  </li>);
 };
 
 export default function ReadingAside({categories, doNotShow}: IReadingAside) {
   const router= useRouter();
-  return (<StReadingAside id={`reading-aside`}>
-    <nav>
-      <Column>
+  const {view}=  useContext(CategoriesContext);
+
+  return (view ? (<aside className={css`
+    width: 100%;
+  `}>
+    <StNav>
+      <h2>Categorias</h2>
+      <ul>
         <Option color={`rgb(var(--foreground))`} name={'todos'} onClick={() => {router.push(`/page/0`);}}/>
         {categories.map(({id, name}: {id: number, name: string}) => {
           const show= doNotShow?.reduce((acc, val) => {
@@ -63,7 +70,7 @@ export default function ReadingAside({categories, doNotShow}: IReadingAside) {
             router.push(`/page/0/${id}`);
           }}/>) : null;
         })}
-      </Column>
-    </nav>
-  </StReadingAside>)
+      </ul>
+    </StNav>
+  </aside>): null);
 };

@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 
 const ProfilePic = styled.div<{width: string, min_height: string, imgurl: string}>`
-  border-radius: 1em;
+  border-radius: 35%;
   cursor: pointer;
   background-size: cover !important;
   background-repeat: no-repeat !important;

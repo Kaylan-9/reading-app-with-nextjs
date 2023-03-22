@@ -4,7 +4,7 @@ import { IModalProps } from '@/types/components/IModalProps';
 export const ModalsSt = styled.ul`
   position: fixed;
   z-index: 1001;
-  margin: 0 50px !important;
+  margin: 0 2em !important;
   bottom: 50px;
   display: flex;
   flex-direction: column;
@@ -14,7 +14,7 @@ export const ModalsSt = styled.ul`
 
 export const ModalSt = styled.div<{width?: string}>`
   align-items: center;
-  background-color: rgb(var(--background));
+  background-color: rgb(var(--secondary-background));
   box-shadow: var(--box-shadow-two);
   border-radius: 25px;
   min-width: ${({width})=> width};

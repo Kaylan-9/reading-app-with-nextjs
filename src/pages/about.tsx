@@ -1,7 +1,6 @@
 import CookiePolicy from '@/components/CookiePolicy';
 import Header from '@/components/Header';
 import Main from '@/components/Main';
-import { StOption, StReadingAside } from '@/components/ReadingAside';
 import Column from '@/styles/Column';
 import { css } from '@emotion/css';
 import styled from '@emotion/styled';
@@ -11,18 +10,15 @@ import { useState } from 'react';
 import { BsGithub } from 'react-icons/bs';
 
 export const StPresentation = styled(motion.div)`
-  max-width: 700px;
   margin: 0 auto;
-  padding: 1.5em;
+  padding: 1em;
+  background-color: rgb(var(--background));
+  border-radius: 1em;
   > h2 {
-    font-family: var(--font-one);
-    text-align: center;
+    text-align: center !important;
+    width: 100% !important;
   }
   > p {
-    font-family: var(--font-one);
-    text-align: justify;
-    font-size: 20px;
-    text-indent: 40px;
     line-height: 60px;
   }
   @media(max-width:700px) {
@@ -35,8 +31,11 @@ export const StPresentation = styled(motion.div)`
 `;
 
 
-export const StAside= styled(StReadingAside)`
+export const StAside= styled(motion.aside)`
   grid-area: page-aside;
+  background-color: rgb(var(--background));
+  border-radius: 1em;
+  width: 100%;
   nav > ul {
     display: flex;
     flex-flow: column wrap;
@@ -71,13 +70,13 @@ export function Aside({ list, setSection, _section }: IAside) {
   return (<StAside>
     <nav>
       <Column>{list.map((name, i) => 
-        <StOption key={name+i}>
+        <li key={name+i}>
           <button className={_section===i ? css`
             color: white !important;
         ` : ``} key={name+i} onClick={()=> setSection(i)}>
             {name}
           </button>       
-        </StOption>
+        </li>
       )}</Column>
     </nav>
   </StAside>);
@@ -113,21 +112,16 @@ export default function About() {
   return (<>
     <Head><title>information</title></Head>
     <Header/>
-    <Aside list={['sobre', 'cookie policy']} setSection={setSection} _section={_section}/>
     <Main>
+      <Aside list={['sobre', 'cookie policy']} setSection={setSection} _section={_section}/>
       {_section===1 && <CookiePolicy variants={variants} css={css`
-        max-width: 700px;
-        margin: 0 auto;
-        padding: 1.5em;
-        > h3 {
-          font-size: 30px !important;
-          margin: 3em 0;
-          text-align: center;
-        }
+        padding: 1em;
+        border-radius: 1em;
+        background-color: rgb(var(--background)) !important;
+        width: 1fr !important;
+        margin: 0 !important;
         > p {
-          font-family: var(--font-one);
           margin: 0 auto;
-          text-align: justify;
           font-size: 20px;
           text-indent: 40px;
           line-height: 60px;

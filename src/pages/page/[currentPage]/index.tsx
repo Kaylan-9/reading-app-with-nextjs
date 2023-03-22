@@ -45,8 +45,8 @@ export default function Index({currentPage, nOfPages, books, categories}: IPagin
   return (<>
     <Head><title>🐲 Todos Mangás</title></Head>
     <Header/>  
-    <ReadingAside categories={categories}/>
     <Main>
+      <ReadingAside categories={categories}/>
       <Pagination baseURL={(position)=> `/page/${position}`} current={currentPage} nOfPages={nOfPages}/>
       <Mangas title='Mangás' books={books}/>
     </Main>

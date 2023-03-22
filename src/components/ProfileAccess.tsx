@@ -12,7 +12,6 @@ const ProfileAccessSt = styled(StNavButton)`
   justify-content: space-between;
   align-items: center;
   padding: 0 !important;
-  padding-right: 1em !important;
 `;
 
 export default function ProfileAccess({imgurl}: IProfileAccessProps) {
@@ -21,6 +20,5 @@ export default function ProfileAccess({imgurl}: IProfileAccessProps) {
   const goToProfile = () => router.push(`/user/@${session?.user?.id ?? ''}`);
   return(<ProfileAccessSt onClick={goToProfile}>
     <ProfilePic imgurl={imgurl} width='51px' min_height='51px'/>
-    Perfil
   </ProfileAccessSt>);
 }

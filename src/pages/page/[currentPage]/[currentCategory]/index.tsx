@@ -90,8 +90,8 @@ export default function Index({currentCategory, currentPage, nOfPages, category,
   return (<>
     <Head><title>🐲 Categoria de Mangá: {category?.name}</title></Head>
     <Header/>
-    <ReadingAside categories={categories} doNotShow={[category?.name ?? '']}/>
     <Main>
+      <ReadingAside categories={categories} doNotShow={[category?.name ?? '']}/>
       <Pagination baseURL={(position) => `/page/${position}/${currentCategory}`} current={currentPage} nOfPages={nOfPages}/>
       <Mangas title={`Mangás de ${category?.name}`} books={books}/>
     </Main>

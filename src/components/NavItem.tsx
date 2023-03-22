@@ -7,13 +7,13 @@ export const StNavButton= styled.button`
   font-family: 'Roboto', sans-serif !important;
   font-weight: bold;
   font-size: 16px;
-  color: var(--foreground);
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 1em;
   padding: 1em;
-  background-color: rgb(var(--secondary-background));
+  background-color: rgb(var(--secondary-background)) !important;
+  color: var(--secondary-foreground) !important;
   justify-content: center;
   border: none;
   border-radius: 1em;

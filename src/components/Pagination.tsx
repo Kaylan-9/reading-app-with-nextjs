@@ -7,7 +7,7 @@ import StPageButton from "./StPageButton";
 const StPagination = styled.nav`
   width: 100%;
   grid-area: pagination;
-  padding: 4.5em 0;
+  padding: 1.5em 0;
   & > ul {
     display: flex;
     align-items: center;
