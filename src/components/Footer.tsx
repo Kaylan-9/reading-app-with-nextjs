@@ -15,6 +15,17 @@ export const StFooter = styled(motion.footer)`
   margin-top: 20em;
   padding: .5em;
   grid-area: page-footer;
+  @media (max-width: 700px) {
+    grid-template-columns: auto;
+    margin-top: 1em;
+    gap: 1em !important;
+    border-radius: 0;
+    > div {
+      padding: 1em !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+    }
+  }
   > div {
     max-width: 500px;
     min-width: 500px;

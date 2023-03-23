@@ -7,11 +7,14 @@ const Main= styled(Column)`
   padding: 0 2rem !important; 
   display: flex;
   flex-flow: column wrap;
-  justify-content: center;
   width: 100%;
   > * {
     width: 100%;
     max-width: 1600px;
+  }
+  @media(max-width: 700px) {
+    gap: 1em;
+    padding: 0 1rem !important; 
   }
 `;
 

@@ -20,26 +20,48 @@ export const UserProfile = styled.div`
 `;
 
 const MangaSt= styled(motion.article)`
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-areas: 
+    'manga-title'
+    'manga-img-list'
+    'manga-options'
+  ;
   align-items: flex-start;
   row-gap: 1em;
   background-color: rgb(var(--secondary-background)) !important;
   padding: 1em 1.5em;
   border-radius: 1em;
+  min-width: 240px;
+  @media (max-width: 700px) {
+    min-width: 100%;
+    padding: 0 !important;
+    background-color: transparent !important;
+    grid-template-areas: 
+      'manga-img-list manga-title'
+      'manga-img-list manga-options'
+      'manga-img-list .'
+    ;
+    grid-template-columns: auto min-content;
+    grid-template-rows: repeat(2, 20px) auto !important;
+    gap: 1em;
+    > .title {
+      font-size: 1.25em !important;
+      min-width: 100%;
+    }
+  }
   > .title {
-    font-size: 16px !important;
+    font-size: 1em;
     font-family: var(--font-one);
     margin: 0 !important;
+    grid-area: manga-title;
   }
   > .img-list {
     cursor: pointer;
     min-height: 200px;
     background-color: transparent;
     border: none;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    display: grid;
+    grid-area: manga-img-list;
     #image-0 {
       transform: translateX(0px) scale(1) !important;
       position: absolute;
@@ -70,6 +92,7 @@ const MangaSt= styled(motion.article)`
     flex-direction: row;
     align-items: center;
     gap: 5px;
+    grid-area: manga-options;
     > li > button {
       cursor: pointer;
       background-color: transparent;
@@ -96,6 +119,17 @@ export const MangasSt= styled(motion.div)`
   width: 100%;
   max-width: 1600px;
   box-sizing: border-box;
+  @media (max-width: 700px) {
+    padding: 1.5em;
+    > ul {
+      grid-template-columns: auto !important;
+      min-width: 100%;
+      row-gap: 2rem !important;
+      > li {
+        margin: 0 !important; 
+      }
+    }
+  }
   > h2 {
     text-align: center;
     background: white;
@@ -110,9 +144,6 @@ export const MangasSt= styled(motion.div)`
       font-weight: lighter;
       font-size: .8em;
       text-decoration: var(--secondary-foreground) underline  !important;
-    }
-    @media(max-width: 700px) {
-      margin-bottom: 0;
     }
   }
   > ul {
@@ -132,7 +163,7 @@ export const MangasSt= styled(motion.div)`
 
 export function Manga({id, title, images, children} : IManga) {
   const { handleMangaViewer } = useContext(MangaViewerContext);
-  return <li>
+  return <motion.li>
     <MangaSt>
       <h3 className="title">{title}</h3>
       <ul className="img-list" onClick={() => handleMangaViewer({type: 'id', id})}>
@@ -147,7 +178,7 @@ export function Manga({id, title, images, children} : IManga) {
       </ul>
       <ul className="options">{children}</ul>
     </MangaSt>
-  </li>;
+  </motion.li>;
 }
 
 export default function Mangas({title, books}: IMangas) {
@@ -162,12 +193,12 @@ export default function Mangas({title, books}: IMangas) {
           title={book.title}
           idCategory={book.categorie.id} 
           category={book.categorie.name}
-          images={book.imagepaths}
+          images={book.imagepaths} 
         >
           {book.user !== undefined ?
             (<li>
               <UserProfile onClick={() => router.push(`/user/@${book.user.id}`)}>
-                <ProfilePic imgurl={book?.user?.image ?? ''} width='30px' min_height='30px'/>
+                <ProfilePic imgurl={book?.user?.image ?? ''} width='35px' min_height='35px'/>
                 <label> {book?.user?.name} </label>
               </UserProfile>
             </li>) :

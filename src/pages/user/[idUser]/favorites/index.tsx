@@ -10,20 +10,24 @@ import { useContext, useEffect, useState } from 'react';
 import { IUserPageProps } from '@/types/pages/user/IUserPageProps';
 import UserProfile from '@/components/UserProfile';
 import Main from '@/components/Main';
+import { getAllCategory } from '@/lib/db/categories';
+import ReadingAside from '@/components/ReadingAside';
 
 export const  getServerSideProps: GetServerSideProps = async ({req, res, query}) => {
   let { idUser } = query;  
   const userExist = typeof idUser==='string';
   const userData = typeof idUser==='string' ? (await getUserFavoriteBooks(idUser.replace(/@/, ''))) : null;
+  const categories= await getAllCategory();
   return ({
     props: {
       userExist,
       userData,
+      categories
     }
   });
 };
 
-export default function User({userData}: IUserPageProps & {userData: any}) {
+export default function User({userData, categories}: IUserPageProps & {userData: any}) {
   const router = useRouter();
   const [optionPicker, setOptionPicker] = useState<number>(0);
   const {handleModal} = useContext(ModalContext);
@@ -41,6 +45,7 @@ export default function User({userData}: IUserPageProps & {userData: any}) {
     <Head><title>{userData?.name}</title></Head>
     <Header/>
     <Main>
+      <ReadingAside categories={categories}/>
       <UserProfile 
         userData={userData}
         selection={{

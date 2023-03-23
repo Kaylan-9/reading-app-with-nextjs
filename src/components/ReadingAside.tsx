@@ -25,6 +25,9 @@ export const StNav= styled(motion.nav)`
   max-width: 1600px;
   padding: 2em 3em !important;
   margin: 0 auto;
+  @media(max-width: 700px) {
+    padding: 1.5em !important;
+  }
   > h2 {
     margin-bottom: 2em;
   }

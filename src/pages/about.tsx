@@ -1,6 +1,7 @@
 import CookiePolicy from '@/components/CookiePolicy';
 import Header from '@/components/Header';
 import Main from '@/components/Main';
+import Button from '@/styles/Button';
 import Column from '@/styles/Column';
 import { css } from '@emotion/css';
 import styled from '@emotion/styled';
@@ -36,23 +37,20 @@ export const StAside= styled(motion.aside)`
   background-color: rgb(var(--background));
   border-radius: 1em;
   width: 100%;
+  padding: 2em 3em !important;
   nav > ul {
     display: flex;
-    flex-flow: column wrap;
+    flex-flow: row wrap;
     gap: 2em;
-    > li {
-      cursor: pointer;
-      > button {
-        line-break: strict;
-        font-size: 1.25em;
-        display: inline;
-        font-weight: bold;
-        background-color: transparent;
-        border: none;
-        color: var(--secondary-foreground);
-      }
-    }
   }
+`;
+
+const Option= styled(Button.withComponent('button'))<{color?: string}>`
+  color: ${({color}) => color};
+  background-color: rgb(var(--secondary-background)) !important;
+  box-shadow: none !important;
+  border-radius: 1em;
+  padding: 1em;
 `;
 
 const variants= {
@@ -69,15 +67,13 @@ export interface IAside {
 export function Aside({ list, setSection, _section }: IAside) {
   return (<StAside>
     <nav>
-      <Column>{list.map((name, i) => 
+      <ul>{list.map((name, i) => 
         <li key={name+i}>
-          <button className={_section===i ? css`
-            color: white !important;
-        ` : ``} key={name+i} onClick={()=> setSection(i)}>
+          <Option className={_section===i ? css`color: white !important;` : ``} key={name+i} onClick={()=> setSection(i)}>
             {name}
-          </button>       
+          </Option>       
         </li>
-      )}</Column>
+      )}</ul>
     </nav>
   </StAside>);
 }

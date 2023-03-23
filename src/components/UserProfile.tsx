@@ -16,7 +16,8 @@ const StUserProfile= styled.section`
     align-items: center;
     gap: 2rem;
     img {
-      border-radius: 100%;
+      border-radius: 1.5rem;
+      width: 5rem;
     }
     figcaption {
       font-weight: bold;
@@ -27,16 +28,17 @@ const StUserProfile= styled.section`
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-end;
+    gap: 1em;
     li > button {
-      background-color: transparent;
-      border-radius: 15px;
+      background-color: rgb(var(--secondary-background)) !important;
+      color: var(--secondary-foreground) !important;
+      border-radius: 1em;
       cursor: pointer;
-      color: white;
       font-family: 'Roboto', sans-serif !important;
       font-size: 16px;
       border: none;
-      padding: 15px 30px;
+      padding: 1em;
     }   
   }
 `;

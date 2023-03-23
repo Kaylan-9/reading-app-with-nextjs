@@ -33,6 +33,10 @@ const StHeader = styled(Column.withComponent('header'))`
   column-gap: 1.5em !important;
   grid-area: page-header;
   background-color: rgb(var(--background));
+  @media (max-width: 700px) {
+    justify-content: center;
+    margin-bottom: 1em !important;
+  }
   > .search {
     display: flex;
     justify-content: center;

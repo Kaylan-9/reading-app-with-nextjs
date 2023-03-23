@@ -16,6 +16,7 @@ import requestParameters from "@/ultis/requestParameters";
 import { CloudinaryImage } from "@cloudinary/url-gen/assets/CloudinaryImage";
 import { AdvancedImage, lazyload, placeholder } from '@cloudinary/react';
 import { Image } from "@/types/data/Images";
+import { AnimatePresence } from "framer-motion";
 
 const initialValueMangaViewerReducer: IMangaViewerReducerState = {
   id: null
@@ -45,10 +46,10 @@ export const MangaViewer= styled.div`
   width: 100vw;
   display: grid;
   grid-template-rows: min-content min-content auto;
-  grid-template-columns: 19em 56px auto;
+  grid-template-columns: 19em auto 56px;
   grid-template-areas: 
     'btn-close . .'
-    'manga-img manga-tools manga-container'
+    'manga-img manga-container manga-tools'
     'manga-pages manga-pages manga-pages'
   ;
   row-gap: 1em;
@@ -80,6 +81,7 @@ export const MangaViewer= styled.div`
         display: flex;
         align-items: center;
         cursor: pointer;
+        background-color: #8b33ff;
         > svg {
           font-size: 2em;
           > * {
@@ -210,47 +212,51 @@ export default function MangaViewerProvider({children}: {children: ReactNode}) {
   return (<MangaViewerContext.Provider value={{mangaViewer, handleMangaViewer}}>
     {children}
     {mangaViewer.id!==null ? (<MangaViewer>
-      {data!==null && cldImgs[0]!==undefined ? 
-        (<AdvancedImage
-          cldImg={cldImgs[0]}
-          plugins={[lazyload(), placeholder({mode: 'pixelate'})]}
-          alt={`capa do mangá`}
-        />) : 
-        null
-      }
-
-      <IoIosCloseCircle onClick={() => {
-        handleMangaViewer({type: 'id', id: null});
-        setData(null);
-      }}/>
-      <ul className="btns">
-        {
-          status==='authenticated' ?
-            (<li><button onClick={changeMark}>{marked ? (<IoHeart/>) : (<IoHeartOutline/>)}</button></li>) :
+      <AnimatePresence>
+        {data!==null && cldImgs[0]!==undefined ? 
+          (<AdvancedImage
+            cldImg={cldImgs[0]}
+            plugins={[lazyload(), placeholder({mode: 'pixelate'})]}
+            alt={`capa do mangá`}
+          />) : 
           null
         }
-        <li><button onClick={() => setShow(oldShow=> !oldShow)}><AiFillRead/></button></li>
-        {show ? (<li><button onClick={() => setViewMode(oldViewMode =>
-            viewModes.length-1==oldViewMode ? 0 : oldViewMode+1
-        )}><HiViewGrid/></button></li>) : null}
-      </ul>
-  
-      <div className="manga-container">
-        <div className="author">
-          {data!==null && data.user.image!==null ? (<img className={`author-img`} src={data.user.image} alt={`foto do autor ou autora`}/>): null}
-          <span className={`author-name`}>{data?.user.name}</span>
+
+        <IoIosCloseCircle onClick={() => {
+          handleMangaViewer({type: 'id', id: null});
+          setData(null);
+        }}/>
+    
+        <div className="manga-container">
+          <div className="author">
+            {data!==null && data.user.image!==null ? (<img className={`author-img`} src={data.user.image} alt={`foto do autor ou autora`}/>): null}
+            <span className={`author-name`}>{data?.user.name}</span>
+          </div>
+          <div className="body-text">
+            <h3 className="title">Descrição <strong>de {data?.title}</strong></h3>
+            <p className="text">{data!==null && data.description}</p>
+          </div>
+          <CategoryButton onClick={() => router.push(`/page/0/${data?.categorie.id}`)}>{data?.categorie.name}</CategoryButton>
         </div>
-        <div className="body-text">
-          <h3 className="title">Descrição <strong>de {data?.title}</strong></h3>
-          <p className="text">{data!==null && data.description}</p>
-        </div>
-        <CategoryButton onClick={() => router.push(`/page/0/${data?.categorie.id}`)}>{data?.categorie.name}</CategoryButton>
-      </div>
-      {show && cldImgs[0]!==null ? (<ul className={viewModes[viewMode]} style={{gridArea: 'manga-pages'}}>
-        {data?.imagepaths.map((img, indice)=> <li key={img.name}>
-          <AdvancedImage cldImg={cldImgs[indice]} alt={`página nº ${indice+1}`} plugins={[lazyload(), placeholder({mode: 'pixelate'})]} />
-        </li>)}
-      </ul>) : null}
+        {show && cldImgs[0]!==null ? (<ul className={viewModes[viewMode]} style={{gridArea: 'manga-pages'}}>
+          {data?.imagepaths.map((img, indice)=> <li key={img.name}>
+            <AdvancedImage cldImg={cldImgs[indice]} alt={`página nº ${indice+1}`} plugins={[lazyload(), placeholder({mode: 'pixelate'})]} />
+          </li>)}
+        </ul>) : null}
+
+        <ul className="btns">
+          {
+            status==='authenticated' ?
+              (<li><button onClick={changeMark}>{marked ? (<IoHeart/>) : (<IoHeartOutline/>)}</button></li>) :
+            null
+          }
+          <li><button onClick={() => setShow(oldShow=> !oldShow)}><AiFillRead/></button></li>
+          {show ? (<li><button onClick={() => setViewMode(oldViewMode =>
+              viewModes.length-1==oldViewMode ? 0 : oldViewMode+1
+          )}><HiViewGrid/></button></li>) : null}
+        </ul>
+
+      </AnimatePresence>
     </MangaViewer>) : null}
   </MangaViewerContext.Provider>);
 };

@@ -11,25 +11,31 @@ import { useContext, useEffect, useState } from 'react';
 import { IUserPageProps } from '@/types/pages/user/IUserPageProps';
 import UserProfile from '@/components/UserProfile';
 import Main from '@/components/Main';
-
+import { getAllCategory } from '@/lib/db/categories';
+import ReadingAside from '@/components/ReadingAside';
+import { CategoriesContext } from '@/contexts/CategoriesContext';
 
 export const getServerSideProps: GetServerSideProps = async ({req, res, query}) => {
   let { idUser } = query;  
   const userData = typeof idUser==='string' ? (await getUserBooks(idUser.replace(/@/, ''))) : null;
+  const categories= await getAllCategory();
   return ({
     props: {
       userData,
+      categories
     }
   });
 };
 
-export default function User({userData}: IUserPageProps) {
+export default function User({userData, categories}: IUserPageProps) {
   const router = useRouter();
   const [optionPicker, setOptionPicker] = useState<number>(0);
   const {handleModal} = useContext(ModalContext);
-  const { status } = useSession();
+  const {status} = useSession();
+  const {setView} = useContext(CategoriesContext);
 
   useEffect(() => {
+    setView(false);
     if(userData===null) {
       handleModal({type: 'add', newModal: {message: 'usuário não existe!'}});
       router.push('/');
@@ -41,6 +47,7 @@ export default function User({userData}: IUserPageProps) {
     <Head><title>{userData?.name}</title></Head>
     <Header/>
     <Main>
+      <ReadingAside categories={categories}/>
       <UserProfile 
         userData={userData}
         selection={{
