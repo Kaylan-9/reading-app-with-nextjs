@@ -29,7 +29,7 @@ const LoginSt = styled.div`
     gap: 30px;
     max-width: 450px; 
     width: 100%;
-    background-color: var(--quartiary-background);
+    background-color: var(--fourth-bg);
     padding: 40px 30px !important;
     align-items: center;
     div {
@@ -69,7 +69,6 @@ export default function Login({setActiveLogin}: {setActiveLogin: (state: boolean
         name= input_username.current.value;
       if(newUser && input_usernameoremail.current!==null) {
         const email = input_usernameoremail.current.value;
-        console.log(password, email, name);
         const createNewUser= await fetch('/api/user/', {
          ...requestParameters.json,
           body: JSON.stringify({
@@ -87,7 +86,6 @@ export default function Login({setActiveLogin}: {setActiveLogin: (state: boolean
           name, password    
         };
         const response = await signIn('credentials', options);
-        console.log(response)
         if(response?.error) handleModal({type: 'add',  newModal: {message: (<strong>{response.error} 🔥</strong>)}});
       }
     }

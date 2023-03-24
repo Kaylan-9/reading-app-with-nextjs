@@ -10,7 +10,15 @@ const StUserProfile= styled.section`
   gap: 5rem;
   padding: 1em;
   border-radius: 1em;
-  background-color: rgb(var(--background)) !important;
+  background-color: rgb(var(--bg)) !important;
+  @media(max-width: 400px){
+    gap: 2rem;
+    padding: .75em;
+    grid-template-columns: initial;
+    .options-menu {
+      justify-content: center !important;
+    }
+  }
   figure {
     display: flex;
     align-items: center;
@@ -31,8 +39,8 @@ const StUserProfile= styled.section`
     justify-content: flex-end;
     gap: 1em;
     li > button {
-      background-color: rgb(var(--secondary-background)) !important;
-      color: var(--secondary-foreground) !important;
+      background-color: rgb(var(--secondary-bg)) !important;
+      color: var(--secondary-fg) !important;
       border-radius: 1em;
       cursor: pointer;
       font-family: 'Roboto', sans-serif !important;

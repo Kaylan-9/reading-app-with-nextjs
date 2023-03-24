@@ -21,6 +21,9 @@ const Items = styled(Column)`
   grid-area: headeritems;
   column-gap: 1.5em;
   padding: 0!important;
+  @media(max-width: 700px) {
+    gap: .75em !important;
+  }
 `;
 
 const StHeader = styled(Column.withComponent('header'))`
@@ -32,7 +35,7 @@ const StHeader = styled(Column.withComponent('header'))`
   margin-bottom: 1.5em !important;
   column-gap: 1.5em !important;
   grid-area: page-header;
-  background-color: rgb(var(--background));
+  background-color: rgb(var(--bg));
   @media (max-width: 700px) {
     justify-content: center;
     margin-bottom: 1em !important;
@@ -64,7 +67,7 @@ const StHeader = styled(Column.withComponent('header'))`
         background-color: transparent;
         padding: 15px;
         font-family: var(--font-one);
-        color: var(--secondary-foreground);
+        color: var(--secondary-fg);
         min-width: 250px;
         outline: none;
         &::-webkit-input-placeholder {
@@ -75,7 +78,7 @@ const StHeader = styled(Column.withComponent('header'))`
         min-width: 18px;
         cursor: pointer;
         > * {
-          color: var(--secondary-foreground);
+          color: var(--secondary-fg);
         }
       }
     }
@@ -117,7 +120,7 @@ export default function Header({children}: IHeaderProps) {
               icon={<HiLockClosed/>} 
               css={css`
                 background-color: #8b33ff !important;
-                color: rgb(var(--foreground)) !important;
+                color: rgb(var(--fg)) !important;
               `}
             />
           </>) : 

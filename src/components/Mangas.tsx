@@ -8,14 +8,15 @@ import { useContext } from 'react';
 import { MangaViewerContext } from '@/contexts/MangaViewerContext';
 import { motion } from 'framer-motion';
 import { IManga } from '@/types/components/IManga';
+import { css } from '@emotion/css';
 
 export const UserProfile = styled.div`
   align-items: center;
   display: flex;
+  flex-flow: row wrap;
   gap: 1em;
-  min-width: 192px;
   & > label {
-    color: var(--secondary-foreground);
+    color: var(--secondary-fg);
   }
 `;
 
@@ -28,26 +29,47 @@ const MangaSt= styled(motion.article)`
   ;
   align-items: flex-start;
   row-gap: 1em;
-  background-color: rgb(var(--secondary-background)) !important;
+  background-color: rgb(var(--secondary-bg)) !important;
   padding: 1em 1.5em;
   border-radius: 1em;
   min-width: 240px;
   @media (max-width: 700px) {
-    min-width: 100%;
     padding: 0 !important;
-    background-color: transparent !important;
+    background-color: rgb(var(--bg)) !important;
     grid-template-areas: 
       'manga-img-list manga-title'
       'manga-img-list manga-options'
       'manga-img-list .'
     ;
-    grid-template-columns: auto min-content;
-    grid-template-rows: repeat(2, 20px) auto !important;
+    grid-template-columns: 192px auto;
+    grid-template-rows: min-content 30px auto !important;
     gap: 1em;
     > .title {
       font-size: 1.25em !important;
       min-width: 100%;
     }
+  }
+  @media (max-width: 400px) {
+    min-width: 192px !important;
+    margin: 0 auto !important;
+    grid-template-columns: 192px !important;
+    grid-template-rows: initial !important;
+    grid-template-areas: 
+      'manga-title'
+      'manga-img-list'
+      'manga-options'
+    ;
+  }
+  @media (max-width: 300px) {
+    min-width: 75vw !important;
+    margin: 0 auto !important;
+    grid-template-columns: 15vw !important;
+    grid-template-rows: initial !important;
+    grid-template-areas: 
+      'manga-title'
+      'manga-img-list'
+      'manga-options'
+    ;
   }
   > .title {
     font-size: 1em;
@@ -114,17 +136,21 @@ export const MangasSt= styled(motion.div)`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: rgb(var(--background));
+  background-color: rgb(var(--bg));
   border-radius: 1em;
   width: 100%;
   max-width: 1600px;
   box-sizing: border-box;
   @media (max-width: 700px) {
     padding: 1.5em;
+    > h2 { 
+      margin-bottom: 1.5em;
+    }
     > ul {
       grid-template-columns: auto !important;
       min-width: 100%;
       row-gap: 2rem !important;
+      justify-content: center !important;
       > li {
         margin: 0 !important; 
       }
@@ -140,14 +166,13 @@ export const MangasSt= styled(motion.div)`
     align-items: center;
     gap: 1.5rem;
     a {
-      color: var(--secondary-foreground) !important;
+      color: var(--secondary-fg) !important;
       font-weight: lighter;
       font-size: .8em;
-      text-decoration: var(--secondary-foreground) underline  !important;
+      text-decoration: var(--secondary-fg) underline  !important;
     }
   }
   > ul {
-    margin: 5em 0;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     row-gap: 3rem;
@@ -198,7 +223,15 @@ export default function Mangas({title, books}: IMangas) {
           {book.user !== undefined ?
             (<li>
               <UserProfile onClick={() => router.push(`/user/@${book.user.id}`)}>
-                <ProfilePic imgurl={book?.user?.image ?? ''} width='35px' min_height='35px'/>
+                <ProfilePic imgurl={book?.user?.image ?? ''} className={css`
+                  width: 35px;
+                  min-height: 35px;
+                  @media (max-width: 700px) {
+                    width: 8vw;
+                    min-height: 8vw;
+                    border-radius: 25%;
+                  }
+                `}/>
                 <label> {book?.user?.name} </label>
               </UserProfile>
             </li>) :

@@ -37,7 +37,6 @@ export default function FormsAdd() {
       method: 'POST', 
       body: formData
     });
-    console.log(responseData);
   }, [newImages]);
 
   useEffect(() => {

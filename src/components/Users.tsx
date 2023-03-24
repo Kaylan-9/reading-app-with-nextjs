@@ -1,6 +1,7 @@
 import Column from '@/styles/Column';
 import { IBookCategories } from '@/types/data/Books';
 import { IUserBookCategoriesPublic } from '@/types/data/Users'
+import { css } from '@emotion/css';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';
@@ -58,7 +59,9 @@ export const UserMangaListsSt= styled(Column.withComponent('div'))`
 
 export function UserMangaList({userData}: IUserMangaListProps) {
   return (<UserMangaListSt>
-    <ProfilePic imgurl={userData.image ?? ''} width='6em' min_height='6em'/>
+    <ProfilePic imgurl={userData.image ?? ''} className={css`
+      
+    `}/>
     <ul>
       {userData.book.map((book: IBookCategories) => 
         <Manga

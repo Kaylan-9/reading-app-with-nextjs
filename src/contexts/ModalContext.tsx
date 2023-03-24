@@ -71,7 +71,7 @@ export default function ModalProvider({children}: {children: ReactNode}) {
       {modal.modals.map((modal: TModal, indice: number) => {
         const { id, message } = modal;
         const key = String(message ?? 'modal').replace(/s/g, '')+id;
-        return (<li key={key}>
+        return (<li key={key+indice}>
           <Modal 
             id={id}
             message={message} 

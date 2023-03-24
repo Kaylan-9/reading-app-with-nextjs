@@ -10,13 +10,13 @@ import { IoIosCloseCircle } from "react-icons/io";
 import { IBookUserCategories } from "@/types/data/Books";
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/router";
-import CategoryButton from "@/styles/CategoryButton";
 import { css } from "@emotion/css";
 import requestParameters from "@/ultis/requestParameters";
 import { CloudinaryImage } from "@cloudinary/url-gen/assets/CloudinaryImage";
 import { AdvancedImage, lazyload, placeholder } from '@cloudinary/react';
 import { Image } from "@/types/data/Images";
 import { AnimatePresence } from "framer-motion";
+import Button, { ViewerOption } from "@/styles/Button";
 
 const initialValueMangaViewerReducer: IMangaViewerReducerState = {
   id: null
@@ -61,6 +61,30 @@ export const MangaViewer= styled.div`
   top: 0;
   bottom: 0;
   padding: 1em calc(((100vw - (1920px)) / 2));
+  @media(max-width: 800px) {
+    background-color: var(--fourth-bg) !important;
+    grid-template-rows: min-content min-content min-content auto;
+    grid-template-columns: auto !important;
+    row-gap: 0 !important;
+    grid-template-areas: 
+      'btn-close'
+      'manga-container' 
+      'manga-tools'
+      'manga-pages'
+    ;
+    > img {
+      display: none;
+    }
+    > .manga-container {
+      margin-right: 0 !important;
+      border-radius: 0 !important;
+    }
+    > .btns {
+      display: flex;
+      flex-flow: row wrap !important;
+      padding-bottom: 2em !important;
+    }
+  }
   > img {
     border-radius: 1em;
     grid-area: manga-img;
@@ -98,7 +122,7 @@ export const MangaViewer= styled.div`
     justify-content: flex-start;
     grid-area: manga-container;
     gap: 1em;
-    background-color: var(--quartiary-background);
+    background-color: var(--fourth-bg);
     padding: 2em;
     border-radius: 2em;
     margin-right: 1em;
@@ -141,7 +165,8 @@ const viewModes = [
     flex-flow: column wrap;
     align-items: center;
     > li > img {  
-      width: 50em;
+      width: 100%;
+      max-width: 50em;
     }
   `,
   css`
@@ -152,6 +177,9 @@ const viewModes = [
     > li > img {  
       flex: auto;
       height: 25em;
+      @media(max-width: 800px){
+        height: 25vw;
+      }
     }
   `
 ]
@@ -189,7 +217,6 @@ export default function MangaViewerProvider({children}: {children: ReactNode}) {
         })
       });
       const response: any = await request.json();
-      console.log(response);
       setMarked(response.data.marked);
     })();
   }, [mangaViewer, status, session]);
@@ -221,7 +248,6 @@ export default function MangaViewerProvider({children}: {children: ReactNode}) {
           />) : 
           null
         }
-
         <IoIosCloseCircle onClick={() => {
           handleMangaViewer({type: 'id', id: null});
           setData(null);
@@ -236,7 +262,7 @@ export default function MangaViewerProvider({children}: {children: ReactNode}) {
             <h3 className="title">Descrição <strong>de {data?.title}</strong></h3>
             <p className="text">{data!==null && data.description}</p>
           </div>
-          <CategoryButton onClick={() => router.push(`/page/0/${data?.categorie.id}`)}>{data?.categorie.name}</CategoryButton>
+          <Button onClick={() => router.push(`/page/0/${data?.categorie.id}`)}>{data?.categorie.name}</Button>
         </div>
         {show && cldImgs[0]!==null ? (<ul className={viewModes[viewMode]} style={{gridArea: 'manga-pages'}}>
           {data?.imagepaths.map((img, indice)=> <li key={img.name}>
@@ -247,13 +273,13 @@ export default function MangaViewerProvider({children}: {children: ReactNode}) {
         <ul className="btns">
           {
             status==='authenticated' ?
-              (<li><button onClick={changeMark}>{marked ? (<IoHeart/>) : (<IoHeartOutline/>)}</button></li>) :
+              (<li><ViewerOption onClick={changeMark}>{marked ? (<IoHeart/>) : (<IoHeartOutline/>)}</ViewerOption></li>) :
             null
           }
-          <li><button onClick={() => setShow(oldShow=> !oldShow)}><AiFillRead/></button></li>
-          {show ? (<li><button onClick={() => setViewMode(oldViewMode =>
+          <li><ViewerOption onClick={() => setShow(oldShow=> !oldShow)}><AiFillRead/></ViewerOption></li>
+          {show ? (<li><ViewerOption onClick={() => setViewMode(oldViewMode =>
               viewModes.length-1==oldViewMode ? 0 : oldViewMode+1
-          )}><HiViewGrid/></button></li>) : null}
+          )}><HiViewGrid/></ViewerOption></li>) : null}
         </ul>
 
       </AnimatePresence>

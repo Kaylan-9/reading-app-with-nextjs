@@ -64,7 +64,7 @@ export async function getAllBooksByCategory(n: number, idCategory: number) {
     },
     orderBy: {id: 'asc'}
   });
-  console.log(data)
+  
   return data;
 }
 
@@ -114,7 +114,7 @@ export const getRandomBook= async (iDsIgnore: number[]) => {
     select: { id: true},
     take: 45
   })))?.map(book=> book.id);
-  console.log('teste');
+
   
   iDs= iDs.filter((id: number)=> 
     !iDsIgnore.some((iDIgnore: number)=> id===iDIgnore)
@@ -142,8 +142,6 @@ export const getRandomBook= async (iDsIgnore: number[]) => {
     }
     attemps++;
   }
-
-  console.log('teste');
 
   return data;
 }

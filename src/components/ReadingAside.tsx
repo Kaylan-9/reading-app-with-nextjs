@@ -1,5 +1,5 @@
 import { CategoriesContext } from '@/contexts/CategoriesContext';
-import CategoryButton from '@/styles/CategoryButton';
+import Button from '@/styles/Button';
 import { ICategory } from '@/types/data/Category';
 import { css } from '@emotion/css';
 import styled from '@emotion/styled'
@@ -19,7 +19,7 @@ export interface IOption {
 };
 
 export const StNav= styled(motion.nav)`
-  background-color: rgb(var(--background));
+  background-color: rgb(var(--bg));
   border-radius: 1em;
   width: 100%;
   max-width: 1600px;
@@ -27,28 +27,19 @@ export const StNav= styled(motion.nav)`
   margin: 0 auto;
   @media(max-width: 700px) {
     padding: 1.5em !important;
+    > h2 {margin-bottom: 1em !important;}
   }
-  > h2 {
-    margin-bottom: 2em;
-  }
+  > h2 {margin-bottom: 2em;}
   > ul {
     display: flex;
     flex-flow: row wrap;
-    gap: 1em;
+    gap: .75em;
   }
-`;
-
-const CategoryBtn= styled(CategoryButton)<{color?: string}>`
-  color: ${({color}) => color};
-  background-color: rgb(var(--secondary-background)) !important;
-  box-shadow: none !important;
-  border-radius: 1em;
-  padding: 1em;
 `;
 
 export function Option({name, color, onClick}: IOption) {
   return (<li>
-    <CategoryBtn color={color} onClick={onClick}>{name}</CategoryBtn>
+    <Button onClick={onClick}>{name}</Button>
   </li>);
 };
 
@@ -62,7 +53,7 @@ export default function ReadingAside({categories, doNotShow}: IReadingAside) {
     <StNav>
       <h2>Categorias</h2>
       <ul>
-        <Option color={`rgb(var(--foreground))`} name={'todos'} onClick={() => {router.push(`/page/0`);}}/>
+        <Option color={`rgb(var(--fg))`} name={'todos'} onClick={() => {router.push(`/page/0`);}}/>
         {categories.map(({id, name}: {id: number, name: string}) => {
           const show= doNotShow?.reduce((acc, val) => {
             if(val===name) acc=0;

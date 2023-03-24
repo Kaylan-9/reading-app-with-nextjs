@@ -14,7 +14,7 @@ export const ModalsSt = styled.ul`
 
 export const ModalSt = styled.div<{width?: string}>`
   align-items: center;
-  background-color: rgb(var(--secondary-background));
+  background-color: rgb(var(--secondary-bg));
   box-shadow: var(--box-shadow-two);
   border-radius: 25px;
   min-width: ${({width})=> width};

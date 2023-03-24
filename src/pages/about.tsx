@@ -2,7 +2,6 @@ import CookiePolicy from '@/components/CookiePolicy';
 import Header from '@/components/Header';
 import Main from '@/components/Main';
 import Button from '@/styles/Button';
-import Column from '@/styles/Column';
 import { css } from '@emotion/css';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
@@ -13,7 +12,7 @@ import { BsGithub } from 'react-icons/bs';
 export const StPresentation = styled(motion.div)`
   margin: 0 auto;
   padding: 1em;
-  background-color: rgb(var(--background));
+  background-color: rgb(var(--bg));
   border-radius: 1em;
   > h2 {
     text-align: center !important;
@@ -34,11 +33,12 @@ export const StPresentation = styled(motion.div)`
 
 export const StAside= styled(motion.aside)`
   grid-area: page-aside;
-  background-color: rgb(var(--background));
+  background-color: rgb(var(--bg));
   border-radius: 1em;
   width: 100%;
   padding: 2em 3em !important;
   nav > ul {
+    padding: .75em !important;
     display: flex;
     flex-flow: row wrap;
     gap: 2em;
@@ -47,7 +47,7 @@ export const StAside= styled(motion.aside)`
 
 const Option= styled(Button.withComponent('button'))<{color?: string}>`
   color: ${({color}) => color};
-  background-color: rgb(var(--secondary-background)) !important;
+  background-color: rgb(var(--secondary-bg)) !important;
   box-shadow: none !important;
   border-radius: 1em;
   padding: 1em;
@@ -113,7 +113,7 @@ export default function About() {
       {_section===1 && <CookiePolicy variants={variants} css={css`
         padding: 1em;
         border-radius: 1em;
-        background-color: rgb(var(--background)) !important;
+        background-color: rgb(var(--bg)) !important;
         width: 1fr !important;
         margin: 0 !important;
         > p {

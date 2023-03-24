@@ -9,8 +9,8 @@ const SelectSt = styled.div`
   border: none;
   grid-area: bookcategoryselect;
   text-align: center;
-  background-color: rgb(var(--secondary-background));
-  color: var(--secondary-foreground);
+  background-color: rgb(var(--secondary-bg));
+  color: var(--secondary-fg);
   font-weight: bold;
   border-radius: 30px;
   > input[type=text] {
@@ -24,7 +24,7 @@ const SelectSt = styled.div`
     margin-top: 10px;
     position: absolute;
     z-index: 6;
-    background-color: rgb(var(--secondary-background));
+    background-color: rgb(var(--secondary-bg));
     border-radius: 15px;
     .option {
       padding: 15px 35px;

@@ -11,11 +11,11 @@ export const StFooter = styled(motion.footer)`
   gap: 2em;
   box-sizing: border-box;
   border-radius: 2em 2em 0 0;
-  background-color: rgb(var(--background));
+  background-color: rgb(var(--bg));
   margin-top: 20em;
   padding: .5em;
   grid-area: page-footer;
-  @media (max-width: 700px) {
+  @media (max-width: 800px) {
     grid-template-columns: auto;
     margin-top: 1em;
     gap: 1em !important;
@@ -35,7 +35,7 @@ export const StFooter = styled(motion.footer)`
     > h3 {
       font-size: 1.25em !important;
       text-align: center;
-      color: var(--secondary-foreground);
+      color: var(--secondary-fg);
     }
     > ul {
       margin-top: 2em !important;

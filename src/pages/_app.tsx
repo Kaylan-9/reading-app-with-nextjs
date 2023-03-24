@@ -21,7 +21,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 export const StButtonBackToTop = styled.button`
   padding: 1em;
   border-radius: 1em;
-  color: rgb(var(--foreground-primary));
+  color: rgb(var(--fg-primary));
   position: fixed;
   border: none;
   background-color: #8b33ff;

@@ -1,5 +1,6 @@
 import { CookiePolicyContext } from '@/contexts/CookiePolicyContext';
 import { ModalContext } from '@/contexts/ModalContext';
+import Button from '@/styles/Button';
 import requestParameters from '@/ultis/requestParameters';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
@@ -40,7 +41,7 @@ export default function CookiePolicy({css, variants}: ICookiePolicy) {
     <p>Esta página mantém somente dados necessários a aplicação, e que foram disponibilizados, por meio do uso consciente do uso desta mesma. </p>
     <p>Os dados presentes somente nela dizem respeito a identificação de seus elementos e usuários, faça login, assim como sessões de acesso. Ou seja, ela apresenta dados pessoais de seus usuários, como nome, senha, e-mail, fotos, marcações de favorito, considere-se também as imagens dos &ldquo;posts&ldquo; realizados, título, descrição, usuário pertencente e categoria.</p>
     {
-      !agreement ? (<button onClick={async () => {
+      !agreement ? (<Button onClick={async () => {
         const request= await fetch('/api/cookies/policy', {
           ...requestParameters.json,
           body: JSON.stringify({cookies: true})
@@ -50,7 +51,7 @@ export default function CookiePolicy({css, variants}: ICookiePolicy) {
         handleModal({type: 'remove', id: 'terms'});
       }}>
         Aceitar
-      </button>) : null
+      </Button>) : null
     }
   </Styled>)
 }
