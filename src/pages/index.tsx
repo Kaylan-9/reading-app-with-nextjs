@@ -27,6 +27,7 @@ export default function Index({categories, morePopular}: {morePopular: IBookUser
       <title>App de leitura</title>
       <meta name={`keywords`} content={`Histórias em Quadrinhos (HQ), Mangás, Manhwas, Manhuas, Leitura`}/>
       <meta name={`description`} content={`Sinta-se livre para visitar e ler diferentes tipos de Histórias em Quadrinhos (HQ), Mangás, Manhwas, Manhuas e etc. E caso seja um criador aproveite e use a plataforma para divulgar o seu trabalho.`}/>
+      <meta name="rating" content="general" />
     </Head>
     <Header/>
     <Main>

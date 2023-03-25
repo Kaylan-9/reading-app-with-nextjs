@@ -1,5 +1,5 @@
 
-import Head from '@/app/head';
+import Head from '@/app/Head';
 import Footer from '@/components/Footer';
 import CategoriesProvider from '@/contexts/CategoriesContext';
 import CookiePolicyProvider from '@/contexts/CookiePolicyContext';

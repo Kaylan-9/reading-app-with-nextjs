@@ -46,6 +46,7 @@ export default function Index({currentPage, nOfPages, books, categories}: IPagin
     <Head>
       <title>Todos Mangás</title>
       <meta name={`description`} content={`A lista de todos os mangás do website independente de gênero ou outras características, Lista`}/>
+      <meta name="rating" content="general" />
     </Head>
     <Header/>  
     <Main>
