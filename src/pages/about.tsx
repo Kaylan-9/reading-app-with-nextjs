@@ -106,7 +106,10 @@ Presentation.displayName= 'Presentation';
 export default function About() {
   const [_section, setSection]= useState(0);
   return (<>
-    <Head><title>information</title></Head>
+    <Head>
+      <title>Sobre  o App de leitura</title>
+      <meta name={`description`} content={`Leia a seguir sobre a nossa página e outras informações de extrema importância.`}/>
+    </Head>
     <Header/>
     <Main>
       <Aside list={['sobre', 'cookie policy']} setSection={setSection} _section={_section}/>

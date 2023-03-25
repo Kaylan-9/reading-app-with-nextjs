@@ -23,7 +23,11 @@ export const getStaticProps: any = async () => {
 export default function Index({categories, morePopular}: {morePopular: IBookUserCategories[], categories: ICategory[]}) {
   let { mangas } = useMangas(morePopular.map(item=> item.id));
   return (<>
-    <Head><title>Reading App</title></Head>
+    <Head>
+      <title>App de leitura</title>
+      <meta name={`keywords`} content={`Histórias em Quadrinhos (HQ), Mangás, Manhwas, Manhuas, Leitura`}/>
+      <meta name={`description`} content={`Sinta-se livre para visitar e ler diferentes tipos de Histórias em Quadrinhos (HQ), Mangás, Manhwas, Manhuas e etc. E caso seja um criador aproveite e use a plataforma para divulgar o seu trabalho.`}/>
+    </Head>
     <Header/>
     <Main>
       <ReadingAside categories={categories}/>

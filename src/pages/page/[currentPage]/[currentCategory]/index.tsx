@@ -88,7 +88,11 @@ export default function Index({currentCategory, currentPage, nOfPages, category,
   categories: ICategory[];
 }) {
   return (<>
-    <Head><title>🐲 Categoria de Mangá: {category?.name}</title></Head>
+    <Head>
+      <title>Categoria de Mangá: {category?.name}</title>
+      <meta name={`keywords`} content={`Histórias em Quadrinhos (HQ), Mangás, Manhwas, Manhuas, Leitura, ${category?.name}, Gênero de ${category?.name}, Lista`}/>
+      <meta name={`description`} content={`A lista de todos os mangás do website dependente de gênero.`}/>
+    </Head>
     <Header/>
     <Main>
       <ReadingAside categories={categories} doNotShow={[category?.name ?? '']}/>

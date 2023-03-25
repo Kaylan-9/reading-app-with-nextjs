@@ -42,7 +42,11 @@ export default function User({userData, categories}: IUserPageProps & {userData:
 
   return (userData!==null ? (
   <>
-    <Head><title>{userData?.name}</title></Head>
+    <Head>
+      <title>Perfil de {userData?.name}</title>
+      <meta name={`author`} content={userData?.name ?? 'desconhecido'}/>
+      <meta name={`description`} content={`Página de favoritos do usuário.`}/>
+    </Head>
     <Header/>
     <Main>
       <ReadingAside categories={categories}/>

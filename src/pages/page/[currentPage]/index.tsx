@@ -43,7 +43,10 @@ export async function getStaticProps(context: any) {
 
 export default function Index({currentPage, nOfPages, books, categories}: IPaginationPageProps) {
   return (<>
-    <Head><title>🐲 Todos Mangás</title></Head>
+    <Head>
+      <title>Todos Mangás</title>
+      <meta name={`description`} content={`A lista de todos os mangás do website independente de gênero ou outras características, Lista`}/>
+    </Head>
     <Header/>  
     <Main>
       <ReadingAside categories={categories}/>

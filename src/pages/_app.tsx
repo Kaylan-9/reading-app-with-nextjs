@@ -1,3 +1,5 @@
+
+import Head from '@/app/head';
 import Footer from '@/components/Footer';
 import CategoriesProvider from '@/contexts/CategoriesContext';
 import CookiePolicyProvider from '@/contexts/CookiePolicyContext';
@@ -55,19 +57,22 @@ export default function MyApp({ Component, pageProps: {session, ...pageProps}}: 
   }, [screenHeight, setScreenHeight]);
 
   return (<>
+    <Head/>
     <Script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8472335099605606" crossOrigin="anonymous"/>
-    <CookiePolicyProvider>
-      <ModalProvider>
-        <SessionProvider session={session}>
-          <CategoriesProvider>
-            <MangaViewerProvider>
-              <Component {...pageProps}/>
-              <Footer/>
-            </MangaViewerProvider>
-          </CategoriesProvider>
-        </SessionProvider>
-        {enoughPosition ? <ButtonBackToTop/> : null}
-      </ModalProvider>
-    </CookiePolicyProvider>
+  
+      <CookiePolicyProvider>
+        <ModalProvider>
+          <SessionProvider session={session}>
+            <CategoriesProvider>
+              <MangaViewerProvider>
+                <Component {...pageProps}/>
+                <Footer/>
+              </MangaViewerProvider>
+            </CategoriesProvider>
+          </SessionProvider>
+          {enoughPosition ? <ButtonBackToTop/> : null}
+        </ModalProvider>
+      </CookiePolicyProvider>
+  
   </>);
 }
