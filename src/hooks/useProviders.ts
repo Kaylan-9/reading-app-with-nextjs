@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import requestParameters from '../ultis/requestParameters';
+import { useEffect, useState } from 'react';
+import requestParameters from '../utils/requestParameters';
 
 export default function useProviders() {
   const [ providers, setProviders ]= useState<any | null>([]);

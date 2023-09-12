@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-export interface IManga {
+export default interface IComic {
   id: number;
   title: string;
   idCategory: number;

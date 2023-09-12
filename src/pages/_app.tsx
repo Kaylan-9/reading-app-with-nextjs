@@ -1,10 +1,11 @@
 
-import Head from '@/app/Head';
-import Footer from '@/components/Footer';
+import Head from '../app/Head';
+import Footer from '@/components/footer';
 import CategoriesProvider from '@/contexts/CategoriesContext';
 import CookiePolicyProvider from '@/contexts/CookiePolicyContext';
-import MangaViewerProvider from '@/contexts/MangaViewerContext';
+import MangaViewerProvider from '@/contexts/ComicViewerContext';
 import ModalProvider from '@/contexts/ModalContext';
+import GlobalStyle from '@/styles/GlobalStyle';
 import { IMyAppProps } from '@/types/pages/IMyAppProps';
 import styled from '@emotion/styled';
 import { GetServerSideProps } from 'next';
@@ -12,7 +13,6 @@ import { getCsrfToken, getProviders, SessionProvider } from 'next-auth/react';
 import Script from 'next/script';
 import { useCallback, useState, useEffect } from 'react';
 import { IoIosArrowUp } from 'react-icons/io';
-import '../app/globals.css';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const providers = await getProviders();
@@ -59,20 +59,19 @@ export default function MyApp({ Component, pageProps: {session, ...pageProps}}: 
   return (<>
     <Head/>
     <Script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8472335099605606" crossOrigin="anonymous"/>
-  
-      <CookiePolicyProvider>
-        <ModalProvider>
-          <SessionProvider session={session}>
-            <CategoriesProvider>
-              <MangaViewerProvider>
-                <Component {...pageProps}/>
-                <Footer/>
-              </MangaViewerProvider>
-            </CategoriesProvider>
-          </SessionProvider>
-          {enoughPosition ? <ButtonBackToTop/> : null}
-        </ModalProvider>
-      </CookiePolicyProvider>
-  
+    <CookiePolicyProvider>
+      <ModalProvider>
+        <SessionProvider session={session}>
+          <CategoriesProvider>
+            <MangaViewerProvider>
+              <Component {...pageProps}/>
+              <Footer/>
+            </MangaViewerProvider>
+          </CategoriesProvider>
+        </SessionProvider>
+        {enoughPosition ? <ButtonBackToTop/> : null}
+      </ModalProvider>
+    </CookiePolicyProvider>
+    <GlobalStyle/>
   </>);
 }

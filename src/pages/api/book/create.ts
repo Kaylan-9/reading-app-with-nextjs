@@ -3,7 +3,7 @@ import { createBook as createBookInDB } from "@/lib/db/books";
 import { FormidableError, parseForm } from "@/lib/parse-form";
 // import { createReadStream } from "fs";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { IBookCreateInput, IBookCreateInputDB } from "@/types/data/Books";
+import { IBookCreateInput, IBookCreateInputDB } from "@/types/data/Comics";
 import { categoryNotExistCreate } from "@/lib/db/categories";
 import { doUpload } from "@/lib/imgs/upload";
 

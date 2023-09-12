@@ -1,12 +1,12 @@
 import { countPages, getAllBooks } from "@/lib/db/books";
 import Header from '@/components/Header';
-import Mangas from '@/components/Mangas';
+import Mangas from '@/components/comics';
 import Head from 'next/head';
 import Pagination from "@/components/Pagination";
 import { IPaginationPageProps } from "@/types/pages/IPaginationPageProps";
 import ReadingAside from "@/components/ReadingAside";
 import { getAllCategory } from "@/lib/db/categories";
-import Main from "@/components/Main";
+import Main from "@/styles/Main";
 
 export async function getStaticPaths() {
   const nOfPages = await countPages();

@@ -1,5 +1,5 @@
 import Input from "@/styles/Input";
-import requestParameters from "@/ultis/requestParameters";
+import requestParameters from "@/utils/requestParameters";
 import styled from "@emotion/styled";
 import { forwardRef, useState, useEffect } from "react";
 import { IoIosArrowForward } from 'react-icons/io';

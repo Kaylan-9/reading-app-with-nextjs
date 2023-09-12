@@ -1,42 +1,23 @@
 import { IPaginationProps } from "@/types/components/IPaginationProps";
-import styled from "@emotion/styled";
 import { useRouter } from "next/router";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import StPageButton from "./StPageButton";
+import Pagination, { PageButton } from "./styled";
 
-const StPagination = styled.nav`
-  width: 100%;
-  grid-area: pagination;
-  padding: 1.5em 0;
-  & > ul {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    justify-content: center;
-    & > li {
-      .marked {
-        background-color: transparent;
-        box-shadow: none;
-      }
-    }
-  }
-`;
-
-export default function Pagination({baseURL, nOfPages, current} : IPaginationProps){
+export default ({baseURL, nOfPages, current} : IPaginationProps) => {
   const router = useRouter();
   if(nOfPages===1) {
     let linkList: string[]= [];
     for(let i=0;i<=nOfPages;i++) linkList.push(baseURL(i));
-    return (<StPagination>
+    return (<Pagination>
       <ul>
         {current!==0 ?
           <li>
-            <StPageButton onClick={() => {
+            <PageButton type="button" onClick={() => {
               router.push(baseURL(0));
             }}>
               <IoIosArrowBack/>
               <IoIosArrowBack/>
-            </StPageButton>
+            </PageButton>
           </li> :
         null}
         {linkList       
@@ -45,23 +26,23 @@ export default function Pagination({baseURL, nOfPages, current} : IPaginationPro
           (indice>=(current-1) && indice<=(current+1) && current!==(linkList.length-1)) ||
           (indice>=(current-2) && indice<=current && current===(linkList.length-1)) ? 
           <li key={link}>
-            <StPageButton className={current===indice ? 'marked' : ''} onClick={() => {
+            <PageButton type="button" className={current===indice ? 'marked' : ''} onClick={() => {
               router.push(link);
-            }}>{indice}</StPageButton>
+            }}>{indice}</PageButton>
           </li> : null;
         })}
         {current!==nOfPages ? <li>
-          <StPageButton onClick={() => {
+          <PageButton  type="button" onClick={() => {
             router.push(baseURL(nOfPages));
           }}>
             <IoIosArrowForward/>
             <IoIosArrowForward/>
-          </StPageButton>
+          </PageButton>
         </li> : 
         null
         } 
       </ul>  
-    </StPagination>);
+    </Pagination>);
   }
   return null;
 }

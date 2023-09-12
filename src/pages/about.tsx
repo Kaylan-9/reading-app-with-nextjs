@@ -1,6 +1,6 @@
 import CookiePolicy from '@/components/CookiePolicy';
 import Header from '@/components/Header';
-import Main from '@/components/Main';
+import Main from '@/styles/Main';
 import Button from '@/styles/Button';
 import { css } from '@emotion/css';
 import styled from '@emotion/styled';

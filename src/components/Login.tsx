@@ -4,7 +4,7 @@ import styled from "@emotion/styled";
 import { FcGoogle } from 'react-icons/fc';
 import { signIn } from "next-auth/react";
 import { ModalContext } from "@/contexts/ModalContext";
-import requestParameters from "@/ultis/requestParameters";
+import requestParameters from "@/utils/requestParameters";
 import useProviders from "@/hooks/useProviders";
 
 const LoginSt = styled.div`

@@ -1,28 +1,28 @@
-import { IPropsMangaViewer } from "@/types/contexts/MangaViewerContext/components/IPropsMangaViewer";
-import { IMangaViewerReducerAction } from "@/types/contexts/MangaViewerContext/reducers/MangaViewerReducerAction";
-import { IMangaViewerReducerState } from "@/types/contexts/MangaViewerContext/reducers/MangaViewerReducerState";
+import IPropsComicViewer from "@/types/contexts/ComicViewerContext/components/IPropsComicViewer";
+import IComicViewerReducerAction from "@/types/contexts/ComicViewerContext/reducers/ComicViewerReducerAction";
+import IComicViewerReducerState from "@/types/contexts/ComicViewerContext/reducers/ComicViewerReducerState";
 import { IoHeart, IoHeartOutline } from 'react-icons/io5';
 import { HiViewGrid } from 'react-icons/hi';
 import { AiFillRead } from 'react-icons/ai';
 import styled from "@emotion/styled";
 import { createContext, ReactNode, Reducer, useCallback, useEffect, useReducer, useState } from "react";
 import { IoIosCloseCircle } from "react-icons/io";
-import { IBookUserCategories } from "@/types/data/Books";
+import { IComicUserCategories } from "@/types/data/Comics";
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/router";
 import { css } from "@emotion/css";
-import requestParameters from "@/ultis/requestParameters";
+import requestParameters from "@/utils/requestParameters";
 import { CloudinaryImage } from "@cloudinary/url-gen/assets/CloudinaryImage";
 import { AdvancedImage, lazyload, placeholder } from '@cloudinary/react';
 import { Image } from "@/types/data/Images";
 import { AnimatePresence } from "framer-motion";
 import Button, { ViewerOption } from "@/styles/Button";
 
-const initialValueMangaViewerReducer: IMangaViewerReducerState = {
+const initialValueComicViewerReducer: IComicViewerReducerState = {
   id: null
 };
 
-export function mangaViewerReducer(state: IMangaViewerReducerState, action: IMangaViewerReducerAction): IMangaViewerReducerState {
+export function comicViewerReducer(state: IComicViewerReducerState, action: IComicViewerReducerAction): IComicViewerReducerState {
   let { id }= state;
   if(action.type==='id' && action.id!==undefined) {
     id= action.id;
@@ -33,12 +33,12 @@ export function mangaViewerReducer(state: IMangaViewerReducerState, action: IMan
 };
 
 
-const initialValueMangaViewer = {
-  mangaViewer: initialValueMangaViewerReducer,
-  handleMangaViewer: mangaViewerReducer
+const initialValueComicViewer = {
+  comicViewer: initialValueComicViewerReducer,
+  handleComicViewer: comicViewerReducer
 };
 
-export const MangaViewer= styled.div`
+export const ComicViewer= styled.div`
   z-index: 6;
   overflow-y: scroll;
   overflow-x: hidden;
@@ -184,12 +184,12 @@ const viewModes = [
   `
 ]
 
-export const MangaViewerContext = createContext<IPropsMangaViewer>(initialValueMangaViewer);
+export const ComicViewerContext = createContext<IPropsComicViewer>(initialValueComicViewer);
 
-export default function MangaViewerProvider({children}: {children: ReactNode}) {
+export default function ComicViewerProvider({children}: {children: ReactNode}) {
   const router= useRouter();
-  const [mangaViewer, handleMangaViewer] = useReducer<Reducer<IMangaViewerReducerState, IMangaViewerReducerAction>>(mangaViewerReducer, initialValueMangaViewerReducer);
-  const [data, setData] = useState<IBookUserCategories | null>(null);
+  const [comicViewer, handleComicViewer] = useReducer<Reducer<IComicViewerReducerState, IComicViewerReducerAction>>(comicViewerReducer, initialValueComicViewerReducer);
+  const [data, setData] = useState<IComicUserCategories | null>(null);
   const [marked, setMarked] = useState<boolean>(false);
   const [show, setShow] = useState<boolean>(true);
   const [viewMode, setViewMode] = useState<number>(0);
@@ -202,30 +202,30 @@ export default function MangaViewerProvider({children}: {children: ReactNode}) {
       body: JSON.stringify({
         isfavorite: marked,
         userId: session.user.id, 
-        bookId: mangaViewer.id
+        bookId: comicViewer.id
       })
     });
-  }, [session, mangaViewer, marked]);
+  }, [session, comicViewer, marked]);
   
   useEffect(()=> {
-    if(status==='authenticated' && typeof mangaViewer.id==='number') (async () => {
+    if(status==='authenticated' && typeof comicViewer.id==='number') (async () => {
       const request= await fetch(`/api/favorite/isfavorite`, {
         ...requestParameters.json,
         body: JSON.stringify({
-          bookID: mangaViewer.id,
+          bookID: comicViewer.id,
           userID: session.user.id
         })
       });
       const response: any = await request.json();
       setMarked(response.data.marked);
     })();
-  }, [mangaViewer, status, session]);
+  }, [comicViewer, status, session]);
 
   useEffect(() => {
-    if(typeof mangaViewer.id==='number') (async () => {
+    if(typeof comicViewer.id==='number') (async () => {
       const request= await fetch(`/api/book/data`, {
         ...requestParameters.json,
-        body: JSON.stringify({id: mangaViewer.id})
+        body: JSON.stringify({id: comicViewer.id})
       });
       const response: any = await request.json();
       setCldImgs(response.book?.imagepaths.map((image: Image) => {
@@ -234,11 +234,11 @@ export default function MangaViewerProvider({children}: {children: ReactNode}) {
       }));
       setData(response.book);
     })();  
-  }, [mangaViewer, status, session]);
+  }, [comicViewer, status, session]);
 
-  return (<MangaViewerContext.Provider value={{mangaViewer, handleMangaViewer}}>
+  return (<ComicViewerContext.Provider value={{comicViewer, handleComicViewer}}>
     {children}
-    {mangaViewer.id!==null ? (<MangaViewer>
+    {comicViewer.id!==null ? (<ComicViewer>
       <AnimatePresence>
         {data!==null && cldImgs[0]!==undefined ? 
           (<AdvancedImage
@@ -249,7 +249,7 @@ export default function MangaViewerProvider({children}: {children: ReactNode}) {
           null
         }
         <IoIosCloseCircle onClick={() => {
-          handleMangaViewer({type: 'id', id: null});
+          handleComicViewer({type: 'id', id: null});
           setData(null);
         }}/>
     
@@ -265,7 +265,7 @@ export default function MangaViewerProvider({children}: {children: ReactNode}) {
           <Button onClick={() => router.push(`/page/0/${data?.categorie.id}`)}>{data?.categorie.name}</Button>
         </div>
         {show && cldImgs[0]!==null ? (<ul className={viewModes[viewMode]} style={{gridArea: 'manga-pages'}}>
-          {data?.imagepaths.map((img, indice)=> <li key={img.name}>
+          {data?.imagepaths.map((img: {name: string}, indice: number)=> <li key={img.name}>
             <AdvancedImage cldImg={cldImgs[indice]} alt={`página nº ${indice+1}`} plugins={[lazyload(), placeholder({mode: 'pixelate'})]} />
           </li>)}
         </ul>) : null}
@@ -283,6 +283,6 @@ export default function MangaViewerProvider({children}: {children: ReactNode}) {
         </ul>
 
       </AnimatePresence>
-    </MangaViewer>) : null}
-  </MangaViewerContext.Provider>);
+    </ComicViewer>) : null}
+  </ComicViewerContext.Provider>);
 };

@@ -1,4 +1,4 @@
-import { IBookCreateInputDB, IBookUserCategories } from "@/types/data/Books";
+import { IBookCreateInputDB, IBookUserCategories } from "@/types/data/Comics";
 import { ImagesCreateManyBookInput } from "@/types/data/Images";
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "./prisma";

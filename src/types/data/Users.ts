@@ -1,5 +1,5 @@
 import { Prisma, User } from "@prisma/client";
-import { IBookUser, IBookUserCategories } from "./Books";
+import { IBookUser, IComicUserCategories } from "./Comics";
 
 export interface IUser extends Omit<User, 'password' | 'emailVerified'> {
   password?: string;
@@ -10,7 +10,7 @@ export interface IUserBook extends IUser {
 }
 
 export interface IUserBookCategories extends IUserBook {
-  book: IBookUserCategories[]
+  book: IComicUserCategories[]
 }
 
 export interface IUserBookCategoriesPublic extends Omit<IUserBookCategories, 'password' | 'emailVerified' | 'email'> {}

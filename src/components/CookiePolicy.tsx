@@ -1,7 +1,7 @@
 import { CookiePolicyContext } from '@/contexts/CookiePolicyContext';
 import { ModalContext } from '@/contexts/ModalContext';
 import Button from '@/styles/Button';
-import requestParameters from '@/ultis/requestParameters';
+import requestParameters from '@/utils/requestParameters';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import React, { useContext } from 'react';

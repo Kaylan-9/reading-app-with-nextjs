@@ -1,5 +1,5 @@
 import Header from '@/components/Header';
-import Mangas from '@/components/Mangas';
+import Mangas from '@/components/comics';
 import { ModalContext } from '@/contexts/ModalContext';
 import { getUserFavoriteBooks } from '@/lib/db/users';
 import { GetServerSideProps } from 'next';
@@ -9,7 +9,7 @@ import { useSession } from 'next-auth/react';
 import { useContext, useEffect, useState } from 'react';
 import { IUserPageProps } from '@/types/pages/user/IUserPageProps';
 import UserProfile from '@/components/UserProfile';
-import Main from '@/components/Main';
+import Main from '@/styles/Main';
 import { getAllCategory } from '@/lib/db/categories';
 import ReadingAside from '@/components/ReadingAside';
 

@@ -1,5 +1,5 @@
 import { IPropsCookiePolicy } from "@/types/contexts/CookiePolicy/components/IPropsCookiePolicy";
-import requestParameters from "@/ultis/requestParameters";
+import requestParameters from "@/utils/requestParameters";
 import { createContext, ReactNode, useEffect, useState } from "react";
 
 const initialValueCookiePolicy = {

@@ -1,7 +1,7 @@
 
-import { IBookUserCategories } from '@/types/data/Books';
+import { IBookUserCategories } from '@/types/data/Comics';
 import { useEffect, useState, useCallback } from 'react';
-import requestParameters from '../ultis/requestParameters';
+import requestParameters from '../utils/requestParameters';
 
 export default function useMangas(initialIDs: number[]) {
   const mangaLimit= 5;
@@ -18,7 +18,7 @@ export default function useMangas(initialIDs: number[]) {
       })
     });
     const responseMangas= await requestMangas.json();
-    setAttemps(oldAttemps=> oldAttemps+1);
+    setAttemps(oldAttemps => oldAttemps+1);
     if(responseMangas!==null) {
       setMangas(oldMangas=> [...oldMangas, responseMangas]);
       setIDsMangas((oldIDsMangas: number[] | any)=> [...oldIDsMangas, responseMangas.id]);

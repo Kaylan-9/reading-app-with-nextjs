@@ -1,4 +1,4 @@
-import { IBookUserCategories } from "../data/Books";
+import { IBookUserCategories } from "../data/Comics";
 
 export default interface IMangas {
   title?: string;

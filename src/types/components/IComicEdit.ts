@@ -1,4 +1,4 @@
-import { IBookUserCategories } from "../data/Books";
+import { IBookUserCategories } from "../data/Comics";
 
 export interface IMangaEdit {
   books: IBookUserCategories[];

@@ -12,4 +12,4 @@ export interface IBookCreateInput extends Prisma.BookUncheckedCreateWithoutImage
 export default interface IBook extends Book {imagepaths: Images[] | [];}
 export interface IBookCategories extends IBook {categorie: Categories;}
 export interface IBookUser extends IBook {user: Omit<User, 'password' | 'email' | 'emailVerified'>;}
-export interface IBookUserCategories extends IBookCategories, IBookUser {}
+export interface IComicUserCategories extends IBookCategories, IBookUser {}

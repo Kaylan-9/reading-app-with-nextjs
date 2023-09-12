@@ -1,4 +1,4 @@
-import { IBookUserCategories } from "../data/Books";
+import { IBookUserCategories } from "../data/Comics";
 import { ICategory } from "../data/Category";
 import { IUserBookCategoriesPublic } from "../data/Users";
 

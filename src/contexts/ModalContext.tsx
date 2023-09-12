@@ -1,4 +1,5 @@
-import { Modal, ModalsSt } from "@/components/Modals";
+import Modal from "@/components/modal";
+import {ModalsSt} from "@/components/modal/styled";
 import { IPropsModal } from "@/types/contexts/ModalContext/components/IPropsModal";
 import { IModal } from "@/types/contexts/ModalContext/IModal";
 import { IModalReducerAction } from "@/types/contexts/ModalContext/reducers/IModalReducerAction";

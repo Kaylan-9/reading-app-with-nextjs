@@ -1,13 +1,13 @@
 import { countPages, getAllBooksByCategory } from "@/lib/db/books";
-import Header from '@/components/Header';
-import Mangas from '@/components/Mangas';
+import Header from '@/components/header';
+import Mangas from '@/components/comics/index';
 import Head from 'next/head';
-import Pagination from "@/components/Pagination";
+import Pagination from "@/components/pagination";
 import { IPaginationPageProps } from "@/types/pages/IPaginationPageProps";
 import { getAllCategory, getCategory } from "@/lib/db/categories";
 import { ICategory } from "@/types/data/Category";
 import ReadingAside from "@/components/ReadingAside";
-import Main from "@/components/Main";
+import Main from "@/styles/Main";
 
 async function getPaths() {
   type TPath = {

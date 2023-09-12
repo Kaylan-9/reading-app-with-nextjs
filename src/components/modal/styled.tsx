@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { IModalProps } from '@/types/components/IModalProps';
 
 export const ModalsSt = styled.ul`
   position: fixed;
@@ -12,7 +11,7 @@ export const ModalsSt = styled.ul`
   row-gap: 10px;
 `;
 
-export const ModalSt = styled.div<{width?: string}>`
+export default styled.div<{width?: string}>`
   align-items: center;
   background-color: rgb(var(--secondary-bg));
   box-shadow: var(--box-shadow-two);
@@ -46,11 +45,3 @@ export const ModalSt = styled.div<{width?: string}>`
   }
 `;
 
-export const Modal = ({message, onClick, btnIcon, width}: IModalProps) => {
-  return (<ModalSt width={width}>
-    <p className='modal-message'>{message}</p>
-    <button className='modal-button' onClick={onClick}> 
-      {btnIcon}
-    </button>
-  </ModalSt>);
-};
