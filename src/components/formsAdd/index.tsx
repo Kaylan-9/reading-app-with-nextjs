@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import Select from './ultis/Select';
-import SelectedImages from './ultis/SelectedImages';
-import InputLabel from "./ultis/InputLabel";
-import TextArea from '../styles/TextArea';
-import Button from '../styles/Button';
+import Select from '../ultis/Select';
+import SelectedImages from '../ultis/SelectedImages';
+import InputLabel from "../ultis/InputLabel";
+import TextArea from '../../styles/TextArea';
+import Button from '../../styles/Button';
 import { useSession } from 'next-auth/react';
 import StFormsAdd from '@/styles/StFormsAdd';
 

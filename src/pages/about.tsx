@@ -1,4 +1,4 @@
-import CookiePolicy from '@/components/CookiePolicy';
+import CookiePolicy from '@/components/cookiePolicy/CookiePolicy';
 import Header from '@/components/Header';
 import Main from '@/styles/Main';
 import Button from '@/styles/Button';

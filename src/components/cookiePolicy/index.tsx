@@ -2,32 +2,19 @@ import { CookiePolicyContext } from '@/contexts/CookiePolicyContext';
 import { ModalContext } from '@/contexts/ModalContext';
 import Button from '@/styles/Button';
 import requestParameters from '@/utils/requestParameters';
-import styled from '@emotion/styled';
-import { motion } from 'framer-motion';
 import React, { useContext } from 'react';
-
-const Styled= styled(motion.div)`
-  display: flex;
-  align-items: flex-start;
-  flex-flow: column wrap;
-  gap: 1em;
-  padding: 2em 0;
-  h2 {
-    text-align: center;
-    width: 100%;
-  }
-`;
+import CookiePolicy from './styled';
 
 export interface ICookiePolicy {
   css?: string;
   variants?: any;
 };
 
-export default function CookiePolicy({css, variants}: ICookiePolicy) {
+export default ({css, variants}: ICookiePolicy) => {
   const { handleModal} = useContext(ModalContext);
   const { setAgreement, agreement } = useContext(CookiePolicyContext);
 
-  return (<Styled 
+  return (<CookiePolicy
     variants={variants} 
     initial={`initial`}
     whileInView={`whileInView`}
@@ -53,5 +40,5 @@ export default function CookiePolicy({css, variants}: ICookiePolicy) {
         Aceitar
       </Button>) : null
     }
-  </Styled>)
+  </CookiePolicy>)
 }

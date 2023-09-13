@@ -1,5 +1,5 @@
 import { BsGithub } from "react-icons/bs";
-import { NavItem } from "../NavItem";
+import { NavItem } from "../navItem";
 import { css } from "@emotion/css";
 import { useTransform, useViewportScroll } from "framer-motion";
 import { FaInfoCircle } from "react-icons/fa";

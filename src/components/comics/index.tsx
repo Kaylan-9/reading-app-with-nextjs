@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import ProfilePic from '../ProfilePic';
+import ProfilePic from '../../styles/ProfilePic';
 import IComics from '@/types/components/IComics';
 import { IComicUserCategories } from '@/types/data/Comics';
 import Comic from '@/components/comic/index';

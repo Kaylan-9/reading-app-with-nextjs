@@ -8,7 +8,7 @@ import { TModal } from "@/types/contexts/ModalContext/TModal";
 import { Reducer } from "@/types/contexts/Reducer";
 import { createContext, ReactNode, useEffect, useReducer, useContext } from "react";
 import { GrClose } from "react-icons/gr";
-import CookiePolicy from "@/components/CookiePolicy";
+import CookiePolicy from "@/components/cookiePolicy/index";
 import { CookiePolicyContext } from "./CookiePolicyContext";
 
 const initialValueModalReducer: IModalReducerState = {

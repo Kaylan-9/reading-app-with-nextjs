@@ -1,18 +1,17 @@
 import { IHeaderProps } from "@/types/components/IHeaderProps";
 import { useContext, useState } from "react";
-import Login from "../Login";
+import Login from "./../login/index";
 import Header, { Items } from './styled';
 import Link from 'next/link';
-import ProfileAccess from "../ProfileAccess";
+import ProfileAccess from "./../profileAccess/index";
 import { signOut, useSession } from "next-auth/react";
-import { NavItemLi } from "../NavItem";
+import { NavItemLi } from "../navItem";
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
 import { CookiePolicyContext } from "@/contexts/CookiePolicyContext";
 import { HiLockClosed } from "react-icons/hi";
 import { CategoriesContext } from "@/contexts/CategoriesContext";
 import { FaInfoCircle } from "react-icons/fa";
 import { css } from "@emotion/css";
-
 
 export default ({children}: IHeaderProps) => {
   const {data: session, status} = useSession();
